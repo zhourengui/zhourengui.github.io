@@ -16,9 +16,8 @@
 <script src="https://github.com/zhourengui/zhourengui.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
     <meta name="description" content="前言：
-
-
-函数式编程(Functional Programming)其实相对于计算机的历史 而言是一个非常古老的概念，甚至早于第一台计算机的诞生。函数式编程的基础模型来源于 λ (Lambda x=&gt;x*2)演算，而 λ 演算并 非..." />
+函数式编程是编程范式中的一种，是一种典型的编程思想和方法。其他的编程范式还包括面向对象编程、逻辑编程等。
+函数式编程不是用函数来编程， 也不是传统的面向过程编程。主旨在于将复杂的函数符合成简单的函数。运算过程尽量写成一系列嵌套的函数..." />
     <meta name="keywords" content="JavaScript" />
     <script src="https://github.com/zhourengui/zhourengui.github.io/media/js/waterfall.min.js"></script>
     <script src="https://github.com/zhourengui/zhourengui.github.io/media/js/prism.min.js"></script>
@@ -32,7 +31,7 @@
         <div class="menu-wrapper">
           <div class="">
             <div class="logo">
-              <a href="https://github.com/zhourengui/zhourengui.github.io"><img src="/media/images/logoo.png" alt=""></a>
+              <a href="https://github.com/zhourengui/zhourengui.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
             </div>
             <!-- start: .main-nav -->
 
@@ -52,12 +51,6 @@
                     </a>
                   </li>
                 
-                  <li class="" >
-                    <a href="/about" class="menu">
-                      关于
-                    </a>
-                  </li>
-                
                 <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
               </ul>
             </nav>
@@ -74,7 +67,7 @@
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1598789351875" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1598950190653" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -89,13 +82,18 @@
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('https://raw.githubusercontent.com/zhourengui/blog-image/master/function-programming.png');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-08-28"><i class="fa fa-calendar"></i><span class="lately">2 天前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-08-28"><i class="fa fa-calendar"></i><span class="lately">4 天前</span></time>
+              
+              <a href="https://github.com/zhourengui/zhourengui.github.io/han-shu-shi-bian-cheng/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/han-shu-shi-bian-cheng/"> </span>
+              </a>
+              <span id="/han-shu-shi-bian-cheng/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="https://github.com/zhourengui/zhourengui.github.io/tag/b02rvhSHe/" class="ctag ctag-0 ctag-b02rvhSHe" aria-label="">JavaScript</a>
+                      <a href="https://github.com/zhourengui/zhourengui.github.io/b02rvhSHe/" class="ctag ctag-0 ctag-b02rvhSHe" aria-label="">JavaScript</a>
                     
               </div>
               <h1 class="title ularge white bold">函数式编程</h1>
@@ -109,21 +107,11 @@
               <section class="post-content">
                 <div class="text">
                   <p>前言：</p>
-<ol>
-<li>
-<p><code>函数式编程(Functional Programming)</code>其实相对于计算机的历史 而言是一个非常古老的概念，甚至早于第一台计算机的诞生。函数式编程的基础模型来源于 <code>λ (Lambda x=&gt;x*2)</code>演算，而 λ 演算并 非设计于在计算机上执行，它是在 20 世纪三十年代引入的一套用 于研究函数定义、函数应用和递归的形式系统。</p>
-</li>
-<li>
+<p><code>函数式编程</code>是编程范式中的一种，是一种典型的编程思想和方法。其他的编程范式还包括<code>面向对象编程</code>、<code>逻辑编程</code>等。</p>
 <p><code>函数式编程</code>不是用函数来编程， 也不是传统的面向过程编程。主旨在于将复杂的函数符合成简单的函数。运算过程尽量写成一系列嵌套的函数调用。</p>
-</li>
-<li>
-<p><code>函数式编程</code>只是范畴论的运算方法，跟数理逻辑、微积分、 行列式是同一类东西，都是数学方法，只是碰巧它能用来写程序。为什么函数式编程要求函数必须是纯的，不能有副作用?因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数 运算法则了。</p>
-</li>
-<li>
-<p><code>函数式编程</code>随着<code>React</code>的高阶函数的普遍使用慢慢在前端流行起来。</p>
-</li>
-</ol>
-<h2 id="一-特点">一. 特点</h2>
+<p><code>函数式编程</code>只是范畴论的运算方法，跟数理逻辑、微积分、 行列式是同一类东西，都是数学方法，只是碰巧它能用来写程序。为什么函数式编程要求函数必须是纯的，不能有副作用?因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了。</p>
+<p>为什么要学习<code>函数式编程</code> ? 函数式编程的最大的特点就是<code>纯</code>， 没有任何的副作用，没有任何的依赖，对于代码的review，重构起着重大的作用。（当看过一个耦合度非常高的项目的时候，你会发现函数式编程之美）</p>
+<h2 id="一-函数式编程的特点">一. 函数式编程的特点</h2>
 <ol>
 <li>函数与其他数据类型一样， 可以赋值给其他变量，也可以是参数，传入另一个函数，或者是别的函数的返回值。</li>
 <li>只用<code>表达式</code>，不用<code>语句</code></li>
@@ -549,14 +537,22 @@ class IO extends Monad {
   }
 }
 
-const print = (x) =&gt; console.log(x)
+const print = (x) =&gt; IO.of(() =&gt; {
+    return x
+})
 const readFile = (filePath) =&gt; IO.of(() =&gt; fs.readFileSync(filePath, &quot;utf8&quot;))
 const result = readFile(&quot;目标文件&quot;) // IO(() =&gt; fs.readFileSync(filePath, &quot;uft-8&quot;))
   .flatMap(print) // 组合后的方法
 
-result()
+result().__value() // 这个__value是() =&gt; console.log(x)
+
+// 如果想要链式调用 可以使用下面的方法
+const result = readFile(&quot;目标文件&quot;) // IO(() =&gt; fs.readFileSync(filePath, &quot;uft-8&quot;))
+  .flatMap(print)() // 返回IO函子
+  .flatMap(print)()
 </code></pre>
-<p>已经把整个过程在代码中注释好了，请慢慢领悟下其中的奥秘。</p>
+<p>上面这段代码的执行流程已经在代码中详细注释，请慢慢领悟下其中的奥秘。</p>
+<p>最后，函数式编程的内容不仅只有这些，本文只列举常见和实用的东西。</p>
 
                 </div>
                 <div class="clear"></div>
@@ -565,6 +561,19 @@ result()
             <div class="clear"></div>
 
             <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://raw.githubusercontent.com/zhourengui/blog-image/master/qa.png');"></div>
+                 <a href="https://github.com/zhourengui/zhourengui.github.io/dan-yuan-ce-shi/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2020-08-30">2020-08-30</time>
+                  <h4 class="title white no-margin">QA测试</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://github.com/zhourengui/zhourengui.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
               
               
 
@@ -610,6 +619,21 @@ jQuery(document).ready(function($){
                   
                   
                   <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://github.com/zhourengui/zhourengui.github.io/dan-yuan-ce-shi/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://raw.githubusercontent.com/zhourengui/blog-image/master/qa.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-08-30">2020-08-30</time>
+                      <h4 class="title usmall">
+                        <a href="https://github.com/zhourengui/zhourengui.github.io/dan-yuan-ce-shi/">QA测试</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
                     <a href="https://github.com/zhourengui/zhourengui.github.io/han-shu-shi-bian-cheng/" class="thumb hover-effect">
                       <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://raw.githubusercontent.com/zhourengui/blog-image/master/function-programming.png');"></span>
                     </a>
@@ -632,7 +656,11 @@ jQuery(document).ready(function($){
                   <h4 class="widget-title title white bordered">标签云</h4>
                   <div class="tagcloud">
                     
-                      <a href="https://github.com/zhourengui/zhourengui.github.io/tag/b02rvhSHe/" class="ctag ctag-0 ctag-b02rvhSHe" aria-label="">JavaScript</a>
+                      <a href="https://github.com/zhourengui/zhourengui.github.io/-bPu6JFhz/" class="ctag ctag-0 ctag--bPu6JFhz" aria-label="">QA</a>
+                    
+                      <a href="https://github.com/zhourengui/zhourengui.github.io/A6Q75Twsp/" class="ctag ctag-1 ctag-A6Q75Twsp" aria-label="">NodeJS</a>
+                    
+                      <a href="https://github.com/zhourengui/zhourengui.github.io/b02rvhSHe/" class="ctag ctag-2 ctag-b02rvhSHe" aria-label="">JavaScript</a>
                     
                   </div>
                   <div class="clear"></div>
@@ -673,10 +701,10 @@ jQuery(document).ready(function($){
         </div>
 
         <div class="logo">
-          <a href="https://github.com/zhourengui/zhourengui.github.io"><img src="/media/images/gridea.png" alt=""></a>
+          <a href="https://github.com/zhourengui/zhourengui.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
         </div>
         <p class="published border-effect">
-          ©2019 共 1 篇文章
+          ©2019 共 2 篇文章
           <br/>
           Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
         </p>
@@ -698,7 +726,7 @@ jQuery(document).ready(function($){
         appKey: 'Xkv8kTC4SwEtYxpQs6EuyuSS',
         pageSize: 30,
         placeholder: '既然来了，那就留个痕迹吧~',
-        visitor: false // 阅读量统计
+        visitor: true // 阅读量统计
     })
 </script>
     

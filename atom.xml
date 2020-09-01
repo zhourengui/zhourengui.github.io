@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-08-30T12:10:36.098Z</updated>
+    <updated>2020-09-01T08:52:09.704Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -11,27 +11,186 @@
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
     <entry>
+        <title type="html"><![CDATA[QA测试]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/dan-yuan-ce-shi/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/dan-yuan-ce-shi/">
+        </link>
+        <updated>2020-08-30T12:49:50.000Z</updated>
+        <content type="html"><![CDATA[<p>前言：</p>
+<p>在开发的过程中，除了代码本身，测试也是重要的一环。测试可以验证代码的正确性，保证项目的稳定性，在项目上线的时候保证不出差错。在开发项目的时候会使用<code>console.log</code>进行测试，这种做法效率不能得到保证，也不能做到自动化测试的优势。测试可以保证重构，由于产品迭代速度很快，迭代后必然存在代码重构的过程，如果有大量的测试用例，就可以大胆的进行重构。</p>
+<p>测试分为4种类型：</p>
+<ol>
+<li>单元测试</li>
+<li>功能测试</li>
+<li>性能测试</li>
+<li>安全测试</li>
+</ol>
+<h2 id="一-环境搭建">一. 环境搭建</h2>
+<p>本篇文章是在node.js环境下进行测试，如果不懂node.js的知识也无关紧要，只需要安装node.js的环境即可。</p>
+<blockquote>
+<p>Mac下nodejs环境安装</p>
+</blockquote>
+<p>第一步打开Mac终端，输入<code>brew --version</code>，如果输出类似<code>Homebrew 2.2.16</code>版本文本的话，请继续往下看，否则点击<a href="https://brew.sh/index_zh-cn">https://brew.sh/index_zh-cn</a>安装<code>Homebrew</code></p>
+<p>第二步在终端输入<code>brew install node</code>， 等待安装完后，在终端输入<code>node --version</code>出现<code>v12.18.3</code>这样的版本文本的话，说明已经安装成功。</p>
+<blockquote>
+<p>Window下nodejs环境安装</p>
+</blockquote>
+<p>请前往<a href="https://nodejs.org/en/">https://nodejs.org/en/</a>下载nodejs安装包，建议下载<code>LTS</code>， 目前最新稳定版本是<code>v12.18.x</code>, 等待安装完后，在终端输入<code>node --version</code>出现<code>v12.18.3</code>这样的版本文本的话，说明已经安装成功。</p>
+<h2 id="二-单元测试">二. 单元测试</h2>
+<blockquote>
+<p>什么是单元测试</p>
+</blockquote>
+<p>通俗的讲就是对你在应用中写的方法或者是类中的某个方法添加测试用例，保证传入的任何值和预期得到的结果一致。</p>
+<blockquote>
+<p>单元测试实践</p>
+</blockquote>
+<p>第一步：需要创建一个空的文件夹，然后在这个文件夹的根目录下运行<code>npm init -y</code>。</p>
+<p>执行<code>npm init -y</code>的可能会时候出现<img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/npm-init-y-error.jpeg" alt="" loading="lazy">，说明文件夹的名称不符合要求。可以通过修改文件的名称或者执行<code>npm init</code>初始化项目。</p>
+<p>第二步：这个案例中使用的断言库<code>jasmine</code>, 测试环境<code>karma</code>, 无头浏览器<code>PhantomJS</code>，测试报表<code>karma-coverage</code>。</p>
+<p>在项目的根目录下执行，<code>npm install karma karma-jasmine jasmine-core karma-phantomjs-launcher karma-coverage --save-dev</code></p>
+<p>第三步：在项目根目录下创建<code>karma.conf.js</code>文件，这个文件的作用就是当我们在执行测试的时候，程序会默认的根据这个配置执行。</p>
+<p>需要更详细的配置请上<a href="http://karma-runner.github.io/5.0/config/configuration-file.html">http://karma-runner.github.io/5.0/config/configuration-file.html</a></p>
+<pre><code class="language-js">module.exports = function (config) {
+  config.set({
+    // 基础路径，用在files，exclude属性上
+    basePath: &quot;&quot;,
+    // 使用的断言库
+    frameworks: [&quot;jasmine&quot;],
+    // 载入浏览器的文件
+    files: [&quot;./tests/unit/*.js&quot;],
+    // 排除文件列表
+    // exclude: [&quot;node_modules&quot;],
+    // 预处理
+    // 可用的预处理: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      &quot;./tests/unit/**/*.js&quot;: [&quot;coverage&quot;],
+    },
+    //  使用测试结果报告者
+    //  可能的值: &quot;dots&quot;, &quot;progress&quot;
+    //  可用的报告者：https://npmjs.org/browse/keyword/karma-reporter
+    reporters: [&quot;progress&quot;, &quot;coverage&quot;],
+    // 服务端口号
+    port: 9876,
+    // 启用或禁用输出报告或者日志中的颜色
+    colors: true,
+    // 日志等级
+    // 可能的值: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+    // 启用或禁用自动检测文件变化进行测试
+    autoWatch: false,
+    // 测试启动的浏览器
+    browsers: [&quot;PhantomJS&quot;],
+    // 无头浏览器需要改为true
+    singleRun: true,
+    // 并发级别（启动的浏览器数）
+    concurrency: Infinity,
+    // coverage报表设置
+    // https://www.npmjs.com/package/karma-coverage
+    coverageReporter: {
+      type: &quot;html&quot;,
+      dir: &quot;./docs/coverage/&quot;,
+    },
+  })
+}
+</code></pre>
+<p>第四步：在项目在创建需要的测试文件，单元测试的文件放到了根目录下的tests文件下的unit文件</p>
+<p>├── 根目录<br>
+├── docs<br>
+├── package-lock.json<br>
+├── package.json<br>
+├── tests<br>
+│  └── unit<br>
+│      ├── index.js<br>
+│      └── index.spec.js<br>
+└── yarn.lock</p>
+<p>在<code>index.js</code>文件中写入需要测试的方法：</p>
+<pre><code class="language-js">function add(x) {
+  if (x === 3) {
+    return 4
+  }
+  return Number(x) + 1
+}
+</code></pre>
+<p>在<code>index.spec.js</code>中编写测试用例：</p>
+<pre><code class="language-js">describe(&quot;测试工具函数的add方法&quot;, function() {
+    it(&quot;参数为数字的时候&quot;, function () {
+    expect(add(1)).toBe(2)
+  })
+
+  it(&quot;参数为字符串的时候&quot;, function () {
+    expect(add(&quot;1&quot;)).toBe(2)
+  })
+})
+</code></pre>
+<p>第五步：测试写的方法是否有问题，并且测试的覆盖率是否达到100%</p>
+<p>在<code>package.json</code>文件的<code>scripts</code>节点添加<code>&quot;test:unit&quot;: &quot;karma start&quot;</code></p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;unit-test&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+    &quot;test:unit&quot;: &quot;karma start&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;jasmine-core&quot;: &quot;^3.6.0&quot;,
+    &quot;karma&quot;: &quot;^5.2.0&quot;,
+    &quot;karma-jasmine&quot;: &quot;^4.0.1&quot;,
+    &quot;karma-phantomjs-launcher&quot;: &quot;^1.0.4&quot;
+  }
+}
+
+</code></pre>
+<p>然后在根目录下执行<code>npm run test:unit</code>。</p>
+<p><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/unit-test-success.png" alt="" loading="lazy">说明测试通过。如果有红色的报错信息，说明你的测试预期的结果不一致。</p>
+<p>第六步：虽然测试通过了，但是有个问题是，在add方法中有个if没有测试到。我们不可能通过肉眼去查看我们有哪个部分没有测到，所以需要从测试报表中查看。</p>
+<p>在我们执行了第五步后文件目录如下：<br>
+├── 根目录<br>
+├── docs<br>
+│   └── coverage<br>
+│       └── PhantomJS\ 2.1.1\ (Mac\ OS\ 0.0.0)<br>
+│           ├── base.css<br>
+│           ├── block-navigation.js<br>
+│           ├── favicon.png<br>
+│           ├── index.html<br>
+│           ├── index.js.html<br>
+│           ├── index.spec.js.html<br>
+│           ├── prettify.css<br>
+│           ├── prettify.js<br>
+│           ├── sort-arrow-sprite.png<br>
+│           └── sorter.js<br>
+├── karma.conf.js<br>
+├── package-lock.json<br>
+├── package.json<br>
+├── tests<br>
+│   └── unit<br>
+│       ├── index.js<br>
+│       └── index.spec.js<br>
+└── yarn.lock</p>
+<p>我们打开docs/coverage/PhantomJS\ 2.1.1\ (Mac\ OS\ 0.0.0)/index.html文件，然后就可以在网页上查看测试的覆盖率如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass.png" alt="" loading="lazy"></figure>
+<p>我们可以看到index.js文件的覆盖率达到了66.6%，然后点击网页的index.js进去，网页会告诉我们哪个位置没有测试到：<br>
+<img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass-location.png" alt="" loading="lazy"></p>
+<p>第七步：根据没有测试到的位置添加测试用例，这里就不在演示。</p>
+<p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%88Unit%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/单元测试（Unit Test）</a></p>
+<p>未完待续。。。</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[函数式编程]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/han-shu-shi-bian-cheng/</id>
         <link href="https://github.com/zhourengui/zhourengui.github.io/han-shu-shi-bian-cheng/">
         </link>
         <updated>2020-08-28T09:00:29.000Z</updated>
         <content type="html"><![CDATA[<p>前言：</p>
-<ol>
-<li>
-<p><code>函数式编程(Functional Programming)</code>其实相对于计算机的历史 而言是一个非常古老的概念，甚至早于第一台计算机的诞生。函数式编程的基础模型来源于 <code>λ (Lambda x=&gt;x*2)</code>演算，而 λ 演算并 非设计于在计算机上执行，它是在 20 世纪三十年代引入的一套用 于研究函数定义、函数应用和递归的形式系统。</p>
-</li>
-<li>
+<p><code>函数式编程</code>是编程范式中的一种，是一种典型的编程思想和方法。其他的编程范式还包括<code>面向对象编程</code>、<code>逻辑编程</code>等。</p>
 <p><code>函数式编程</code>不是用函数来编程， 也不是传统的面向过程编程。主旨在于将复杂的函数符合成简单的函数。运算过程尽量写成一系列嵌套的函数调用。</p>
-</li>
-<li>
-<p><code>函数式编程</code>只是范畴论的运算方法，跟数理逻辑、微积分、 行列式是同一类东西，都是数学方法，只是碰巧它能用来写程序。为什么函数式编程要求函数必须是纯的，不能有副作用?因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数 运算法则了。</p>
-</li>
-<li>
-<p><code>函数式编程</code>随着<code>React</code>的高阶函数的普遍使用慢慢在前端流行起来。</p>
-</li>
-</ol>
-<h2 id="一-特点">一. 特点</h2>
+<p><code>函数式编程</code>只是范畴论的运算方法，跟数理逻辑、微积分、 行列式是同一类东西，都是数学方法，只是碰巧它能用来写程序。为什么函数式编程要求函数必须是纯的，不能有副作用?因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了。</p>
+<p>为什么要学习<code>函数式编程</code> ? 函数式编程的最大的特点就是<code>纯</code>， 没有任何的副作用，没有任何的依赖，对于代码的review，重构起着重大的作用。（当看过一个耦合度非常高的项目的时候，你会发现函数式编程之美）</p>
+<h2 id="一-函数式编程的特点">一. 函数式编程的特点</h2>
 <ol>
 <li>函数与其他数据类型一样， 可以赋值给其他变量，也可以是参数，传入另一个函数，或者是别的函数的返回值。</li>
 <li>只用<code>表达式</code>，不用<code>语句</code></li>
@@ -457,14 +616,22 @@ class IO extends Monad {
   }
 }
 
-const print = (x) =&gt; console.log(x)
+const print = (x) =&gt; IO.of(() =&gt; {
+    return x
+})
 const readFile = (filePath) =&gt; IO.of(() =&gt; fs.readFileSync(filePath, &quot;utf8&quot;))
 const result = readFile(&quot;目标文件&quot;) // IO(() =&gt; fs.readFileSync(filePath, &quot;uft-8&quot;))
   .flatMap(print) // 组合后的方法
 
-result()
+result().__value() // 这个__value是() =&gt; console.log(x)
+
+// 如果想要链式调用 可以使用下面的方法
+const result = readFile(&quot;目标文件&quot;) // IO(() =&gt; fs.readFileSync(filePath, &quot;uft-8&quot;))
+  .flatMap(print)() // 返回IO函子
+  .flatMap(print)()
 </code></pre>
-<p>已经把整个过程在代码中注释好了，请慢慢领悟下其中的奥秘。</p>
+<p>上面这段代码的执行流程已经在代码中详细注释，请慢慢领悟下其中的奥秘。</p>
+<p>最后，函数式编程的内容不仅只有这些，本文只列举常见和实用的东西。</p>
 ]]></content>
     </entry>
 </feed>
