@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-01T09:14:24.116Z</updated>
+    <updated>2020-09-02T08:39:36.370Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -18,13 +18,7 @@
         <updated>2020-08-30T12:49:50.000Z</updated>
         <content type="html"><![CDATA[<p>前言：</p>
 <p>在开发的过程中，除了代码本身，测试也是重要的一环。测试可以验证代码的正确性，保证项目的稳定性，在项目上线的时候保证不出差错。在开发项目的时候会使用<code>console.log</code>进行测试，这种做法效率不能得到保证，也不能做到自动化测试的优势。测试可以保证重构，由于产品迭代速度很快，迭代后必然存在代码重构的过程，如果有大量的测试用例，就可以大胆的进行重构。</p>
-<p>测试分为4种类型：</p>
-<ol>
-<li>单元测试</li>
-<li>功能测试</li>
-<li>性能测试</li>
-<li>安全测试</li>
-</ol>
+<p>本文将介绍单元测试（Unit Test）、端到端测试（E2E Test）、UI测试、服务端测试（Server Test），例子相对简单，如果想要深入学习可以到对应的官网查看文档，本文也会将对应的官网地址附上。</p>
 <h2 id="一-环境搭建">一. 环境搭建</h2>
 <p>本篇文章是在node.js环境下进行测试，如果不懂node.js的知识也无关紧要，只需要安装node.js的环境即可。</p>
 <blockquote>
@@ -36,7 +30,7 @@
 <p>Window下nodejs环境安装</p>
 </blockquote>
 <p>请前往<a href="https://nodejs.org/en/">https://nodejs.org/en/</a>下载nodejs安装包，建议下载<code>LTS</code>， 目前最新稳定版本是<code>v12.18.x</code>, 等待安装完后，在终端输入<code>node --version</code>出现<code>v12.18.3</code>这样的版本文本的话，说明已经安装成功。</p>
-<h2 id="二-单元测试">二. 单元测试</h2>
+<h2 id="二-单元测试unit-test">二. 单元测试（Unit Test）</h2>
 <blockquote>
 <p>什么是单元测试</p>
 </blockquote>
@@ -93,7 +87,7 @@
   })
 }
 </code></pre>
-<p>第四步：在项目在创建需要的测试文件，单元测试的文件放到了根目录下的tests文件下的unit文件</p>
+<p>第四步：在项目创建需要的测试文件，单元测试的文件放到了根目录下的tests文件下的unit文件</p>
 <p>├── 根目录<br>
 ├── docs<br>
 ├── package-lock.json<br>
@@ -176,7 +170,312 @@
 <img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass-location.png" alt="" loading="lazy"></p>
 <p>第七步：根据没有测试到的位置添加测试用例，这里就不在演示。</p>
 <p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%88Unit%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/单元测试（Unit Test）</a></p>
-<p>未完待续。。。</p>
+<p><code>jasmine</code>官方文档<a href="https://jasmine.github.io/api/edge/global">https://jasmine.github.io/api/edge/global</a></p>
+<h2 id="三端到端测试e2e-test">三.端到端测试（E2E Test）</h2>
+<blockquote>
+<p>什么是端到端测试</p>
+</blockquote>
+<p>一般公司测试页面都是人工去点击页面上的东西，如果点不出bug就说明没有问题，这种做法相对于做自动化测试来说减少了编写代码的时间，但是并不能达到测试的最终目的，所以为了上线后项目的稳定性，我们不得不去做这种端到端的自动化测试。</p>
+<blockquote>
+<p>端到端测试实践</p>
+</blockquote>
+<p>第一步：请参照单元测试（Unit Test）第一步。</p>
+<p>第二步：打开终端，路径切换到创建的文件根目录下，执行<code>npm install selenium-webdriver</code>。</p>
+<p>第三步：下载对应的无头浏览器脚本。（这里以Chrome为例）。</p>
+<p>Chrome下载地址：<a href="http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/">http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/</a></p>
+<p>其他浏览器可查看：<a href="https://www.npmjs.com/package/selenium-webdriver">https://www.npmjs.com/package/selenium-webdriver</a>找到对应的浏览器。</p>
+<p>下载完后有一个脚本文件，将脚本文件放到我们项目的更目录下。</p>
+<p>第四步：在项目创建需要的测试文件，端到端测试的文件放到了根目录下的tests文件下的e2e文件</p>
+<p>├── 根目录<br>
+├── README.md<br>
+├── chromedriver<br>
+├── docs<br>
+├── package.json<br>
+├── tests<br>
+│   └── e2e<br>
+│       ├── browser.js<br>
+│       ├── toast.js<br>
+│       └── wait.js<br>
+├── yarn-error.log<br>
+└── yarn.lock</p>
+<p>第五步：添加测试命令</p>
+<p>修改<code>package.json</code>文件的<code>scripts</code>节点</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;e2e-test&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+    &quot;e2e:browser&quot;: &quot;node ./tests/e2e/browser.js&quot;,
+    &quot;e2e:wait&quot;: &quot;node ./tests/e2e/wait.js&quot;,
+    &quot;e2e:toast&quot;: &quot;node ./tests/e2e/toast.js&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;selenium-webdriver&quot;: &quot;^4.0.0-alpha.7&quot;
+  }
+}
+</code></pre>
+<p>第五步：编写测试脚本</p>
+<pre><code class="language-html">&lt;!-- 这段代码是下面测试脚本使用iframe的例子 --&gt;
+&lt;div id=&quot;modal&quot;&gt;
+    &lt;iframe id=&quot;buttonframe&quot; name=&quot;myframe&quot;  src=&quot;https://seleniumhq.github.io&quot;&gt;
+        &lt;button&gt;Click here&lt;/button&gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-js">// browser.js 这个文件里面的方法都是对浏览器的操作
+const { Builder, By } = require(&quot;selenium-webdriver&quot;)
+const fs = require(&quot;fs&quot;)
+
+;(async () =&gt; {
+  let driver = await new Builder().forBrowser(&quot;chrome&quot;).build() // 打开无头浏览器
+  try {
+    // 浏览器导航
+    await driver.get(&quot;https://www.baidu.com&quot;) // 跳转到目标地址
+    const currentUrl = await driver.getCurrentUrl() // 获取当前url地址
+    // currentUrl = https://www.baidu.com
+    await driver.navigate().back() // 浏览器的后退按钮
+    await driver.navigate().forward() // 浏览器的前进按钮
+    await driver.navigate().refresh() // 浏览器刷新
+    const pageTitle = await driver.getTitle() // 获取页面标题
+    // pageTitle = 百度一下，你就知道
+    const windowHandle = await driver.getWindowHandle() // 每个window窗口都有一个唯一标识 这个方法是获取页面标识
+    // widnowHandle = CDwindow-7EF1E8C65D989D8EB7DE9190B4B8A7E1
+    await driver.switchTo().newWindow(&quot;tab&quot;) // 创建新标签
+    await driver.switchTo().newWindow(&quot;window&quot;) // 创建新的window窗口
+    // await driver.close() // 关闭窗口
+    await driver.switchTo().window(windowHandle) // 切换窗口
+
+    // Iframe操作 因为这部分是模拟的 如果不注释会报错 可以根据实际情况修改
+    // 进入Iframe内部 下面的方法选其一
+    // 方法一 使用标签获取
+    // const iframe = driver.findElement(By.css(&quot;#modal &gt; iframe&quot;))
+    // await driver.switchTo().frame(iframe)
+    // await driver.findElement(By.css(&quot;button&quot;)).click()
+    // // 方法二 使用name或者id 推荐使用这个
+    // await driver.switchTo().frame(&quot;buttonframe&quot;)
+    // await driver.switchTo().frame(&quot;myframe&quot;)
+    // await driver.findElement(By.css(&quot;button&quot;)).click()
+    // // 方法三
+    // await driver.switchTo().frame(1)
+
+    // await driver.switchTo().defaultContent() // 退出iframe
+
+    // window管理
+    const { width, height, x, y } = await driver.manage().window().getRect() // 获取窗口的宽高 位置
+    // width=1200 height=927 x=22 y=45
+    await driver
+      .manage()
+      .window()
+      .setRect({ width: 1024, height: 768, x: 100, y: 100 }) // 设定窗口大小和位置
+
+    await driver.manage().window().maximize() // 窗口最大化
+    await driver.manage().window().minimize() // 窗口最小化
+    await driver.manage().window().fullscreen() // 全屏窗口
+
+    const screenEncodeString = driver.takeScreenshot() // 截屏
+    // await fs.writeFileSync(&quot;./image.png&quot;, screenEncodeString, &quot;base64&quot;) 可以将截到的数据写入一个文件中
+
+    await driver.get(&quot;https://www.baidu.com&quot;)
+    const ele = await driver.findElement(By.id(&quot;lg&quot;)) // 获取元素
+    const eleEncodedString = await ele.takeScreenshot(true) // 截取获取到的元素
+    await fs.writeFileSync(&quot;./image.png&quot;, eleEncodedString, &quot;base64&quot;) // 写入文件
+
+    // await driver.wait(() =&gt; {}, 3000) // 这个是让程序等待3秒 因为没有这个整个过程太快了所以可以打开这个注释。
+  } finally {
+    await driver.quit() // 退出浏览器
+  }
+})()
+</code></pre>
+<p>到这里就可以测试上面编写的浏览器的脚本，在项目根目录执行<code>npm run e2e:browser</code></p>
+<pre><code class="language-js">// await.js 是对等待方法的讲解
+const { Builder, until, By } = require(&quot;selenium-webdriver&quot;)
+const assert = require(&quot;assert&quot;)
+// 这个文件是等待的方法
+// Selenium客户可以使用命令式，程序性语言进行显式等待。
+// 它们允许您的代码暂停程序执行或冻结线程，直到传递给它的条件解决为止。
+// 以一定的频率调用该条件，直到等待超时超时为止。这意味着只要条件返回虚假值，它将一直尝试并等待。
+;(async () =&gt; {
+  let driver = await new Builder().forBrowser(&quot;chrome&quot;).build() // 打开无头浏览器
+  try {
+    await driver.get(&quot;https://www.baidu.com&quot;)
+    // 因为等待将不会吞没找不到元素时引发的此类元素错误，所以条件将重试直到找到元素。然后它将使用返回值WebElement，并将其传递回我们的脚本。
+    // 如果条件失败，例如从未达到该条件的真实返回值，则等待将抛出/引发一个错误/异常，称为超时错误。
+    let ele = await driver.wait(until.elementLocated(By.css(&quot;p&quot;)), 10000)
+    let foo = await ele.getText()
+    assert(foo == &quot;Hello from JavaScript&quot;)
+  } finally {
+    await driver.quit() // 退出浏览器
+  }
+})()
+
+</code></pre>
+<p>到这里就可以测试上面编写的等待方法的脚本，在项目根目录执行<code>npm run e2e:wait</code></p>
+<pre><code class="language-js">// toast.js 这个文件里面的东西是如何模拟浏览器弹窗 点击确认按钮 点击关闭按钮 提示信息等
+const { Builder, until, By } = require(&quot;selenium-webdriver&quot;)
+// 这个文件里面的东西是如何模拟浏览器弹窗 点击确认按钮 点击关闭按钮 提示信息等
+;(async () =&gt; {
+  let driver = await new Builder().forBrowser(&quot;chrome&quot;).build() // 打开无头浏览器
+  try {
+    await driver.get(&quot;https://www.baidu.com&quot;) // 跳转到目标地址
+    await driver.findElement(By.className(&quot;qrcode-layer&quot;)).click() // 这个是模拟点击后出现弹窗
+    // 要想继续走下去必须到弹出的网页的console面板 alert(xxx)不然一直卡在这
+    await driver.wait(until.alertIsPresent()) // 这个地方会监听网页上是否有弹窗
+    let alert = await driver.switchTo().alert()
+    let alertText = await alert.getText()
+    await alert.sendKeys(&quot;Selenium&quot;) // 这个东西是用在window.promt 替换占位符文本 想要验证这个必须在网页的控制台输入window.promt()
+    await alert.accept() // 这个是模拟点击确认按钮
+    await alert.dismiss() // 这个是模拟点击取消按钮
+    await driver.wait(() =&gt; {}, 10000)
+  } finally {
+    await driver.quit() // 退出浏览器
+  }
+})()
+</code></pre>
+<p>到这里就可以测试上面编写的弹窗方法的脚本，在项目根目录执行<code>npm run e2e:toast</code></p>
+<p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95%EF%BC%88E2E%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/端到端测试（E2E Test）</a></p>
+<p>这里就举例了常用的例子，如果想要深入的了解其他api可以到<code>selenium</code>官网<a href="https://www.selenium.dev/documentation/en/">https://www.selenium.dev/documentation/en/</a></p>
+<h2 id="四-ui测试ui-test">四. UI测试（UI Test）</h2>
+<blockquote>
+<p>什么是UI测试</p>
+</blockquote>
+<p>UI测试是为了测试前端写得页面是否还原了设计稿，UI测试可以测出1px的像素差，阴影等，再也不用管UI设计师BB（赞美）这里没对齐那里没对齐，这里差了1像素的废话。</p>
+<blockquote>
+<p>UI测试实践</p>
+</blockquote>
+<p>第一步：参考单元测试的第一步。</p>
+<p>第二步：全局安装<code>backstopjs</code>, 在终端执行<code>npm install -g backstopjs</code>,这个过程有点久。</p>
+<p>第三步：在创建文件的根目录下执行<code>backstop init</code>, 这时候会生成<code>backstop_data</code>和<code>backstop.json</code>两个文件。</p>
+<p>第四步：这个UI测试不需要编写测试的脚本，只需要配置和把需要对比的图片放到指定目录，接下来就是配置教程。</p>
+<pre><code class="language-json">// backstop.json 请注意的是 json不允许注释，这里为了讲述必要的字段配置加的注释
+{
+  &quot;id&quot;: &quot;Tencent Mobile Map&quot;,
+  &quot;viewports&quot;: [ // 这里是配置需要测试的尺寸 我这里选中iphone6的尺寸
+    {
+      &quot;label&quot;: &quot;phone6&quot;,
+      &quot;width&quot;: 375,
+      &quot;height&quot;: 667
+    },
+  ],
+  &quot;onBeforeScript&quot;: &quot;puppet/onBefore.js&quot;, // 这个脚本会去找 backstop_data/engine_scripts/puppet/onBefore.js
+  &quot;onReadyScript&quot;: &quot;puppet/onReady.js&quot;, // 这个脚本会去找 backstop_data/engine_scripts/puppet/onReady.js
+  &quot;scenarios&quot;: [ // 配置要匹配的页面
+    {
+      &quot;label&quot;: &quot;BackstopJS Homepage&quot;,
+      &quot;cookiePath&quot;: &quot;backstop_data/engine_scripts/cookies.json&quot;, // 这个会去找 backstop_data/engine_scripts/cookiePath.json 如果网页需要cookie的使用可以通过这个配置
+      &quot;url&quot;: &quot;https://map.qq.com/m/&quot;, // 这里用的是腾讯地图页面
+      &quot;referenceUrl&quot;: &quot;&quot;,
+      &quot;readyEvent&quot;: &quot;&quot;,
+      &quot;readySelector&quot;: &quot;&quot;,
+      &quot;delay&quot;: 0,
+      &quot;hideSelectors&quot;: [],
+      &quot;removeSelectors&quot;: [],
+      &quot;hoverSelector&quot;: &quot;&quot;,
+      &quot;clickSelector&quot;: &quot;&quot;,
+      &quot;postInteractionWait&quot;: 0,
+      &quot;selectors&quot;: [],
+      &quot;selectorExpansion&quot;: true,
+      &quot;expect&quot;: 0,
+      &quot;misMatchThreshold&quot; : 0.1,
+      &quot;requireSameDimensions&quot;: true
+    }
+  ],
+  &quot;paths&quot;: {
+    &quot;bitmaps_reference&quot;: &quot;backstop_data/bitmaps_reference&quot;, // 需要对比的图片 这里就是存放ui做的图
+    &quot;bitmaps_test&quot;: &quot;backstop_data/bitmaps_test&quot;,
+    &quot;engine_scripts&quot;: &quot;backstop_data/engine_scripts&quot;, // 引擎脚本路径 不要修改
+    &quot;html_report&quot;: &quot;./docs/backstop_data/html_report&quot;, // 报表存放路径
+    &quot;ci_report&quot;: &quot;backstop_data/ci_report&quot; // ci报表存放路径
+  },
+  &quot;report&quot;: [&quot;browser&quot;],
+  &quot;engine&quot;: &quot;puppeteer&quot;,
+  &quot;engineOptions&quot;: {
+    &quot;args&quot;: [&quot;--no-sandbox&quot;]
+  },
+  &quot;asyncCaptureLimit&quot;: 5,
+  &quot;asyncCompareLimit&quot;: 50,
+  &quot;debug&quot;: false,
+  &quot;debugWindow&quot;: false
+}
+</code></pre>
+<p>到这里就可以在项目根目录执行<code>backstop test</code>,这时候会弹出个窗口，如果没有弹出可以点开<code>docs/backstop_data/html_report/index.html</code>。<br>
+如图：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/backstop-html_report.png" alt="" loading="lazy"></figure>
+<p>可以有红色的报错，这个报错是因为我们还没有把对比的图放到指定的位置上, <code>/backstop_data/bitmaps_reference/TencentMobileMap_BackstopJS_Homepage_0_document_0_phone6.png</code>文件路径一定要跟网页上的一致，包括图片的文件名。</p>
+<p>添加后，重新在根目录执行<code>backstop test</code></p>
+<p>如图：</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/backstop-html_report1.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/backstop-html_report2.png" alt="" loading="lazy"></figure>
+<p>图中可以看到，设计稿和网页上的diff，如果有问题找到相应的位置修改。</p>
+<p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/UI%E6%B5%8B%E8%AF%95%EF%BC%88UI%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/UI测试（UI Test）</a></p>
+<p>实际项目中肯定会比这复杂得多，更多配置请到backstopjs官网查看<a href="https://github.com/garris/BackstopJS">https://github.com/garris/BackstopJS</a></p>
+<h2 id="服务端测试server-test">服务端测试（Server Test）</h2>
+<blockquote>
+<p>什么是服务端测试</p>
+</blockquote>
+<p>测试接口返回的数据是否跟预期的一致。这里使用到<code>mocha</code>断言库，报表使用<code>mochawesome</code>。</p>
+<blockquote>
+<p>服务端测试实践</p>
+</blockquote>
+<p>第一步：参照单元测试的第一步。</p>
+<p>第二步：编写一个简单的接口, 在根目录下创建<code>server.js</code>, 并在根目录下执行<code>npm install express</code></p>
+<pre><code class="language-js">const express = require(&quot;express&quot;)
+const app = express()
+app.get(&quot;/test&quot;, (req, res) =&gt;
+  res.json({ code: 0, payload: null, message: null })
+)
+app.listen(3000, () =&gt; {
+  console.log(&quot;server starting 3000&quot;)
+})
+module.exports = app
+</code></pre>
+<p>然后在项目根目录下执行<code>node server.js</code></p>
+<p>第三步：在项目根目录下创建tests/index.spec.js文件，然后编写测试用例。并在项目根目录下执行<code>npm install supertest mobcha mochawesome</code>, <code>supertest</code>这个插件是做代理的。<code>mobcha</code>是用来断言的。<code>mochawesome</code>测试后的报表。</p>
+<pre><code class="language-js">// index.spec.js
+const superagent = require(&quot;supertest&quot;)
+const app = require(&quot;../server&quot;)
+
+describe(&quot;接口测试&quot;, function () {
+  it(&quot;test接口测试&quot;, function (done) {
+    superagent(app.listen())
+      .get(&quot;/test&quot;)
+      .expect(200)
+      .expect(&quot;Content-Type&quot;, /json/)
+      .end(function (err, res) {
+        err &amp;&amp; done(err)
+        let flag = false
+        const dataKey = Object.keys(res.data)
+        flag = !(dataKey.includes(&quot;payload&quot;) &amp;&amp; dataKey.includes(&quot;code&quot;))
+        flag ? new Error(&quot;数据接口字段返回不准确&quot;) : done()
+      })
+  })
+})
+</code></pre>
+<p>第四步：编写tests/index.js启动脚本</p>
+<pre><code class="language-js">// /tests/index.js
+const Mocha = require(&quot;mocha&quot;)
+var mocha = new Mocha({
+  reporter: &quot;mochawesome&quot;,
+  reporterOptions: {
+    reportDir: &quot;./docs/mochawesome-report&quot;,
+    // quiet: true
+  },
+})
+mocha.addFile(&quot;./tests/index.spec.js&quot;)
+mocha.run(function () {
+  process.exit()
+})
+
+</code></pre>
+<p>然后执行node ./tests.index.js，然后会在根目录下生成./docs/mochawesome-report报表，点击html文件就可以查看报表了。<br>
+如图：</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/server-test.png" alt="" loading="lazy"></figure>
+<p>案例源码<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B5%8B%E8%AF%95%EF%BC%88Server%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/服务端测试（Server Test）</a></p>
+<p>实例的开发中肯定是比这个复杂得多，如果有其他的需求，请前往<code>mocha</code><a href="https://mochajs.org/">https://mochajs.org/</a>查看api。</p>
+<p>最后，希望这篇文章对您有帮助。</p>
 ]]></content>
     </entry>
     <entry>
