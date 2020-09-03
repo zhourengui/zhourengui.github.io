@@ -75,7 +75,7 @@ if ..." />
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1599120532773" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1599122772373" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -207,7 +207,7 @@ fn(test, 10, 20, 30);
 test()();
 </code></pre>
 <p>答案是：不会</p>
-<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文。<br>
+<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文（lexical envirmoent）。<br>
 特殊的三种情况：<br>
 下面的这些情况都会将执行期的上下文全部保留，即使没有使用过的依然会被保留。</p>
 <ol>

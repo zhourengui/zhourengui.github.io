@@ -66,7 +66,7 @@
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1599120532773" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1599122772373" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -261,7 +261,7 @@
 <figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass.png" alt="" loading="lazy"></figure>
 <p>我们可以看到index.js文件的覆盖率达到了66.6%，然后点击网页的index.js进去，网页会告诉我们哪个位置没有测试到：<br>
 <img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass-location.png" alt="" loading="lazy"></p>
-<p>第七步：根据没有测试到的位置添加测试用例，这里就不在演示。</p>
+<p>第七步：根据没有测试到的位置添加测试用例，这里就不再演示。</p>
 <p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%88Unit%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/单元测试（Unit Test）</a></p>
 <p><code>jasmine</code>官方文档<a href="https://jasmine.github.io/api/edge/global">https://jasmine.github.io/api/edge/global</a></p>
 <h2 id="三端到端测试e2e-test">三.端到端测试（E2E Test）</h2>
@@ -277,7 +277,7 @@
 <p>第三步：下载对应的无头浏览器脚本。（这里以Chrome为例）。</p>
 <p>Chrome下载地址：<a href="http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/">http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/</a></p>
 <p>其他浏览器可查看：<a href="https://www.npmjs.com/package/selenium-webdriver">https://www.npmjs.com/package/selenium-webdriver</a>找到对应的浏览器。</p>
-<p>下载完后有一个脚本文件，将脚本文件放到我们项目的更目录下。</p>
+<p>下载完后有一个脚本文件，将脚本文件放到我们项目的根目录下。</p>
 <p>第四步：在项目创建需要的测试文件，端到端测试的文件放到了根目录下的tests文件下的e2e文件</p>
 <p>├── 根目录<br>
 ├── README.md<br>
@@ -435,7 +435,7 @@ const { Builder, until, By } = require(&quot;selenium-webdriver&quot;)
 <blockquote>
 <p>什么是UI测试</p>
 </blockquote>
-<p>UI测试是为了测试前端写得页面是否还原了设计稿，UI测试可以测出1px的像素差，阴影等，再也不用管UI设计师BB（赞美）这里没对齐那里没对齐，这里差了1像素的废话。</p>
+<p>UI测试是为了测试前端写的页面是否还原了设计稿，UI测试可以测出1px的像素差，阴影等，再也不用管UI设计师BB（赞美）这里没对齐那里没对齐，这里差了1像素的废话。</p>
 <blockquote>
 <p>UI测试实践</p>
 </blockquote>

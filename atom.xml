@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-03T08:08:54.524Z</updated>
+    <updated>2020-09-03T08:46:16.334Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -107,7 +107,7 @@ fn(test, 10, 20, 30);
 test()();
 </code></pre>
 <p>答案是：不会</p>
-<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文。<br>
+<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文（lexical envirmoent）。<br>
 特殊的三种情况：<br>
 下面的这些情况都会将执行期的上下文全部保留，即使没有使用过的依然会被保留。</p>
 <ol>
@@ -285,7 +285,7 @@ test()()
 <figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass.png" alt="" loading="lazy"></figure>
 <p>我们可以看到index.js文件的覆盖率达到了66.6%，然后点击网页的index.js进去，网页会告诉我们哪个位置没有测试到：<br>
 <img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/coverage-nopass-location.png" alt="" loading="lazy"></p>
-<p>第七步：根据没有测试到的位置添加测试用例，这里就不在演示。</p>
+<p>第七步：根据没有测试到的位置添加测试用例，这里就不再演示。</p>
 <p>案例源码：<a href="https://github.com/zhourengui/blog-example/tree/master/QA%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%88Unit%20Test%EF%BC%89">https://github.com/zhourengui/blog-example/tree/master/QA测试/单元测试（Unit Test）</a></p>
 <p><code>jasmine</code>官方文档<a href="https://jasmine.github.io/api/edge/global">https://jasmine.github.io/api/edge/global</a></p>
 <h2 id="三端到端测试e2e-test">三.端到端测试（E2E Test）</h2>
@@ -301,7 +301,7 @@ test()()
 <p>第三步：下载对应的无头浏览器脚本。（这里以Chrome为例）。</p>
 <p>Chrome下载地址：<a href="http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/">http://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/</a></p>
 <p>其他浏览器可查看：<a href="https://www.npmjs.com/package/selenium-webdriver">https://www.npmjs.com/package/selenium-webdriver</a>找到对应的浏览器。</p>
-<p>下载完后有一个脚本文件，将脚本文件放到我们项目的更目录下。</p>
+<p>下载完后有一个脚本文件，将脚本文件放到我们项目的根目录下。</p>
 <p>第四步：在项目创建需要的测试文件，端到端测试的文件放到了根目录下的tests文件下的e2e文件</p>
 <p>├── 根目录<br>
 ├── README.md<br>
@@ -459,7 +459,7 @@ const { Builder, until, By } = require(&quot;selenium-webdriver&quot;)
 <blockquote>
 <p>什么是UI测试</p>
 </blockquote>
-<p>UI测试是为了测试前端写得页面是否还原了设计稿，UI测试可以测出1px的像素差，阴影等，再也不用管UI设计师BB（赞美）这里没对齐那里没对齐，这里差了1像素的废话。</p>
+<p>UI测试是为了测试前端写的页面是否还原了设计稿，UI测试可以测出1px的像素差，阴影等，再也不用管UI设计师BB（赞美）这里没对齐那里没对齐，这里差了1像素的废话。</p>
 <blockquote>
 <p>UI测试实践</p>
 </blockquote>
