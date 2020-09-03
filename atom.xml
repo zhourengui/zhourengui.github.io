@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-02T10:54:43.199Z</updated>
+    <updated>2020-09-03T06:32:05.098Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,60 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[JavaScript-面试题（一）]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/mian-shi-ti/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/mian-shi-ti/">
+        </link>
+        <updated>2020-09-02T13:26:05.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="常见面试题">常见面试题</h1>
+<ol>
+<li>请写出如下代码输出值。</li>
+</ol>
+<pre><code class="language-js">console.log(a);
+console.log(typeof fn(a));
+var flag = true;
+if (!flag) {
+    var a = 1;
+}
+if (flag) {
+    function fn(a) {
+        fn = a;
+        console.log(&quot;fn1&quot;);
+    }
+} else {
+    function fn(a) {
+        fn = a;
+        console.log(&quot;fn2&quot;);
+    }
+}
+</code></pre>
+<p>答案是：undefined、报错（<code>fn is not a function</code>）</p>
+<p>第一个答案相对简单点，因为<code>var a = 1</code>这里变量提升所以输出的时候<code>a=undefined</code>。<br>
+第二个输出答对的人相对较少，因为认为方法也会提升，方法是会提升，但是需要注意方法是放在哪个地方。<strong>在块级作用域的地方声明函数，等于var fn = function() {}, 那么var fn会被提升，fn被提升后是undefined，并非是function</strong>，所以第二个是输出<code>fn is not a function</code>。<strong>在严格模式下，如果在<code>if-else</code>下声明方法是会报错的。</strong></p>
+<p>拓展题：</p>
+<pre><code class="language-js">function fn1() {
+    // fn2 = undefined
+    // fn3 = undefined
+    if (false) {
+        function fn2() {
+            console.log(&quot;fn2: false&quot;)
+        }
+    } else {
+        var fn3 = function fn2() {
+            fn2 = 3
+        }
+    }
+    console.log(typeof fn2)
+    fn3()
+    console.log(typeof fn2)
+}
+fn1()
+</code></pre>
+<p>这里会输出两个undefined，在上面我们已经提到了在块级作用域声明函数，等于<code>var fn = funciton() {}</code>，然后进入if判断，<code>fn3 = function fn2() {...}</code>，然后第一个输出undefined没有任何的问题，然后执行fn3， fn3方法里面<code>fn2 = 3</code>，但是非常可惜的这个赋值并没有生效，因为fn2是函数名，在内部是不能被覆盖的，所以外边的fn2依然是undefined。</p>
+<p>未完待续。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[QA测试]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/qa-test/</id>
