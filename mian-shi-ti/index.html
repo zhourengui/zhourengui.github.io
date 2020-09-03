@@ -17,7 +17,7 @@
     <meta name="referrer" content="never">
     <meta name="description" content="常见面试题
 
-请写出如下代码输出值。
+请写出如下代码输出值。（考察作用域）
 
 console.log(a);
 console.log(typeof fn(a));
@@ -25,7 +25,7 @@ var flag = true;
 if (!flag) {
     var a = 1;
 }
-if (flag) ..." />
+if ..." />
     <meta name="keywords" content="面试题,JavaScript" />
     <script src="/media/js/waterfall.min.js"></script>
     <script src="/media/js/prism.min.js"></script>
@@ -75,7 +75,7 @@ if (flag) ..." />
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1599114821503" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1599118973656" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -90,7 +90,7 @@ if (flag) ..." />
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-02"><i class="fa fa-calendar"></i><span class="lately">17 小时前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-09-02"><i class="fa fa-calendar"></i><span class="lately">18 小时前</span></time>
               
               <a href="/mian-shi-ti#comments" class="comments meta-info" title="">
                 <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/mian-shi-ti/"> </span>
@@ -118,7 +118,7 @@ if (flag) ..." />
                 <div class="text">
                   <h1 id="常见面试题">常见面试题</h1>
 <ol>
-<li>请写出如下代码输出值。</li>
+<li>请写出如下代码输出值。（考察作用域）</li>
 </ol>
 <pre><code class="language-js">console.log(a);
 console.log(typeof fn(a));
@@ -160,8 +160,71 @@ if (flag) {
 }
 fn1()
 </code></pre>
-<p>这里会输出两个undefined，在上面我们已经提到了在块级作用域声明函数，等于<code>var fn = funciton() {}</code>，然后进入if判断，<code>fn3 = function fn2() {...}</code>，然后第一个输出undefined没有任何的问题，然后执行fn3， fn3方法里面<code>fn2 = 3</code>，但是非常可惜的这个赋值并没有生效，因为fn2是函数名，在内部是不能被覆盖的，所以外边的fn2依然是undefined。</p>
-<p>未完待续。。。</p>
+<p>这里会输出两个undefined，在上面我们已经提到了在块级作用域声明函数，等于<code>var fn = funciton() {}</code>，然后进入if判断，<code>fn3 = function fn2() {...}</code>，然后第一个输出undefined没有任何的问题，然后执行fn3， fn3方法里面<code>fn2 = 3</code>，但是非常可惜这个赋值并没有生效，因为fn2是函数名，在内部是不能被覆盖的，所以外边的fn2依然是undefined。</p>
+<ol start="2">
+<li>请写出如下代码输出值。（考察this指向）</li>
+</ol>
+<pre><code class="language-js">function fn() {
+    console.log(this.length);
+}
+var obj = {
+    length: 5,
+    method: function() {
+        &quot;use strict&quot;;
+        fn();
+        arguments[0]()
+    }
+}
+const result = obj.method.bind(null);
+result(fn, 1);
+</code></pre>
+<p>答案是：0、2</p>
+<p>先不看上面代码是如何执行的，首先<code>bind</code>可以修改函数内部的this指向，但是当bind第一个参数传的是null的时候，这种绑定方式叫做<code>软绑</code>，意思就是说绑了更没绑都一样，方法内部的this还是不变。第二个就是&quot;use strict&quot;严格模式，严格模式的特点就是在这个区域内<code>this = null</code>（使用bind，apply，call传入的第一个参数不为null除外），所以<code>obj.method</code>方法内部的<code>this = null</code>。</p>
+<p>然后我们在看这道题，执行<code>fn()</code>，因为没有人去调用它，所以默认是全局调用，那方法里面的this就指向<code>window</code>，<code>window.length</code>等于页面iframe的数量，所以输出0。然后就是<code>arguments[0]()</code>，arguments[0]是参数穿进去的fn，然后因为这个方法是arguments调用的，所以这个函数的this就是arguments，所以第二个输出2。</p>
+<p>拓展题：</p>
+<pre><code class="language-js">function test(p1, p2, p3) {
+    console.log(this.length);
+    console.log(this.callee.length); // 这里callee是fn
+}
+
+function fn(p) {
+    arguments[0](10, 20, 30, 40, 50);
+}
+fn(test, 10, 20, 30);
+</code></pre>
+<p>答案是：4、1</p>
+<p>看代码之前，有几个东西需要知道的是，<code>fn.length === 形参个数</code>， <code>window.length === 页面iframe的个数</code>。</p>
+<p>那么这道题就非常的简单了，因为test方法的this是指向了<code>arguments</code>， 所以arguments.length = 4，输出的是4，第二个是fn.length，等于形参个数1。</p>
+<ol start="3">
+<li>变量会被GC回收吗?（变量垃圾回收）</li>
+</ol>
+<pre><code class="language-js">function test() {
+    var a = 10;
+    return function() {
+        eval(&quot;&quot;);
+    }
+}
+test()();
+</code></pre>
+<p>答案是：不会</p>
+<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文。<br>
+特殊的三种情况：<br>
+下面的这些情况都会将执行期的上下文全部保留，即使没有使用过的依然会被保留。</p>
+<ol>
+<li>eval：因为系统并没有对eval里面执行的代码进行判断处理。解决办法就是<code>eval</code>修改成<code>window.eval</code></li>
+<li>with：因为系统并不知道with传入的对象是否包含对应的字段。所以with方法尽量不要用。</li>
+<li>Function：Function的使用方法有两种，参数是非字符串的时候，会立即执行参数里面的东西，里面的变量是当前执行的执行期上下文，如果是字符串，返回的是一个方法，调用的时候里面的变量是全局的，系统并没有对这个进行优化，系统也不知道用没有用到上一层定义的变量，所以将执行期的上下文全部保留。</li>
+</ol>
+<pre><code class="language-js">function test() {
+    cosnt a = 100
+    return function() {
+        new Function(console.log(a)) // 100
+        new Function(&quot;console.log(a)&quot;)() // 报错 a is not defined
+    }
+}
+test()()
+</code></pre>
+<p>未完待续</p>
 
                 </div>
                 <div class="clear"></div>
