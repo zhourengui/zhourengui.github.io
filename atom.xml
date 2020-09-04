@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-03T08:46:16.334Z</updated>
+    <updated>2020-09-04T02:27:23.607Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -15,11 +15,9 @@
         <id>https://github.com/zhourengui/zhourengui.github.io/mian-shi-ti/</id>
         <link href="https://github.com/zhourengui/zhourengui.github.io/mian-shi-ti/">
         </link>
-        <updated>2020-09-02T13:26:05.000Z</updated>
+        <updated>2020-09-04T02:00:00.000Z</updated>
         <content type="html"><![CDATA[<h1 id="常见面试题">常见面试题</h1>
-<ol>
-<li>请写出如下代码输出值。（考察作用域）</li>
-</ol>
+<h3 id="1-请写出如下代码输出值-考察作用域">1. 请写出如下代码输出值。（考察作用域）</h3>
 <pre><code class="language-js">console.log(a);
 console.log(typeof fn(a));
 var flag = true;
@@ -61,9 +59,7 @@ if (flag) {
 fn1()
 </code></pre>
 <p>这里会输出两个undefined，在上面我们已经提到了在块级作用域声明函数，等于<code>var fn = funciton() {}</code>，然后进入if判断，<code>fn3 = function fn2() {...}</code>，然后第一个输出undefined没有任何的问题，然后执行fn3， fn3方法里面<code>fn2 = 3</code>，但是非常可惜这个赋值并没有生效，因为fn2是函数名，在内部是不能被覆盖的，所以外边的fn2依然是undefined。</p>
-<ol start="2">
-<li>请写出如下代码输出值。（考察this指向）</li>
-</ol>
+<h3 id="2-请写出如下代码输出值-考察this指向">2. 请写出如下代码输出值。（考察this指向）</h3>
 <pre><code class="language-js">function fn() {
     console.log(this.length);
 }
@@ -95,9 +91,7 @@ fn(test, 10, 20, 30);
 <p>答案是：4、1</p>
 <p>看代码之前，有几个东西需要知道的是，<code>fn.length === 形参个数</code>， <code>window.length === 页面iframe的个数</code>。</p>
 <p>那么这道题就非常的简单了，因为test方法的this是指向了<code>arguments</code>， 所以arguments.length = 4，输出的是4，第二个是fn.length，等于形参个数1。</p>
-<ol start="3">
-<li>变量会被GC回收吗?（考察垃圾回收机制）</li>
-</ol>
+<h3 id="3-变量会被gc回收吗考察垃圾回收机制">3. 变量会被GC回收吗?（考察垃圾回收机制）</h3>
 <pre><code class="language-js">function test() {
     var a = 10;
     return function() {
@@ -116,7 +110,7 @@ test()();
 <li>Function：Function的使用方法有两种，参数是非字符串的时候，会立即执行参数里面的东西，里面的变量是当前执行的执行期上下文，如果是字符串，返回的是一个方法，调用的时候里面的变量是全局的，系统并没有对这个进行优化，系统也不知道用没有用到上一层定义的变量，所以将执行期的上下文全部保留。</li>
 </ol>
 <pre><code class="language-js">function test() {
-    cosnt a = 100
+    const a = 100
     return function() {
         new Function(console.log(a)) // 100
         new Function(&quot;console.log(a)&quot;)() // 报错 a is not defined
@@ -124,7 +118,37 @@ test()();
 }
 test()()
 </code></pre>
-<p>未完待续</p>
+<ol start="4">
+<li>try-catch: 欺骗了执行期上下文，延长了作用域链条。</li>
+</ol>
+<h3 id="4-请写出如下代码输出值-考察原型与原型链">4. 请写出如下代码输出值。（考察原型与原型链）</h3>
+<pre><code class="language-js">Object.prototype.a = 'a';
+Function.prototype.a = 'a1';
+function Person() {};
+var person = new Person();
+console.log('person.a: ' + person.a);
+console.log(person.__proto__.__proto__.constructor.constructor.constructor);
+</code></pre>
+<p>答案是：person.a：a，function Function() {}</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/prototype.jpeg" alt="" loading="lazy"></figure>
+<p>在看这道题之前需要知道的知识点：</p>
+<ol>
+<li>只有构造函数才有<code>prototype</code>。</li>
+<li>构造函数和实例都有<code>__proto__</code>。</li>
+<li>构造函数是没有<code>constructor</code>的，只有构造函数的原型才有<code>constructor</code>。</li>
+<li>构造函数都是由<code>Function</code>构造出来的。</li>
+</ol>
+<p>接下来解释这道题的答案（<strong>边看讲解边看配图</strong>）：<br>
+第一个：<code>person</code>是<code>Person的实例</code>，那访问<code>person.a</code>因为<code>person</code>并没有a属性，所以上<code>person.__proto__</code>找a，<code>person.__proto__= Person.prototype</code>， 但是<code>Person.prototype</code>也没有a属性，那么就上<code>Person.prototype.__proto__</code>找a，<code>Person.prototype.__proto__ = Object.prototype</code>，所以第一个输出的是a。</p>
+<p>第二个：</p>
+<pre><code class="language-js">person.__proto__ = Person.prototype
+person.__proto__.__proto__ = Person.prototype.__proto__ = Object.prototype
+person.__proto__.__proto__.constructor = Object.prototype.constructor = function Object() {}
+person.__proto__.__proto__.constructor.constructor = function Object() {}.constructor = function Object() {}.__proto__.constructor = Function.prototype.constructor = function Function() {}
+person.__proto__.__proto__.constructor.constructor = function Function() {}.constructor = function Function() {}.__proto__.constructor = Function.prototype.constructor = function Function() {}
+</code></pre>
+<p>所以答案是<code>function Function() {}</code></p>
+<p>未完待续。。。</p>
 ]]></content>
     </entry>
     <entry>
