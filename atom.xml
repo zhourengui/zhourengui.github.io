@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-07T09:37:34.583Z</updated>
+    <updated>2020-09-07T09:46:42.030Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -15,8 +15,9 @@
         <id>https://github.com/zhourengui/zhourengui.github.io/shou-xie-callapplybind/</id>
         <link href="https://github.com/zhourengui/zhourengui.github.io/shou-xie-callapplybind/">
         </link>
-        <updated>2020-09-07T06:22:43.000Z</updated>
+        <updated>2020-09-07T09:38:07.000Z</updated>
         <content type="html"><![CDATA[<p>前言：</p>
+<p>手写call、apply、bind是前端面试必问的问题，但是也不用当太当心，因为实现起来也并不算太难。</p>
 <p><code>call</code>、<code>apply</code>、<code>bind</code>都可以修改一个函数执行时候的this指向，虽然用法上略有差异，但是在实现的思想上如出一辙。</p>
 <p>在实现之前，必须要知道这三个方法是如何使用的：</p>
 <pre><code class="language-js">const obj = {
