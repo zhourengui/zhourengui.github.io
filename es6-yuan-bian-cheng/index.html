@@ -16,7 +16,7 @@
 <script src="/media/js/functions.js"></script>
     <meta name="referrer" content="never">
     <meta name="description" content="前言：
-很多小伙伴都致力于项目中的业务，这些业务并不会接触到元编程或者说可以使用其他的编写方式来代替这种元编程，元编程就是对js编程，对编程语言的编程，这样说可能优点抽象，简单的说就是js没有提供的方法，但是js预留了接口让我们自己去实现功..." />
+很多小伙伴都致力于项目中的业务，这些业务并不会接触到元编程或者说可以使用其他的编写方式来代替这种元编程，元编程就是对js编程，对编程语言的编程，这样说可能有点抽象，简单的说就是js没有提供的方法，但是js预留了接口让我们自己去实现功..." />
     <meta name="keywords" content="NodeJS,JavaScript" />
     <script src="/media/js/waterfall.min.js"></script>
     <script src="/media/js/prism.min.js"></script>
@@ -66,7 +66,7 @@
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1599449642593" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1599450395393" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -81,7 +81,7 @@
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-07"><i class="fa fa-calendar"></i><span class="lately">1 分钟前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-09-07"><i class="fa fa-calendar"></i><span class="lately">14 分钟前</span></time>
               
               <a href="/es6-yuan-bian-cheng#comments" class="comments meta-info" title="">
                 <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/es6-yuan-bian-cheng/"> </span>
@@ -108,9 +108,9 @@
               <section class="post-content">
                 <div class="text">
                   <p>前言：</p>
-<p>很多小伙伴都致力于项目中的业务，这些业务并不会接触到元编程或者说可以使用其他的编写方式来代替这种元编程，元编程就是对js编程，对编程语言的编程，这样说可能优点抽象，简单的说就是js没有提供的方法，但是js预留了接口让我们自己去实现功能，这就是元编程。</p>
+<p>很多小伙伴都致力于项目中的业务，这些业务并不会接触到元编程或者说可以使用其他的编写方式来代替这种元编程，元编程就是对js编程，对编程语言的编程，这样说可能有点抽象，简单的说就是js没有提供的方法，但是js预留了接口让我们自己去实现功能，这就是元编程。</p>
 <h2 id="一-元编程之symboltoprimitive">一. 元编程之Symbol.toPrimitive</h2>
-<p><code>Symbol.toPrimitive</code>是ES6新增的属性，它是对象的一个属性，它指向一个方法。这个对象被转为原始类型的值时，回调用这个方法，返回该对象对应的原始类型值。什么意思呢，看例子：</p>
+<p><code>Symbol.toPrimitive</code>是ES6新增的属性，它是对象的一个属性，它指向一个方法。这个对象被转为原始类型的值时，会调用这个方法，返回该对象对应的原始类型值。什么意思呢，看例子：</p>
 <pre><code class="language-js">let obj = {
     [Symbol.toPrimitive](hint) {
         switch(hint) {
