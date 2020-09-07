@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-07T03:46:37.389Z</updated>
+    <updated>2020-09-07T09:37:34.583Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,111 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[手写call、apply、bind]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shou-xie-callapplybind/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shou-xie-callapplybind/">
+        </link>
+        <updated>2020-09-07T06:22:43.000Z</updated>
+        <content type="html"><![CDATA[<p>前言：</p>
+<p><code>call</code>、<code>apply</code>、<code>bind</code>都可以修改一个函数执行时候的this指向，虽然用法上略有差异，但是在实现的思想上如出一辙。</p>
+<p>在实现之前，必须要知道这三个方法是如何使用的：</p>
+<pre><code class="language-js">const obj = {
+    language: &quot;javascript&quot;
+}
+function fn(...arg) {
+    console.log(&quot;The current language is &quot; + this.language)
+    console.log(arg)
+}
+fn() // The current language is undefined，[]
+fn.call(obj, &quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;) // &quot;The current language is javascript&quot;，[&quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;]
+fn.apply(obj, [&quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;]) // &quot;The current language is javascript&quot;，[&quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;]
+const bindFn = fn.bind(obj, &quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;)
+bindFn() // &quot;The current language is javascript&quot;，[&quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;]
+new bindFn() // The current language is undefined，[&quot;javascript&quot;, &quot;java&quot;, &quot;c++&quot;]
+</code></pre>
+<p>从上面的代码明显的发现，<code>call</code>、<code>apply</code>、<code>bind</code>可以修改函数执行时内部的this指向，并且还能传参数到函数中。三者的使用方式都是通过函数点的方式使用，说明这三个方法都是在原型上(Function.prototype)。<code>call</code>与<code>apply</code>不同之处就是传递的参数方式不同。最大的不同就是<code>bind</code>，<code>bind</code>有两种用法，如果返回的函数当成普通函数调用的时候，里面的this还是传进去的obj，但是<code>new</code>的时候，函数内部的this指向<code>window</code>，返回值则是<code>new</code>的实例。</p>
+<p>了解了这些知识后我们就可以撸代码。。。</p>
+<h2 id="一-functionprototypecall实现">一. Function.prototype.call实现</h2>
+<p>从上面可以知道，call的第一个参数是修改函数内部的this指向，从第二个起则是传到函数的参数。</p>
+<pre><code class="language-js">Function.prototype.call = function(context = window) {
+    // 创建一个唯一值 防止context或者window有相同的key
+    const symbol = Symbol()
+    context[symbol] = this // 这里的this是调用者 也就是函数
+    const ret = context[symbol](...Array.from(arguments).slice(1))
+    delete context[symbol]  // 删除我们添加的属性 不修改传进来的对象或者污染全局变量
+    return ret
+}
+
+function fn() {
+    console.log(this.name)
+}
+fn.call({name: &quot;Little Boy&quot;}, &quot;arg1&quot;, &quot;arg2&quot;) // Little Boy
+</code></pre>
+<p>看到这里很多小伙伴肯定有很多疑问：为什么要用到Symbol，为什么要在context上挂载一个调用者函数，接下来就一一来解答。</p>
+<p>首先先来看这段代码：</p>
+<pre><code class="language-js">const obj = {
+    name: &quot;Little Boy&quot;,
+    fn: function() {
+        console.log(this.name)
+    }
+}
+obj.fn() // Little Boy
+</code></pre>
+<p>这段代码的意思就是对象点的形式去调用函数，this是指向当前对象的（如果这里还不明白的小伙伴，需要对<code>this</code>的指向好好复习了），那么利用这个套路我们就可以实现<code>call</code>，使用对象点的方式修改函数运行时内部的<code>this</code>指向，这就是为什么要在<code>context</code>上挂载一个调用者函数，既然要在<code>context</code>上挂载一个函数那么就必须要保证key唯一，因为<code>Symbol</code>可以生成一个唯一的值，所以这里用到了<code>Symbol</code>。</p>
+<h2 id="二-functionprototypeapply实现">二. Function.prototype.apply实现</h2>
+<p>如果看懂了<code>call</code>是如何实现了之后，<code>apply</code>就很好实现了，因为它们两者不同的地方就是传递的参数不同。</p>
+<pre><code class="language-js">Function.prototype.apply = function(context = window) {
+    // 创建一个唯一值 防止context或者window有相同的key
+    const symbol = Symbol()
+    context[symbol] = this // 这里的this是调用者 也就是函数
+    const args = arguments[1] || []
+    const ret = context[symbol](...args)
+    delete context[symbol] // 删除我们添加的属性 不修改传进来的对象或者污染全局变量
+    return ret
+}
+
+function fn() {
+    console.log(this.name)
+}
+
+fn.apply({name: &quot;Little Boy&quot;}, []) // Little Boy
+</code></pre>
+<h2 id="三-functionprototypebind实现">三. Function.prototype.bind实现</h2>
+<p><code>bind</code>的方法有两种用法，一种是直接调用，另一种是<code>new</code>的方式调用。实现代码如下：</p>
+<pre><code class="language-js">Function.prototype.bind = function(context = window) {
+    // 创建一个唯一值 防止context或者window有相同的key
+    const symbol = Symbol()
+    context[symbol] = this // 这里的this是调用者 也就是函数
+    const firstArgs = Array.from(arguments).slice(1) // 获取第一次调用的参数
+    return function() {
+        const secondArgs = Array.from(arguments) // 获取第二次传入的参数
+        const fn = context[symbol] // 获取调用函数
+       return this === window ? context[symbol](...[...firstArgs, ...secondArgs]) : fn(...[...firstArgs, ...secondArgs])
+    }
+}
+const obj = {
+    language: &quot;javascript&quot;
+}
+
+function fn(...arg) {
+    console.log(&quot;The current language is &quot; + this.language)
+    console.log(arg)
+}
+const newFn = fn.bind(obj, 1, 2)
+newFn(3, 4) // The current language is javascript，[1, 2, 3, 4]
+new newFn(3, 4) // The current language is undefined，{}
+</code></pre>
+<p>代码看到这里，疑问也会非常的多，大概有如下问题：</p>
+<ol>
+<li><code>bind</code>函数内部<code>this === widnow</code>为什么要这样判断，判断依据是上面。</li>
+<li><code>bind</code>函数内部的<code>fn</code>，为什么要赋值给<code>fn</code>后再调用呢。</li>
+</ol>
+<p>首先第一个问题，如果不<code>new</code>的情况下，函数内部的<code>this = window</code>的（这个是this指向问题，如果有问题请补充这方面的知识），<code>new</code>的话，函数内部的<code>this</code>是等于实例的（这个是原型与原型链的文体局，如果有问题请自行补充这方面的知识）。但是这样为什么要做判断呢，因为两种情况返回的是不同的，不<code>new</code>的情况下是返回函数的返回值，<code>new</code>的情况下是返回实例，这就是为什么<code>bind</code>里面要做这样的判断。</p>
+<p>第二个问题，我们使用bind会发现，<code>new</code>的时候函数内部的<code>this</code>是指向<code>window</code>的（注意这里是函数内部的<code>this</code>，第一个问题的<code>this</code>是<code>bind</code>里面的），那这个<code>fn</code>就是我想达到<code>this</code>指向<code>window</code>的目的（这个是this指向问题，如果有问题请补充这方面的知识）。</p>
+<p>最后，希望这篇文章帮助大家对<code>call</code>、<code>apply</code>、<code>bind</code>的理解。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ES6元编程]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/es6-yuan-bian-cheng/</id>
@@ -86,6 +191,7 @@ let name = Reflect.getMetadata(&quot;name&quot;, obj, &quot;methods&quot;)
 console.log(name) // Little Boy
 </code></pre>
 <p>这个例子是在拓展类的方法，但是我们要知道的是，在类中拓展方法，面向对象的语言中是不允许去操作类中的东西的，在js中虽然可以，但是不建议，建议使用上面这种方式去拓展类中的方法。</p>
+<p>想要更深入的了解<code>Reflect</code>，可以查看阮一峰的《ECMAScript 6 入门》<a href="https://es6.ruanyifeng.com/#docs/reflect">https://es6.ruanyifeng.com/#docs/reflect</a>。</p>
 <p>最后，希望小伙伴们对元编程有一个新的了解。</p>
 ]]></content>
     </entry>
