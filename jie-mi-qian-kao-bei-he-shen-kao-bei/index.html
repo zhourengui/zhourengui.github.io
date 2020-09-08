@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>JavaScript-面试题（一） | LittleBoy-前端爱好者</title>
+<title>读懂浅拷贝和深拷贝 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -15,16 +15,11 @@
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
     <meta name="referrer" content="never">
-    <meta name="description" content="常见面试题
-1. 请写出如下代码输出值。（考察作用域）
-console.log(a);
-console.log(typeof fn(a));
-var flag = true;
-if (!flag) {
-    var a = 1;
-}
-if..." />
-    <meta name="keywords" content="面试题,JavaScript" />
+    <meta name="description" content="个人博客欢迎分享。
+大前端养成记欢迎Start和Fork。
+简介：
+很多小伙伴对浅拷贝和深拷贝并不是了解得很透测，在项目中可能由于操作不当，导致程序不能达到预期的结果，本篇文章会介绍javascript内置的一些拷贝方法，到底哪些是深拷贝，..." />
+    <meta name="keywords" content="JavaScript" />
     <script src="/media/js/waterfall.min.js"></script>
     <script src="/media/js/prism.min.js"></script>
   </head>
@@ -88,23 +83,21 @@ if..." />
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-04"><i class="fa fa-calendar"></i><span class="lately">4 天前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-09-08"><i class="fa fa-calendar"></i><span class="lately">几秒前</span></time>
               
-              <a href="/mian-shi-ti#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/mian-shi-ti/"> </span>
+              <a href="/jie-mi-qian-kao-bei-he-shen-kao-bei#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/jie-mi-qian-kao-bei-he-shen-kao-bei/"> </span>
               </a>
-              <span id="/mian-shi-ti/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/jie-mi-qian-kao-bei-he-shen-kao-bei/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="/daPyJFle1" class="ctag ctag-0 ctag-daPyJFle1" aria-label="">面试题</a>
-                    
-                      <a href="/b02rvhSHe" class="ctag ctag-1 ctag-b02rvhSHe" aria-label="">JavaScript</a>
+                      <a href="/b02rvhSHe" class="ctag ctag-0 ctag-b02rvhSHe" aria-label="">JavaScript</a>
                     
               </div>
-              <h1 class="title ularge white bold">JavaScript-面试题（一）</h1>
+              <h1 class="title ularge white bold">读懂浅拷贝和深拷贝</h1>
             </div>
           </div>
         </div>  
@@ -114,139 +107,140 @@ if..." />
             <article class="main-article post">
               <section class="post-content">
                 <div class="text">
-                  <h1 id="常见面试题">常见面试题</h1>
-<h3 id="1-请写出如下代码输出值-考察作用域">1. 请写出如下代码输出值。（考察作用域）</h3>
-<pre><code class="language-js">console.log(a);
-console.log(typeof fn(a));
-var flag = true;
-if (!flag) {
-    var a = 1;
-}
-if (flag) {
-    function fn(a) {
-        fn = a;
-        console.log(&quot;fn1&quot;);
-    }
-} else {
-    function fn(a) {
-        fn = a;
-        console.log(&quot;fn2&quot;);
-    }
+                  <p><a href="https://zhourengui.github.io/">个人博客</a>欢迎<code>分享</code>。</p>
+<p><a href="https://github.com/zhourengui/study">大前端养成记</a>欢迎<code>Start</code>和<code>Fork</code>。</p>
+<p>简介：</p>
+<p>很多小伙伴对<code>浅拷贝</code>和<code>深拷贝</code>并不是了解得很透测，在项目中可能由于操作不当，导致程序不能达到预期的结果，本篇文章会介绍<code>javascript</code>内置的一些拷贝方法，到底哪些是<code>深拷贝</code>，哪些是<code>浅拷贝</code>，最后还会带大家手写<code>浅拷贝</code>和<code>深拷贝</code>。</p>
+<p>在了解<code>浅拷贝</code>和<code>深拷贝</code>之前，我们要知道的是，<code>数组</code>和<code>对象</code>是用地址的形式指向对应的值，例如这段代码：</p>
+<pre><code class="language-js">const object = {
+    info: {
+        name: &quot;Little Boy&quot;,
+        age: 24
+    },
+    hobby: [&quot;hobby1&quot;, &quot;hobby2&quot;]
 }
 </code></pre>
-<p>答案是：undefined、报错（<code>fn is not a function</code>）</p>
-<p>第一个答案相对简单点，因为<code>var a = 1</code>这里变量提升所以输出的时候<code>a=undefined</code>。<br>
-第二个输出答对的人相对较少，因为认为方法也会提升，方法是会提升，但是需要注意方法是放在哪个地方。<strong>在块级作用域的地方声明函数，等于var fn = function() {}, 那么var fn会被提升，fn被提升后是undefined，并非是function</strong>，所以第二个是输出<code>fn is not a function</code>。<strong>在严格模式下，如果在<code>if-else</code>下声明方法是会报错的。</strong></p>
-<p>拓展题：</p>
-<pre><code class="language-js">function fn1() {
-    // fn2 = undefined
-    // fn3 = undefined
-    if (false) {
-        function fn2() {
-            console.log(&quot;fn2: false&quot;)
-        }
+<p>如下图：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/stack.png" alt="" loading="lazy"></figure>
+<p>这张图很清晰的表示了<code>数组</code>和<code>对象</code>是怎么用地址的形式指向对应的值。了解了这些之后我们进入正文。</p>
+<h2 id="一-arrayprototypeconcat">一. Array.prototype.concat</h2>
+<p><code>Array.prototype.concat</code>方法是用于连接多个数组的，意义上也是用于拷贝数组。</p>
+<p>用法：<code>const newArr = [].concat(arr1, arr2, ...)</code></p>
+<p>那么接下来我们用一个例子证明<code>Array.prototype.concat</code>是哪一种拷贝：</p>
+<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
+const newArr = [].concat(arr)
+newArr[0].name = &quot;Hello Little Boy&quot;
+console.log(newArr[0].name) // Hello Little Boy
+console.log(arr[0].name) // Hello Little Boy
+</code></pre>
+<p>从代码我们可以发现，<code>newArr</code>是我们通过<code>concat</code>拷贝来的，当我们给<code>newArr</code>的第一个元素（也就是拷贝来的元素）修改的时候，原来的数组<code>arr</code>的对应元素也修改，这时候就证明了<code>Array.prototype.concat</code>是浅拷贝。</p>
+<h2 id="二-arrayprototypeslice">二. Array.prototype.slice</h2>
+<p><code>Array.prototype.concat</code>方法是用于从现有的数组中返回特定的元素，意义上也可用于拷贝数组。</p>
+<p>用法：<code>const newArr = arr.slice()</code></p>
+<p>那么接下来我们用一个例子证明<code>Array.prototype.slice</code>是哪一种拷贝：</p>
+<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
+const newArr = arr.slice()
+newArr[0].name = &quot;Hello Little Boy&quot;
+console.log(arr[0].name) // Hello Little Boy
+</code></pre>
+<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>Array.prototype.slice</code>也是<code>浅拷贝</code>。</p>
+<h2 id="三-objectassign">三. Object.assign</h2>
+<p><code>Object.assign</code>方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
+<p>用法： <code>newObj = Object.assign(obj1, obj2)</code></p>
+<p>那么接下来我们用一个例子证明<code>Object.assign</code>是哪一种拷贝：</p>
+<pre><code class="language-js">const obj1 = {
+    name: &quot;Little Boy&quot;
+}
+const obj2 = {
+    info: {
+        type: &quot;a&quot;
+    }
+}
+const newObj = Object.assign(obj1, obj2)
+newObj.name = &quot;Hello Little Boy&quot;
+console.log(obj1.name) // &quot;Hello Little Boy&quot;
+</code></pre>
+<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>Object.assign</code>也是<code>浅拷贝</code>。</p>
+<h2 id="四-拓展运算符">四. 拓展运算符</h2>
+<p><code>拓展运算符</code>是ES6新增的语法，拓展运算符对象和数组都可以使用。</p>
+<p>用法：<code>[...arr1, ...arr2]</code>或<code>{...obj1, ...obj2}</code></p>
+<p>那么接下来我们用一个例子证明<code>拓展运算符</code>是哪一种拷贝：</p>
+<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
+const newArr = [...arr]
+newArr[0].name = &quot;Hello Little Boy&quot;
+console.log(arr[0].name) // Hello Little Boy
+</code></pre>
+<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>拓展运算符</code>也是<code>浅拷贝</code>。</p>
+<h2 id="五-jsonparsejsonstringify">五. JSON.parse(JSON.stringify())</h2>
+<p><code>JSON.parse(JSON.stringify())</code>是<code>JSON.parse</code>和<code>JSON.stringify</code>组合实现，这两个方法都是<code>JSON</code>的方法，可以先将对象或者数组转化成json字符串，然后就可以转成数组或者对象了。</p>
+<p>用法：<code>JSON.parse(JSON.stringify([]))</code>或者<code>JSON.parse(JSON.stringify({}))</code></p>
+<p>那么接下来我们用一个例子证明<code>JSON.parse(JSON.stringify())</code>是哪一种拷贝：</p>
+<pre><code class="language-js">const obj = {name: &quot;Little Boy&quot;}
+const newObj = JSON.parse(JSON.stringify(obj))
+newObj.name = &quot;Hello Little Boy&quot;
+console.log(obj.name) // Little Boy
+</code></pre>
+<p>和上面几种方法不同的是，当修改了拷贝的对象后，原来的对象并没有被修改，所以这种方法的拷贝属于<code>深拷贝</code>，虽然这种方法在项目中也有人使用，但是并不是每一个对象都可以这样使用的，当对象的某个字段是等于自身的时候，这种方法就会报错了，所以这个方法要慎用。</p>
+<h2 id="六-手写浅拷贝">六. 手写浅拷贝</h2>
+<p><code>浅拷贝</code>的特点就是：只遍历一层，并且遇到引用值的时候并不用去处理，直接赋值即可，实现如下：</p>
+<pre><code class="language-js">function lightCopy(target) {
+    if (!(target instanceof Object)) throw Error(&quot;传入的值必须为数组或者是对象&quot;)
+    if (target instanceof Array) {
+        const newArr = []
+        target.forEach(key =&gt; newArr.push(key))
+        return newArr
     } else {
-        var fn3 = function fn2() {
-            fn2 = 3
+        const newObj = {}
+        Object.keys(target).forEach(key =&gt; newObj[key] = target[key])
+        return newObj
+    }
+}
+const newArr = lightCopy([1, 2, 3])
+console.log(newArr) // [1, 2, 3]
+const newObj = lightCopy({name: &quot;Little Boy&quot;})
+console.log(newObj) // {name: &quot;Little Boy&quot;}
+</code></pre>
+<p><code>浅拷贝</code>实现起来也不是很难，如果对上面的代码不理解的同学需要好好的补充基础知识了。</p>
+<h2 id="七-手写深拷贝">七. 手写深拷贝</h2>
+<p><code>深拷贝</code>的特点就是：拷贝出来的数据无论做了什么修改，原来的数据不会发生变化，那么如何做到这一点呢？上面我们说过数组和对象都是用地址来指向对应的值，所以我们可以通过修改指向去做<code>深拷贝</code>，这样拷贝出来的数据就不会影响到原始数据。</p>
+<pre><code class="language-js">// 判断是否是引用值
+function isReferenceValue(target) {
+    return target instanceof Object
+}
+// 获取每项克隆后的值
+function getCopyValue(target) {
+    return isReferenceValue(target) ? deepCopy(target) : target
+}
+// 深度拷贝
+function deepCopy(target) {
+    if (!isReferenceValue(target)) throw Error(&quot;传入的值必须为数组或者是对象&quot;)
+    if (target instanceof Array) {
+        const newArr = []
+        const targetLen = target.length
+        for (let i = 0; i &lt; targetLen; i++) {
+            newArr.push(getCopyValue(target[i]))
         }
+        return newArr
+    } else {
+        const newObj = {}
+        for (const key in target) {
+            newObj[key] = getCopyValue(target[key])
+        }
+        return newObj
     }
-    console.log(typeof fn2)
-    fn3()
-    console.log(typeof fn2)
-}
-fn1()
-</code></pre>
-<p>这里会输出两个undefined，在上面我们已经提到了在块级作用域声明函数，等于<code>var fn = funciton() {}</code>，然后进入if判断，<code>fn3 = function fn2() {...}</code>，然后第一个输出undefined没有任何的问题，然后执行fn3， fn3方法里面<code>fn2 = 3</code>，但是非常可惜这个赋值并没有生效，因为fn2是函数名，在内部是不能被覆盖的，所以外边的fn2依然是undefined。</p>
-<h3 id="2-请写出如下代码输出值-考察this指向">2. 请写出如下代码输出值。（考察this指向）</h3>
-<pre><code class="language-js">function fn() {
-    console.log(this.length);
-}
-var obj = {
-    length: 5,
-    method: function() {
-        &quot;use strict&quot;;
-        fn();
-        arguments[0]()
-    }
-}
-const result = obj.method.bind(null);
-result(fn, 1);
-</code></pre>
-<p>答案是：0、2</p>
-<p>先不看上面代码是如何执行的，首先<code>bind</code>可以修改函数内部的this指向，但是当bind第一个参数传的是null的时候，这种绑定方式叫做<code>软绑</code>，意思就是说绑了更没绑都一样，方法内部的this还是不变。第二个就是&quot;use strict&quot;严格模式，严格模式的特点就是在这个区域内<code>this = null</code>（使用bind，apply，call传入的第一个参数不为null除外），所以<code>obj.method</code>方法内部的<code>this = null</code>。</p>
-<p>然后我们在看这道题，执行<code>fn()</code>，因为没有人去调用它，所以默认是全局调用，那方法里面的this就指向<code>window</code>，<code>window.length</code>等于页面iframe的数量，所以输出0。然后就是<code>arguments[0]()</code>，arguments[0]是参数穿进去的fn，然后因为这个方法是arguments调用的，所以这个函数的this就是arguments，所以第二个输出2。</p>
-<p>拓展题：</p>
-<pre><code class="language-js">function test(p1, p2, p3) {
-    console.log(this.length);
-    console.log(this.callee.length); // 这里callee是fn
 }
 
-function fn(p) {
-    arguments[0](10, 20, 30, 40, 50);
-}
-fn(test, 10, 20, 30);
+const arr = [{
+    hobby: [{
+        name: &quot;Little  Boy&quot;
+    }]
+}]
+
+const newObj = deepCopy(arr)
+newObj[0].hobby[0].name = &quot;Hello Little Boy&quot;
+console.log(arr) // &quot;Little  Boy&quot;
 </code></pre>
-<p>答案是：4、1</p>
-<p>看代码之前，有几个东西需要知道的是，<code>fn.length === 形参个数</code>， <code>window.length === 页面iframe的个数</code>。</p>
-<p>那么这道题就非常的简单了，因为test方法的this是指向了<code>arguments</code>， 所以arguments.length = 4，输出的是4，第二个是fn.length，等于形参个数1。</p>
-<h3 id="3-变量会被gc回收吗考察垃圾回收机制">3. 变量会被GC回收吗?（考察垃圾回收机制）</h3>
-<pre><code class="language-js">function test() {
-    var a = 10;
-    return function() {
-        eval(&quot;&quot;);
-    }
-}
-test()();
-</code></pre>
-<p>答案是：不会</p>
-<p>一般情况下，返回的方法里面如果没有用到的参数会被立即回收，里面用到的参数会被保留在这个方法的执行期上下文（lexical envirmoent）。<br>
-特殊的三种情况：<br>
-下面的这些情况都会将执行期的上下文全部保留，即使没有使用过的依然会被保留。</p>
-<ol>
-<li>eval：因为系统并没有对eval里面执行的代码进行判断处理。解决办法就是<code>eval</code>修改成<code>window.eval</code></li>
-<li>with：因为系统并不知道with传入的对象是否包含对应的字段。所以with方法尽量不要用。</li>
-<li>Function：Function的使用方法有两种，参数是非字符串的时候，会立即执行参数里面的东西，里面的变量是当前执行的执行期上下文，如果是字符串，返回的是一个方法，调用的时候里面的变量是全局的，系统并没有对这个进行优化，系统也不知道用没有用到上一层定义的变量，所以将执行期的上下文全部保留。</li>
-</ol>
-<pre><code class="language-js">function test() {
-    const a = 100
-    return function() {
-        new Function(console.log(a)) // 100
-        new Function(&quot;console.log(a)&quot;)() // 报错 a is not defined
-    }
-}
-test()()
-</code></pre>
-<ol start="4">
-<li>try-catch: 欺骗了执行期上下文，延长了作用域链条。</li>
-</ol>
-<h3 id="4-请写出如下代码输出值-考察原型与原型链">4. 请写出如下代码输出值。（考察原型与原型链）</h3>
-<pre><code class="language-js">Object.prototype.a = 'a';
-Function.prototype.a = 'a1';
-function Person() {};
-var person = new Person();
-console.log('person.a: ' + person.a);
-console.log(person.__proto__.__proto__.constructor.constructor.constructor);
-</code></pre>
-<p>答案是：person.a：a，function Function() {}</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/prototype.jpeg" alt="" loading="lazy"></figure>
-<p>在看这道题之前需要知道的知识点：</p>
-<ol>
-<li>只有构造函数才有<code>prototype</code>。</li>
-<li>构造函数和实例都有<code>__proto__</code>。</li>
-<li>构造函数是没有<code>constructor</code>的，只有构造函数的原型才有<code>constructor</code>。</li>
-<li>构造函数都是由<code>Function</code>构造出来的。</li>
-</ol>
-<p>接下来解释这道题的答案（<strong>边看讲解边看配图</strong>）：<br>
-第一个：<code>person</code>是<code>Person的实例</code>，那访问<code>person.a</code>因为<code>person</code>并没有a属性，所以上<code>person.__proto__</code>找a，<code>person.__proto__= Person.prototype</code>， 但是<code>Person.prototype</code>也没有a属性，那么就上<code>Person.prototype.__proto__</code>找a，<code>Person.prototype.__proto__ = Object.prototype</code>，所以第一个输出的是a。</p>
-<p>第二个：</p>
-<pre><code class="language-js">person.__proto__ = Person.prototype
-person.__proto__.__proto__ = Person.prototype.__proto__ = Object.prototype
-person.__proto__.__proto__.constructor = Object.prototype.constructor = function Object() {}
-person.__proto__.__proto__.constructor.constructor = function Object() {}.constructor = function Object() {}.__proto__.constructor = Function.prototype.constructor = function Function() {}
-person.__proto__.__proto__.constructor.constructor = function Function() {}.constructor = function Function() {}.__proto__.constructor = Function.prototype.constructor = function Function() {}
-</code></pre>
-<p>所以答案是<code>function Function() {}</code></p>
-<p>未完待续。。。</p>
+<p>上面的代码就实现<code>深拷贝</code>，只要在拷贝的时候发现引用值那就继续遍历就可以了，代码也并不算太难，如果有问题的话，可以联系博主。</p>
 
                 </div>
                 <div class="clear"></div>
@@ -256,26 +250,13 @@ person.__proto__.__proto__.constructor.constructor = function Function() {}.cons
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/A6Q75Twsp.jpg');"></div>
-                 <a href="/es6-yuan-bian-cheng" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2020-09-07">2020-09-07</time>
-                  <h4 class="title white no-margin">ES6元编程</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
               
               <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://raw.githubusercontent.com/zhourengui/blog-image/master/qa.png');"></div>
-                 <a href="/qa-test" class="full-link"></a>
+                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/b02rvhSHe.jpg');"></div>
+                 <a href="/shou-xie-callapplybind" class="full-link"></a>
                  <div class="info">
-                  <time datetime="2020-08-30">2020-08-30</time>
-                  <h4 class="title white no-margin">QA测试</h4>
+                  <time datetime="2020-09-07">2020-09-07</time>
+                  <h4 class="title white no-margin">手写call、apply、bind</h4>
                 </div>
                  <span class="epcl-button red">
                   <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
