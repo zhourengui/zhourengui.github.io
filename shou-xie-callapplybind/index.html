@@ -68,7 +68,7 @@ call、apply、bind都可以修改一个函数执行时候的this指向，虽然
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1599473383231" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1599533574950" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -83,7 +83,7 @@ call、apply、bind都可以修改一个函数执行时候的this指向，虽然
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-07"><i class="fa fa-calendar"></i><span class="lately">32 分钟前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-09-07"><i class="fa fa-calendar"></i><span class="lately">17 小时前</span></time>
               
               <a href="/shou-xie-callapplybind#comments" class="comments meta-info" title="">
                 <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shou-xie-callapplybind/"> </span>
@@ -179,11 +179,13 @@ fn.apply({name: &quot;Little Boy&quot;}, []) // Little Boy
     const symbol = Symbol()
     context[symbol] = this // 这里的this是调用者 也就是函数
     const firstArgs = Array.from(arguments).slice(1) // 获取第一次调用的参数
-    return function() {
+    const bindFn = function() {
         const secondArgs = Array.from(arguments) // 获取第二次传入的参数
         const fn = context[symbol] // 获取调用函数
-       return this === window ? context[symbol](...[...firstArgs, ...secondArgs]) : fn(...[...firstArgs, ...secondArgs])
+        return this instanceof bindFn ? fn(...[...firstArgs, ...secondArgs]) : context[symbol](...[...firstArgs, ...secondArgs])
     }
+    bindFn.prototype = Object.create(this.prototype)
+    return bindFn
 }
 const obj = {
     language: &quot;javascript&quot;
@@ -196,14 +198,15 @@ function fn(...arg) {
 const newFn = fn.bind(obj, 1, 2)
 newFn(3, 4) // The current language is javascript，[1, 2, 3, 4]
 new newFn(3, 4) // The current language is undefined，{}
+console.log(new newFn(3, 4)) // 输出的时候会发现是这个样子的 bindFn {} 发现名称并不是预期的效果，目前我并没有想到好的方案，有知道的小伙伴可以在评论区大显身手哦。
 </code></pre>
 <p>代码看到这里，疑问也会非常的多，大概有如下问题：</p>
 <ol>
-<li><code>bind</code>函数内部<code>this === widnow</code>为什么要这样判断，判断依据是上面。</li>
-<li><code>bind</code>函数内部的<code>fn</code>，为什么要赋值给<code>fn</code>后再调用呢。</li>
+<li><code>returnFn</code>函数内部<code>this instanceof returnFn</code>为什么要这样判断，判断依据是什么。</li>
+<li><code>returnFn</code>函数内部的<code>fn</code>，为什么要赋值给<code>fn</code>后再调用呢。</li>
 </ol>
-<p>首先第一个问题，如果不<code>new</code>的情况下，函数内部的<code>this = window</code>的（这个是this指向问题，如果有问题请补充这方面的知识），<code>new</code>的话，函数内部的<code>this</code>是等于实例的（这个是原型与原型链的文体局，如果有问题请自行补充这方面的知识）。但是这样为什么要做判断呢，因为两种情况返回的是不同的，不<code>new</code>的情况下是返回函数的返回值，<code>new</code>的情况下是返回实例，这就是为什么<code>bind</code>里面要做这样的判断。</p>
-<p>第二个问题，我们使用bind会发现，<code>new</code>的时候函数内部的<code>this</code>是指向<code>window</code>的（注意这里是函数内部的<code>this</code>，第一个问题的<code>this</code>是<code>bind</code>里面的），那这个<code>fn</code>就是我想达到<code>this</code>指向<code>window</code>的目的（这个是this指向问题，如果有问题请补充这方面的知识）。</p>
+<p>首先第一个问题，<code>new</code>与不<code>new</code>的区别就是函数内部的<code>this</code>不同，<code>new</code>的时候<code>returnFn</code>内部的<code>this</code>是指向实例的，不<code>new</code>的时候，<code>returnFn</code>内部的<code>this</code>是指向调用者的，这里是<code>window</code>。<code>this instanceof returnFn</code>所以这样是为了判断是否<code>new</code>下执行的不同的逻辑。（这里对this指向有问题的小伙伴，需要去补充这方面的知识了）。</p>
+<p>第二个问题，我们使用<code>bind</code>会发现，<code>new</code>的时候<code>fn</code>内部的<code>this</code>是指向<code>window</code>的，既然想达到这种效果，就必须在<code>returnFn</code>中定义个变量把函数取出来，这样相当于<code>window.fn</code>，<code>fn</code>函数内部的<code>this</code>就是指向<code>window</code>，这就是赋值给<code>fn</code>后再调用的目的。</p>
 <p>最后，希望这篇文章帮助大家对<code>call</code>、<code>apply</code>、<code>bind</code>的理解。</p>
 
                 </div>
