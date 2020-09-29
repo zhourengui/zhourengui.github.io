@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-29T08:06:14.866Z</updated>
+    <updated>2020-09-29T08:12:36.089Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -66,7 +66,7 @@ sh get-docker.sh
 <h2 id="安装docker-compose">安装docker-compose</h2>
 <h3 id="安装">安装</h3>
 <p>Compose是用于定义和运行多容器Docker应用程序的工具。通过Compose，您可以使用YAML文件来配置应用程序的服务。然后，使用一个命令，就可以从配置中创建并启动所有服务。</p>
-<p>官网地址：<a href="">https://docs.docker.com/compose/install/</a></p>
+<p>官网地址：<a href="https://docs.docker.com/compose/install/"></a></p>
 <pre><code class="language-bash">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
 </code></pre>
 <h3 id="添加执行权限">添加执行权限</h3>
@@ -76,9 +76,9 @@ sh get-docker.sh
 <blockquote>
 <p>docker pull 镜像名:版本</p>
 </blockquote>
-<p>搜索镜像地址：<a href="">https://hub.docker.com/</a></p>
+<p>搜索镜像地址：<a href="https://hub.docker.com/"></a></p>
 <p>设置淘宝镜像源：</p>
-<p>教程地址：<a href="">https://www.runoob.com/docker/docker-mirror-acceleration.html</a></p>
+<p>教程地址：<a href="https://www.runoob.com/docker/docker-mirror-acceleration.html"></a></p>
 <p>修改<code>/etc/docker/daemon.json</code>的内容为<code>{&quot;registry-mirrors&quot;:[&quot;https://12nh278i.mirror.aliyuncs.com&quot;]}</code></p>
 <h2 id="查看镜像">查看镜像</h2>
 <pre><code class="language-bash">docker images
