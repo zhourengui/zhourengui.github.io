@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>搜索结果 | LittleBoy-前端爱好者</title>
+<title>回调函数 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,17 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <script src="/media/gridea-search/fuse.js"></script>
-    <script src="/media/gridea-search/ejs.min.js"></script>
-    <script src="/media/gridea-search/gridea-search.js"></script>
-    <script src="/media/gridea-search/result-template.ejs" type="text/ejs"></script>
-</head>
-
+    <meta name="referrer" content="never">
+    <meta name="description" content="前言：
+Node.js 异步编程的直接体现就是回调。
+异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。
+回调函数在完成任务后就会被调用，Node 使用了大量的回调函数，Node 所有 API 都支持回调函数。
+例如，我们可以一..." />
+    <meta name="keywords" content="NodeJS" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,22 +79,107 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-          <div class="main-article post">
-            <div id="gridea-search-result">
-              <h2 class="searching">搜索中......</h2>
-              <h2 class="no-result" style="display:none">未搜索到相关文章</h2>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-09-09"><i class="fa fa-calendar"></i><span class="lately">20 天前</span></time>
+              
+              <a href="/nodejs-hui-diao-han-shu#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/nodejs-hui-diao-han-shu/"> </span>
+              </a>
+              <span id="/nodejs-hui-diao-han-shu/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="/A6Q75Twsp" class="ctag ctag-0 ctag-A6Q75Twsp" aria-label="">NodeJS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">回调函数</h1>
             </div>
           </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>前言：</p>
+<p><code>Node.js</code> 异步编程的直接体现就是回调。</p>
+<p>异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。</p>
+<p>回调函数在完成任务后就会被调用，<code>Node</code> 使用了大量的回调函数，<code>Node</code> 所有 API 都支持回调函数。</p>
+<p>例如，我们可以一边读取文件，一边执行其他命令，在文件读取完成后，我们将文件内容作为回调函数的参数返回。这样在执行代码时就没有阻塞或等待文件<code>I/O</code> 操作。这就大大提高了 <code>Node.js</code> 的性能，可以处理大量的并发请求。</p>
+<p>回调函数一般作为函数的最后一个参数出现：</p>
+<pre><code class="language-js">function foo1(name, age, callback) { }
+function foo2(value, callback1, callback2) { }
+</code></pre>
+<h2 id="阻塞代码实例">阻塞代码实例</h2>
+<p>创建一个文件 <code>input.txt</code> ，内容: <code>阻塞代码实例</code>。</p>
+<p>创建 app.js 文件, 代码如下：</p>
+<pre><code class="language-js">const fs = require(&quot;fs&quot;)
+const data = fs.readFileSync('input.txt', 'utf8')
+console.log(data) // 阻塞代码实例
+</code></pre>
+<h2 id="非阻塞代码实例">非阻塞代码实例</h2>
+<p>创建一个文件 <code>input.txt</code> ，内容: <code>非阻塞代码实例</code>。</p>
+<p>创建 app.js 文件, 代码如下：</p>
+<pre><code class="language-js">const fs = require(&quot;fs&quot;)
+const data = fs.readFile('input.txt', 'utf8', (err, data) =&gt; {
+    if (err) return console.log(err)
+    console.log(data) // 非阻塞代码实例
+})
+</code></pre>
+<p>以上两个实例我们了解了阻塞与非阻塞调用的不同。第一个实例在文件读取完后才执行程序。 第二个实例我们不需要等待文件读取完，这样就可以在读取文件时同时执行接下来的代码，大大提高了程序的性能。</p>
+<p>因此，阻塞是按顺序执行的，而非阻塞是不需要按顺序的，所以如果需要处理回调函数的参数，我们就需要写在回调函数内。</p>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-        </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -263,6 +349,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

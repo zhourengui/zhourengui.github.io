@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>搜索结果 | LittleBoy-前端爱好者</title>
+<title>Linux 常见命令 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,28 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <script src="/media/gridea-search/fuse.js"></script>
-    <script src="/media/gridea-search/ejs.min.js"></script>
-    <script src="/media/gridea-search/gridea-search.js"></script>
-    <script src="/media/gridea-search/result-template.ejs" type="text/ejs"></script>
-</head>
+    <meta name="referrer" content="never">
+    <meta name="description" content="前言：
 
+
+文档型命令：文件相关命令（touch，cat，echo，rm, vi, cd）
+
+
+硬件型：硬盘/进行/服务/网络
+
+
+功能型：压缩/解压，下载，远程
+
+
+文档型命令
+
+touch test.json 创建文件
+cat test..." />
+    <meta name="keywords" content="" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,22 +90,144 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-          <div class="main-article post">
-            <div id="gridea-search-result">
-              <h2 class="searching">搜索中......</h2>
-              <h2 class="no-result" style="display:none">未搜索到相关文章</h2>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-09-29"><i class="fa fa-calendar"></i><span class="lately">5 小时前</span></time>
+              
+              <a href="/linux-chang-jian-ming-ling#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/linux-chang-jian-ming-ling/"> </span>
+              </a>
+              <span id="/linux-chang-jian-ming-ling/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+              </div>
+              <h1 class="title ularge white bold">Linux 常见命令</h1>
             </div>
           </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>前言：</p>
+<ol>
+<li>
+<p>文档型命令：文件相关命令（touch，cat，echo，rm, vi, cd）</p>
+</li>
+<li>
+<p>硬件型：硬盘/进行/服务/网络</p>
+</li>
+<li>
+<p>功能型：压缩/解压，下载，远程</p>
+</li>
+</ol>
+<h2 id="文档型命令">文档型命令</h2>
+<ol>
+<li>touch test.json 创建文件</li>
+<li>cat test.json 查看文件内容</li>
+<li>vi test.json 编辑文件内容</li>
+<li>echo</li>
+</ol>
+<pre><code class="language-bash"># 向文件test.json末尾添加123456
+echo 123456 &gt;&gt; test.json
+# 修改test.json的内容为123456
+echo 123456 &gt; test.json
+</code></pre>
+<ol start="5">
+<li>rm</li>
+</ol>
+<pre><code class="language-bash">#删除文件
+rm test.json
+#删除目录
+rm -r test
+</code></pre>
+<h2 id="硬件型">硬件型</h2>
+<ol>
+<li>lsb_release -a查看系统描述</li>
+<li>df -Th 查看磁盘命令</li>
+<li>top  查看系统cup和内存资源</li>
+<li>ps -ef | grep docker，grep代表过滤，这里表示过滤出docker的进程</li>
+<li>kill -9 pid，杀进程</li>
+<li>service sshd status，查看服务命令</li>
+<li>service sshd restart，重启sshd服务</li>
+<li>systemctl status firewalld.service，查看防火墙的服务</li>
+</ol>
+<h2 id="功能型">功能型</h2>
+<ol>
+<li>wget https://baidu.com  下载资源</li>
+<li>tar zxvf .  解压tar文件</li>
+</ol>
+<p>zxvf意思代表<code>.gz</code>结尾的文件<code>x</code>代表解压缩，<code>v</code>显示所有解压的过程，<code>f</code>代表解压缩后的名称是压缩包的前缀</p>
+<ol start="3">
+<li>
+<p>tar zcvf 压缩后的名称 需要压缩的目录或文件，<code>c</code>代表压缩，</p>
+</li>
+<li>
+<p>scp</p>
+</li>
+</ol>
+<p>文件上传到服务器</p>
+<pre><code class="language-bash"># 文件
+scp 文件 root@47.98.252.43:/root/source
+# 文件夹
+scp -r 文件夹 root@47.98.252.43:/root/source
+</code></pre>
+<p>服务器的文件下载到本地</p>
+<pre><code class="language-bash">scp root@47.98.252.43:/root/source 本地目录
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-        </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -263,6 +397,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>读懂浅拷贝和深拷贝 | LittleBoy-前端爱好者</title>
+<title>文件系统 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -15,11 +15,11 @@
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
     <meta name="referrer" content="never">
-    <meta name="description" content="个人博客欢迎分享。
-大前端养成记欢迎Start和Fork。
-简介：
-很多小伙伴对浅拷贝和深拷贝并不是了解得很透测，在项目中可能由于操作不当，导致程序不能达到预期的结果，本篇文章会介绍javascript内置的一些拷贝方法，到底哪些是深拷贝，..." />
-    <meta name="keywords" content="JavaScript" />
+    <meta name="description" content="前言：
+Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。 Node 导入文件系统模块(fs)语法如下所示：
+异步和同步
+Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有..." />
+    <meta name="keywords" content="" />
     <script src="/media/js/waterfall.min.js"></script>
     <script src="/media/js/prism.min.js"></script>
   </head>
@@ -83,21 +83,19 @@
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-08"><i class="fa fa-calendar"></i><span class="lately">21 天前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-09-19"><i class="fa fa-calendar"></i><span class="lately">10 天前</span></time>
               
-              <a href="/jie-mi-qian-kao-bei-he-shen-kao-bei#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/jie-mi-qian-kao-bei-he-shen-kao-bei/"> </span>
+              <a href="/wen-jian-xi-tong#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/wen-jian-xi-tong/"> </span>
               </a>
-              <span id="/jie-mi-qian-kao-bei-he-shen-kao-bei/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/wen-jian-xi-tong/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="/b02rvhSHe" class="ctag ctag-0 ctag-b02rvhSHe" aria-label="">JavaScript</a>
-                    
               </div>
-              <h1 class="title ularge white bold">读懂浅拷贝和深拷贝</h1>
+              <h1 class="title ularge white bold">文件系统</h1>
             </div>
           </div>
         </div>  
@@ -107,140 +105,267 @@
             <article class="main-article post">
               <section class="post-content">
                 <div class="text">
-                  <p><a href="https://zhourengui.github.io/">个人博客</a>欢迎<code>分享</code>。</p>
-<p><a href="https://github.com/zhourengui/study">大前端养成记</a>欢迎<code>Start</code>和<code>Fork</code>。</p>
-<p>简介：</p>
-<p>很多小伙伴对<code>浅拷贝</code>和<code>深拷贝</code>并不是了解得很透测，在项目中可能由于操作不当，导致程序不能达到预期的结果，本篇文章会介绍<code>javascript</code>内置的一些拷贝方法，到底哪些是<code>深拷贝</code>，哪些是<code>浅拷贝</code>，最后还会带大家手写<code>浅拷贝</code>和<code>深拷贝</code>。</p>
-<p>在了解<code>浅拷贝</code>和<code>深拷贝</code>之前，我们要知道的是，<code>数组</code>和<code>对象</code>是用地址的形式指向对应的值，例如这段代码：</p>
-<pre><code class="language-js">const object = {
-    info: {
-        name: &quot;Little Boy&quot;,
-        age: 24
-    },
-    hobby: [&quot;hobby1&quot;, &quot;hobby2&quot;]
-}
-</code></pre>
-<p>如下图：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/stack.png" alt="" loading="lazy"></figure>
-<p>这张图很清晰的表示了<code>数组</code>和<code>对象</code>是怎么用地址的形式指向对应的值。了解了这些之后我们进入正文。</p>
-<h2 id="一-arrayprototypeconcat">一. Array.prototype.concat</h2>
-<p><code>Array.prototype.concat</code>方法是用于连接多个数组的，意义上也是用于拷贝数组。</p>
-<p>用法：<code>const newArr = [].concat(arr1, arr2, ...)</code></p>
-<p>那么接下来我们用一个例子证明<code>Array.prototype.concat</code>是哪一种拷贝：</p>
-<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
-const newArr = [].concat(arr)
-newArr[0].name = &quot;Hello Little Boy&quot;
-console.log(newArr[0].name) // Hello Little Boy
-console.log(arr[0].name) // Hello Little Boy
-</code></pre>
-<p>从代码我们可以发现，<code>newArr</code>是我们通过<code>concat</code>拷贝来的，当我们给<code>newArr</code>的第一个元素（也就是拷贝来的元素）修改的时候，原来的数组<code>arr</code>的对应元素也修改，这时候就证明了<code>Array.prototype.concat</code>是浅拷贝。</p>
-<h2 id="二-arrayprototypeslice">二. Array.prototype.slice</h2>
-<p><code>Array.prototype.concat</code>方法是用于从现有的数组中返回特定的元素，意义上也可用于拷贝数组。</p>
-<p>用法：<code>const newArr = arr.slice()</code></p>
-<p>那么接下来我们用一个例子证明<code>Array.prototype.slice</code>是哪一种拷贝：</p>
-<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
-const newArr = arr.slice()
-newArr[0].name = &quot;Hello Little Boy&quot;
-console.log(arr[0].name) // Hello Little Boy
-</code></pre>
-<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>Array.prototype.slice</code>也是<code>浅拷贝</code>。</p>
-<h2 id="三-objectassign">三. Object.assign</h2>
-<p><code>Object.assign</code>方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
-<p>用法： <code>newObj = Object.assign(obj1, obj2)</code></p>
-<p>那么接下来我们用一个例子证明<code>Object.assign</code>是哪一种拷贝：</p>
-<pre><code class="language-js">const obj1 = {
-    name: &quot;Little Boy&quot;
-}
-const obj2 = {
-    info: {
-        type: &quot;a&quot;
-    }
-}
-const newObj = Object.assign(obj1, obj2)
-newObj.name = &quot;Hello Little Boy&quot;
-console.log(obj1.name) // &quot;Hello Little Boy&quot;
-</code></pre>
-<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>Object.assign</code>也是<code>浅拷贝</code>。</p>
-<h2 id="四-拓展运算符">四. 拓展运算符</h2>
-<p><code>拓展运算符</code>是ES6新增的语法，拓展运算符对象和数组都可以使用。</p>
-<p>用法：<code>[...arr1, ...arr2]</code>或<code>{...obj1, ...obj2}</code></p>
-<p>那么接下来我们用一个例子证明<code>拓展运算符</code>是哪一种拷贝：</p>
-<pre><code class="language-js">const arr = [{name: &quot;LIttle Boy&quot;}]
-const newArr = [...arr]
-newArr[0].name = &quot;Hello Little Boy&quot;
-console.log(arr[0].name) // Hello Little Boy
-</code></pre>
-<p>可以看到结果和<code>Array.prototype.concat</code>一致，所以<code>拓展运算符</code>也是<code>浅拷贝</code>。</p>
-<h2 id="五-jsonparsejsonstringify">五. JSON.parse(JSON.stringify())</h2>
-<p><code>JSON.parse(JSON.stringify())</code>是<code>JSON.parse</code>和<code>JSON.stringify</code>组合实现，这两个方法都是<code>JSON</code>的方法，可以先将对象或者数组转化成json字符串，然后就可以转成数组或者对象了。</p>
-<p>用法：<code>JSON.parse(JSON.stringify([]))</code>或者<code>JSON.parse(JSON.stringify({}))</code></p>
-<p>那么接下来我们用一个例子证明<code>JSON.parse(JSON.stringify())</code>是哪一种拷贝：</p>
-<pre><code class="language-js">const obj = {name: &quot;Little Boy&quot;}
-const newObj = JSON.parse(JSON.stringify(obj))
-newObj.name = &quot;Hello Little Boy&quot;
-console.log(obj.name) // Little Boy
-</code></pre>
-<p>和上面几种方法不同的是，当修改了拷贝的对象后，原来的对象并没有被修改，所以这种方法的拷贝属于<code>深拷贝</code>，虽然这种方法在项目中也有人使用，但是并不是每一个对象都可以这样使用的，当对象的某个字段是等于自身的时候，这种方法就会报错了，所以这个方法要慎用。</p>
-<h2 id="六-手写浅拷贝">六. 手写浅拷贝</h2>
-<p><code>浅拷贝</code>的特点就是：只遍历一层，并且遇到引用值的时候并不用去处理，直接赋值即可，实现如下：</p>
-<pre><code class="language-js">function lightCopy(target) {
-    if (!(target instanceof Object)) throw Error(&quot;传入的值必须为数组或者是对象&quot;)
-    if (target instanceof Array) {
-        const newArr = []
-        target.forEach(key =&gt; newArr.push(key))
-        return newArr
-    } else {
-        const newObj = {}
-        Object.keys(target).forEach(key =&gt; newObj[key] = target[key])
-        return newObj
-    }
-}
-const newArr = lightCopy([1, 2, 3])
-console.log(newArr) // [1, 2, 3]
-const newObj = lightCopy({name: &quot;Little Boy&quot;})
-console.log(newObj) // {name: &quot;Little Boy&quot;}
-</code></pre>
-<p><code>浅拷贝</code>实现起来也不是很难，如果对上面的代码不理解的同学需要好好的补充基础知识了。</p>
-<h2 id="七-手写深拷贝">七. 手写深拷贝</h2>
-<p><code>深拷贝</code>的特点就是：拷贝出来的数据无论做了什么修改，原来的数据不会发生变化，那么如何做到这一点呢？上面我们说过数组和对象都是用地址来指向对应的值，所以我们可以通过修改指向去做<code>深拷贝</code>，这样拷贝出来的数据就不会影响到原始数据。</p>
-<pre><code class="language-js">// 判断是否是引用值
-function isReferenceValue(target) {
-    return target instanceof Object
-}
-// 获取每项克隆后的值
-function getCopyValue(target) {
-    return isReferenceValue(target) ? deepCopy(target) : target
-}
-// 深度拷贝
-function deepCopy(target) {
-    if (!isReferenceValue(target)) throw Error(&quot;传入的值必须为数组或者是对象&quot;)
-    if (target instanceof Array) {
-        const newArr = []
-        const targetLen = target.length
-        for (let i = 0; i &lt; targetLen; i++) {
-            newArr.push(getCopyValue(target[i]))
-        }
-        return newArr
-    } else {
-        const newObj = {}
-        for (const key in target) {
-            newObj[key] = getCopyValue(target[key])
-        }
-        return newObj
-    }
-}
+                  <p>前言：</p>
+<p>Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。 Node 导入文件系统模块(fs)语法如下所示：</p>
+<h2 id="异步和同步">异步和同步</h2>
+<p>Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。</p>
+<p>异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。</p>
+<p>建议大家使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。</p>
+<h2 id="读文件">读文件</h2>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
 
-const arr = [{
-    hobby: [{
-        name: &quot;Little  Boy&quot;
-    }]
-}]
-
-const newObj = deepCopy(arr)
-newObj[0].hobby[0].name = &quot;Hello Little Boy&quot;
-console.log(arr) // &quot;Little  Boy&quot;
+// 异步读取
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;异步读取: &quot; + data.toString());
+});
+// 同步读取
+var data = fs.readFileSync('input.txt');
+console.log(&quot;同步读取: &quot; + data.toString());
+console.log(&quot;程序执行完毕。&quot;);
 </code></pre>
-<p>上面的代码就实现<code>深拷贝</code>，只要在拷贝的时候发现引用值那就继续遍历就可以了，代码也并不算太难，如果有问题的话，可以联系博主。</p>
+<h2 id="打开文件">打开文件</h2>
+<h3 id="语法">语法</h3>
+<p>以下为在异步模式下打开文件的语法格式：</p>
+<blockquote>
+<p>fs.open(path, flags[, mode], callback)</p>
+</blockquote>
+<h3 id="参数">参数</h3>
+<ul>
+<li>path - 文件的路径。</li>
+<li>flags - 文件打开的行为。具体值详见下文。</li>
+<li>mode - 设置文件模式(权限)，文件创建默认权限为 0666(可读，可写)。</li>
+<li>callback - 回调函数，带有两个参数如：callback(err, fd)。</li>
+</ul>
+<p>flags参数可以是以下值：</p>
+<ul>
+<li>r	以读取模式打开文件。如果文件不存在抛出异常。</li>
+<li>r+	以读写模式打开文件。如果文件不存在抛出异常。</li>
+<li>rs	以同步的方式读取文件。</li>
+<li>rs+	以同步的方式读取和写入文件。</li>
+<li>w	以写入模式打开文件，如果文件不存在则创建。</li>
+<li>wx	类似 'w'，但是如果文件路径存在，则文件写入失败。</li>
+<li>w+	以读写模式打开文件，如果文件不存在则创建。</li>
+<li>wx+	类似 'w+'， 但是如果文件路径存在，则文件读写失败。</li>
+<li>a	以追加模式打开文件，如果文件不存在则创建。</li>
+<li>ax	类似 'a'， 但是如果文件路径存在，则文件追加失败。</li>
+<li>a+	以读取追加模式打开文件，如果文件不存在则创建。</li>
+<li>ax+	类似 'a+'， 但是如果文件路径存在，则文件读取追加失败。</li>
+</ul>
+<h3 id="实例">实例</h3>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 异步打开文件
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+  console.log(&quot;文件打开成功！&quot;);     
+});
+</code></pre>
+<h2 id="获取文件信息">获取文件信息</h2>
+<h3 id="语法-2">语法</h3>
+<p>以下为通过异步模式获取文件信息的语法格式：</p>
+<blockquote>
+<p>fs.stat(path, callback)</p>
+</blockquote>
+<h3 id="实例-2">实例</h3>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.stat('input.txt', function (err, stats) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(stats);
+   console.log(&quot;读取文件信息成功！&quot;);
+   
+   // 检测文件类型
+   console.log(&quot;是否为文件(isFile) ? &quot; + stats.isFile());
+   console.log(&quot;是否为目录(isDirectory) ? &quot; + stats.isDirectory());    
+});
+</code></pre>
+<p>stats类中的方法有：</p>
+<ul>
+<li>stats.isFilestats.isFile() - 如果是文件返回 true，否则返回 false。</li>
+<li>stats.isDirectory() - 如果是目录返回 true，否则返回 false。</li>
+<li>stats.isBlockDevice() - 如果是块设备返回 true，否则返回 false。</li>
+<li>stats.isCharacterDevice() - 如果是字符设备返回 true，否则返回 false。</li>
+<li>stats.isSymbolicLink() - 如果是软链接返回 true，否则返回 false。</li>
+<li>stats.isFIFO() - 如果是FIFO，返回true，否则返回 false。FIFO是UNIX中的一种特殊类型的命令管道。</li>
+<li>stats.isSocket() - 如果是 Socket 返回 true，否则返回 false。</li>
+</ul>
+<h2 id="写入文件">写入文件</h2>
+<h3 id="语法-3">语法</h3>
+<blockquote>
+<p>fs.writeFile(file, data[, options], callback)</p>
+</blockquote>
+<p>writeFile 直接打开文件默认是 w 模式，所以如果文件存在，该方法写入的内容会覆盖旧的文件内容。</p>
+<h3 id="参数-2">参数</h3>
+<ul>
+<li>file - 文件名或文件描述符。</li>
+<li>data - 要写入文件的数据，可以是 String(字符串) 或 Buffer(缓冲) 对象。</li>
+<li>options - 该参数是一个对象，包含 {encoding, mode, flag}。默认编码为 utf8, 模式为 0666 ， flag 为 'w'</li>
+<li>callback -  回调函数，回调函数只包含错误信息参数(err)，在写入失败时返回。。</li>
+</ul>
+<h3 id="实例-3">实例</h3>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备写入文件&quot;);
+fs.writeFile('input.txt', '我是通 过fs.writeFile 写入文件的内容',  {
+    encoding: &quot;utf-8&quot;
+},function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;数据写入成功！&quot;);
+   console.log(&quot;--------我是分割线-------------&quot;)
+   console.log(&quot;读取写入的数据！&quot;);
+   fs.readFile('input.txt', function (err, data) {
+      if (err) {
+         return console.error(err);
+      }
+      console.log(&quot;异步读取文件数据: &quot; + data.toString());
+   });
+});
+</code></pre>
+<h2 id="读取文件">读取文件</h2>
+<h3 id="语法-4">语法</h3>
+<p>fs.read(fd, buffer, offset, length, position, callback)<br>
+该方法使用了文件描述符来读取文件。</p>
+<h3 id="参数-3">参数</h3>
+<ul>
+<li>fd - 通过 fs.open() 方法返回的文件描述</li>
+<li>buffer - 数据写入的缓冲区</li>
+<li>offset - 缓冲区写入的写入偏移量</li>
+<li>length - 要从文件中读取的字节数</li>
+<li>position - 文件读取的起始位置</li>
+<li>callback - 回调函数，有三个参数err, bytesRead, buffer，err 为错误信息， bytesRead 表示读取的字节数，buffer 为缓冲区对象。</li>
+</ul>
+<h3 id="实例-4">实例</h3>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开已存在的文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;准备读取文件：&quot;);
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+      console.log(bytes + &quot;  字节被读取&quot;);
+      
+      // 仅输出读取的字节
+      if(bytes &gt; 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+   });
+});
+</code></pre>
+<h2 id="关闭文件">关闭文件</h2>
+<h3 id="语法-5">语法</h3>
+<blockquote>
+<p>fs.close(fd, callback)</p>
+</blockquote>
+<h3 id="参数-4">参数</h3>
+<ul>
+<li>fs - 通过 fs.open 方法返回的文件描述符</li>
+<li>callback - 回到函数，没有参数</li>
+</ul>
+<h2 id="截取文件">截取文件</h2>
+<h3 id="语法-6">语法</h3>
+<blockquote>
+<p>fs.ftruncate(fd, len, callback)</p>
+</blockquote>
+<h3 id="参数-5">参数</h3>
+<ul>
+<li>fd - 通过fs.open()方法返回的文件描述符</li>
+<li>len - 文件内容截取的长度</li>
+<li>callback - 回调函数， 没有参数</li>
+</ul>
+<h3 id="实例-5">实例</h3>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;截取10字节内的文件内容，超出部分将被去除。&quot;);
+   
+   // 截取文件
+   fs.ftruncate(fd, 10, function(err){
+      if (err){
+         console.log(err);
+      } 
+      console.log(&quot;文件截取成功。&quot;);
+      console.log(&quot;读取相同的文件&quot;); 
+      fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+         if (err){
+            console.log(err);
+         }
+
+         // 仅输出读取的字节
+         if(bytes &gt; 0){
+            console.log(buf.slice(0, bytes).toString());
+         }
+
+         // 关闭文件
+         fs.close(fd, function(err){
+            if (err){
+               console.log(err);
+            } 
+            console.log(&quot;文件关闭成功！&quot;);
+         });
+      });
+   });
+});
+</code></pre>
+<h2 id="删除文件">删除文件</h2>
+<h3 id="语法-7">语法</h3>
+<blockquote>
+<p>fs.unlink(path, callback)</p>
+</blockquote>
+<h2 id="创建目录">创建目录</h2>
+<h3 id="语法-8">语法</h3>
+<blockquote>
+<p>fs.mkdir(path[, options], callback)</p>
+</blockquote>
+<h3 id="参数-6">参数</h3>
+<ul>
+<li>path - 文件路径</li>
+<li>options 参数可以是：
+<ul>
+<li>recursive - 是否以递归的方式创建目录，默认为false</li>
+<li>mode - 设置目录权限，默认0777</li>
+</ul>
+</li>
+<li>callback - 回调函数，没有参数</li>
+</ul>
+<h2 id="读取目录">读取目录</h2>
+<h2 id="语法-9">语法</h2>
+<blockquote>
+<p>fs.readdir(path, callback)</p>
+</blockquote>
+<h3 id="参数-7">参数</h3>
+<ul>
+<li>path - 文件路径</li>
+<li>callback - 回调函数，回调函数带有两个参数err，files</li>
+</ul>
+<h2 id="删除目录">删除目录</h2>
+<h3 id="语法-10">语法</h3>
+<blockquote>
+<p>fs.rmdir(path, callback)</p>
+</blockquote>
 
                 </div>
                 <div class="clear"></div>
@@ -250,32 +375,6 @@ console.log(arr) // &quot;Little  Boy&quot;
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/mOE9vbkrU.jpg');"></div>
-                 <a href="/linux-an-zhuang-docker" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2020-09-29">2020-09-29</time>
-                  <h4 class="title white no-margin">Linux 安装 Docker</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-              
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/b02rvhSHe.jpg');"></div>
-                 <a href="/shou-xie-callapplybind" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2020-09-07">2020-09-07</time>
-                  <h4 class="title white no-margin">手写call、apply、bind</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
               
 
                 <div class="clear"></div>

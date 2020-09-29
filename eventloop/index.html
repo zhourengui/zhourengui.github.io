@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>搜索结果 | LittleBoy-前端爱好者</title>
+<title>EventLoop | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,16 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <script src="/media/gridea-search/fuse.js"></script>
-    <script src="/media/gridea-search/ejs.min.js"></script>
-    <script src="/media/gridea-search/gridea-search.js"></script>
-    <script src="/media/gridea-search/result-template.ejs" type="text/ejs"></script>
-</head>
-
+    <meta name="referrer" content="never">
+    <meta name="description" content="前言：
+Node.js 是单进程单线程应用程序，但是因为 V8 引擎提供的异步执行回调接口，通过这些接口可以处理大量的并发，所以性能非常高。
+Node.js 几乎每一个 API 都是支持回调函数的。
+Node.js 基本上所有的事件机制都是..." />
+    <meta name="keywords" content="NodeJS" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,22 +78,127 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-          <div class="main-article post">
-            <div id="gridea-search-result">
-              <h2 class="searching">搜索中......</h2>
-              <h2 class="no-result" style="display:none">未搜索到相关文章</h2>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-09-09"><i class="fa fa-calendar"></i><span class="lately">20 天前</span></time>
+              
+              <a href="/eventloop#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/eventloop/"> </span>
+              </a>
+              <span id="/eventloop/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="/A6Q75Twsp" class="ctag ctag-0 ctag-A6Q75Twsp" aria-label="">NodeJS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">EventLoop</h1>
             </div>
           </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>前言：</p>
+<p><code>Node.js</code> 是单进程单线程应用程序，但是因为 V8 引擎提供的异步执行回调接口，通过这些接口可以处理大量的并发，所以性能非常高。</p>
+<p><code>Node.js</code> 几乎每一个 API 都是支持回调函数的。</p>
+<p><code>Node.js</code> 基本上所有的事件机制都是用设计模式中观察者模式实现。</p>
+<p><code>Node.js</code> 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数。</p>
+<h2 id="事件驱动程序">事件驱动程序</h2>
+<p><code>Node.js</code> 使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务下一个web请求。</p>
+<p>当这个请求完成，它被放回处理队列，当到达队列开头，这个结果被返回给用户。</p>
+<p>这个模型非常高效可扩展性非常强，因为 <code>webserver</code> 一直接受请求而不等待任何读写操作。（这也称之为非阻塞式IO或者事件驱动IO）</p>
+<p>在事件驱动模型中，会生成一个主循环来监听事件，当检测到事件时触发回调函数。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/event_loop.jpg" alt="" loading="lazy"></figure>
+<p>整个事件驱动的流程就是这么实现的，非常简洁。有点类似于观察者模式，事件相当于一个主题(<code>Subject</code>)，而所有注册到这个事件上的处理函数相当于观察者(<code>Observer</code>)。</p>
+<p><code>Node.js</code> 有多个内置的事件，我们可以通过引入 <code>events</code> 模块，并通过实例化 <code>EventEmitter</code> 类来绑定和监听事件，如下实例：</p>
+<pre><code class="language-js">// 引入events
+const events = require(&quot;events&quot;)
+// 创建eventEmitter对象
+const eventEmitter = new events.EventEmitter()
+// 绑定事件
+function handler(arg1, arg2) {
+  console.log(&quot;事件触发&quot;)
+}
+eventEmitter.on(&quot;eventName&quot;, handler)
+// 触发事件
+eventEmitter.emit(&quot;eventName&quot;, &quot;arg1&quot;, &quot;arg2&quot;)
+</code></pre>
+<p>执行后会输出“事件触发”</p>
+<h2 id="node-应用程序是如何工作的">Node 应用程序是如何工作的？</h2>
+<p>在 <code>Node</code> 应用程序中，执行异步操作的函数将回调函数作为最后一个参数， 回调函数接收错误对象作为第一个参数。</p>
+<p>接下来让我们来重新看下前面的实例，创建一个 <code>input.txt</code> ,文件内容：<code>大前端nodejs测试</code></p>
+<p>创建 <code>app.js</code> 文件，代码如下：</p>
+<pre><code class="language-js">const fs = require(&quot;fs&quot;);
+
+fs.readFile('input.txt', function (err, data) {
+   if (err){
+      console.log(err.stack);
+      return;
+   }
+   console.log(data.toString());
+});
+console.log(&quot;程序执行完毕&quot;);
+</code></pre>
+<p>执行<code>app,js</code>之后会输出：</p>
+<p>程序执行完毕<br>
+大前端nodejs测试</p>
+<p>接下来我们删除 input.txt 文件，执行结果如下所示：</p>
+<p>程序执行完毕<br>
+Error: ENOENT, open 'input.txt'</p>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-        </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -263,6 +368,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-08T08:10:13.546Z</updated>
+    <updated>2020-09-29T08:06:14.866Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,98 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[SSH密钥方式远程连接Linux]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/">
+        </link>
+        <updated>2020-09-29T06:06:57.000Z</updated>
+        <content type="html"><![CDATA[<p>前言：</p>
+<p>我们经常使用账号密码的方式登陆服务器，这种方式还是有点繁琐，我们可以通过ssh密钥的方式远程连接Linux。</p>
+<h2 id="修改服务器ssh默认端口">修改服务器ssh默认端口</h2>
+<p>服务器的ssh默认端口一般是22，也可以用过<code>netstat -anlp | grep sshd</code>命令查看默认的端口，如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/ssh-default-port.png" alt="" loading="lazy"></figure>
+<p>可以看到我的LInux服务器的sshd默认端口是10022</p>
+<p>接下来我们就来修改sshd的默认端口：</p>
+<p>同<code>vi /etc/ssh/sshd_config</code>编辑文件，默认有个<code># Port 22</code>，我们可以把井号去掉，然后修改需要的端口，这里我是用的是10022端口。</p>
+<p>然后<code>AuthorizedKeysFile</code>这个几点默认是<code>.ssh/authorized_keys</code>的，不建议修改，如果修改了的小伙伴，在下面的讲述中将<code>authorized_keys</code>修改成自己修改的文件即可。</p>
+<p>然后就是一定我们自定义添加的端口了，使用<code>semanage port -a -t ssh_port_t -p tcp 10022</code>，如果没有<code>semanage</code>命令的话请查找下资料，自行安装，运行了这段代码后，我们可以验证我们这个命令是否操作成功，使用<code>semanage port -l | grep ssh</code>，如下图：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/view-ssh-ports.png" alt="" loading="lazy"></figure>
+<p>说明了我们之前的代码运行成功。</p>
+<p>最后重启sshd，<code>service sshd restart</code>。</p>
+<h2 id="ssh密钥登陆">ssh密钥登陆</h2>
+<p>首先我们需要在本地的.ssh目录下通过<code>ssh-keygen</code>创建密钥，我创建的密钥名是<code>baiduyun_key</code>，.ssh目录下就会生成<code>baiduyun_key</code>和<code>baiduyun_key.pub</code>文件。</p>
+<p>创建完之后，修改服务器上的<code>/.ssh/authorized_keys</code>文件，将上一步生成的<code>baiduyun_key.pub</code>的密钥复制到<code>authorized_keys</code>文件中。</p>
+<p>最后一步就是修改本地的<code>/.ssh/config</code>文件，文件中添加</p>
+<pre><code>Host littleboy
+  Port 10022
+  HostName 服务器ip地址
+  User root
+  IdentityFile ~/.ssh/baiduyun_key
+  IdentitiesOnly yes
+</code></pre>
+<p>到这里就所有的工作完成了，可以通过<code>ssh littleboy</code>验证是否设置成功。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux 安装 Docker]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/linux-an-zhuang-docker/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/linux-an-zhuang-docker/">
+        </link>
+        <updated>2020-09-29T01:35:28.000Z</updated>
+        <content type="html"><![CDATA[<p>前言：</p>
+<p>容器是打包代码及其所有依赖项的软件的标准单元，因此该应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。Docker容器映像是一个轻量级的，独立的，可执行的软件软件包，其中包含运行应用程序所需的一切：代码，运行时，系统工具，系统库和设置。</p>
+<p>容器映像在运行时会成为容器，对于Docker容器，映像会在Docker Engine上运行时成为容器。不论基础架构如何，容器化软件都可用于基于Linux和Windows的应用程序，始终运行相同。容器将软件与其环境隔离开来，并确保尽管开发和登台之间存在差异，但软件仍可以均匀运行。</p>
+<p>在Docker Engine上运行的Docker容器：</p>
+<ul>
+<li>标准： Docker创建了容器的行业标准，因此它们可以在任何地方移植</li>
+<li>轻巧：容器共享计算机的OS系统内核，因此不需要每个应用程序都具有OS，从而提高了服务器效率，并降低了服务器和许可成本</li>
+<li>安全：应用程序在容器中更安全，并且Docker提供了业界最强大的默认隔离功能</li>
+</ul>
+<h2 id="安装docker">安装docker</h2>
+<p><code>github</code>搜索<code>docker-install</code>, 按照教程进行安装即可</p>
+<pre><code class="language-bash">curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+</code></pre>
+<h2 id="安装docker-compose">安装docker-compose</h2>
+<h3 id="安装">安装</h3>
+<p>Compose是用于定义和运行多容器Docker应用程序的工具。通过Compose，您可以使用YAML文件来配置应用程序的服务。然后，使用一个命令，就可以从配置中创建并启动所有服务。</p>
+<p>官网地址：<a href="">https://docs.docker.com/compose/install/</a></p>
+<pre><code class="language-bash">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+</code></pre>
+<h3 id="添加执行权限">添加执行权限</h3>
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/docker-compose
+</code></pre>
+<h2 id="拉取镜像">拉取镜像</h2>
+<blockquote>
+<p>docker pull 镜像名:版本</p>
+</blockquote>
+<p>搜索镜像地址：<a href="">https://hub.docker.com/</a></p>
+<p>设置淘宝镜像源：</p>
+<p>教程地址：<a href="">https://www.runoob.com/docker/docker-mirror-acceleration.html</a></p>
+<p>修改<code>/etc/docker/daemon.json</code>的内容为<code>{&quot;registry-mirrors&quot;:[&quot;https://12nh278i.mirror.aliyuncs.com&quot;]}</code></p>
+<h2 id="查看镜像">查看镜像</h2>
+<pre><code class="language-bash">docker images
+</code></pre>
+<h2 id="运行镜像">运行镜像</h2>
+<pre><code class="language-bash">docker run -d --name test-mongo  -p 10080:27017 mongo
+</code></pre>
+<p><code>-d</code>在后台运行<br>
+<code>--name</code>启动的镜像名称<br>
+<code>-p</code>设置端口映射</p>
+<h2 id="设置防火墙-避免端口被不能被访问">设置防火墙 避免端口被不能被访问</h2>
+<h3 id="关闭防火墙">关闭防火墙</h3>
+<pre><code class="language-bash">service firewalld stop
+</code></pre>
+<h3 id="放行端口">放行端口</h3>
+<pre><code class="language-bash">firewall-cmd --zone=public --add-port=10080/tcp --permanent
+firewall-com reload
+</code></pre>
+<h2 id="停止容器">停止容器</h2>
+<pre><code class="language-bash">docker stop &lt;容器 ID&gt;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[读懂浅拷贝和深拷贝]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/jie-mi-qian-kao-bei-he-shen-kao-bei/</id>

@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>搜索结果 | LittleBoy-前端爱好者</title>
+<title>常用工具 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,16 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <script src="/media/gridea-search/fuse.js"></script>
-    <script src="/media/gridea-search/ejs.min.js"></script>
-    <script src="/media/gridea-search/gridea-search.js"></script>
-    <script src="/media/gridea-search/result-template.ejs" type="text/ejs"></script>
-</head>
-
+    <meta name="referrer" content="never">
+    <meta name="description" content="前言：
+util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心 JavaScript 的功能 过于精简的不足。
+util.callbackify
+util.callbackify(original) 将 async 异步..." />
+    <meta name="keywords" content="" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,22 +78,173 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-          <div class="main-article post">
-            <div id="gridea-search-result">
-              <h2 class="searching">搜索中......</h2>
-              <h2 class="no-result" style="display:none">未搜索到相关文章</h2>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-09-19"><i class="fa fa-calendar"></i><span class="lately">10 天前</span></time>
+              
+              <a href="/chang-yong-gong-ju#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/chang-yong-gong-ju/"> </span>
+              </a>
+              <span id="/chang-yong-gong-ju/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+              </div>
+              <h1 class="title ularge white bold">常用工具</h1>
             </div>
           </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>前言：</p>
+<p>util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心 JavaScript 的功能 过于精简的不足。</p>
+<h2 id="utilcallbackify">util.callbackify</h2>
+<p><code>util.callbackify(original)</code> 将 async 异步函数（或者一个返回值为 Promise 的函数）转换成遵循异常优先的回调风格的函数，例如将 (err, value) =&gt; ... 回调作为最后一个参数。 在回调函数中，第一个参数为拒绝的原因（如果 Promise 解决，则为 null），第二个参数则是解决的值。</p>
+<h3 id="实例">实例</h3>
+<pre><code class="language-js">const util = require('util');
+
+async function fn() {
+  return 'hello world';
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  if (err) throw err;
+  console.log(ret); // hello world
+});
+</code></pre>
+<p>回调函数是异步执行的，并且有异常堆栈错误追踪。 如果回调函数抛出一个异常，进程会触发一个 'uncaughtException' 异常，如果没有被捕获，进程将会退出。</p>
+<p>null 在回调函数中作为一个参数有其特殊的意义，如果回调函数的首个参数为 Promise 拒绝的原因且带有返回值，且值可以转换成布尔值 false，这个值会被封装在 Error 对象里，可以通过属性 reason 获取。</p>
+<pre><code class="language-js">function fn() {
+  return Promise.reject(null);
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  // 当 Promise 被以 `null` 拒绝时，它被包装为 Error 并且原始值存储在 `reason` 中。
+  err &amp;&amp; err.hasOwnProperty('reason') &amp;&amp; err.reason === null;  // true
+});
+</code></pre>
+<h2 id="utilinherits">util.inherits</h2>
+<p><code>util.inherits(constructor, superConstructor)</code>是一个实现对象间原型继承的函数。</p>
+<p>JavaScript 的面向对象特性是基于原型的，与常见的基于类的不同。JavaScript 没有提供对象继承的语言级别特性，而是通过原型复制来实现的。</p>
+<p>在这里我们只介绍 util.inherits 的用法，示例如下：</p>
+<pre><code class="language-js">var util = require('util'); 
+function Base() { 
+    this.name = 'base'; 
+    this.base = 1991; 
+    this.sayHello = function() { 
+        console.log('Hello ' + this.name); 
+    }; 
+} 
+Base.prototype.showName = function() { 
+    console.log(this.name);
+}; 
+function Sub() { 
+    this.name = 'sub'; 
+} 
+util.inherits(Sub, Base); 
+var objBase = new Base(); 
+objBase.showName();  // base
+objBase.sayHello();  // Hello base
+console.log(objBase);  // { name: base, base: 1991, sayHello: [Function] }
+var objSub = new Sub(); 
+objSub.showName();  // sub
+console.log(objSub);  // { name: sub }
+</code></pre>
+<p><code>注意：</code>Sub 仅仅继承了Base 在原型中定义的函数，而构造函数内部创造的 base 属 性和 sayHello 函数都没有被 Sub 继承。</p>
+<h2 id="utilinspect">util.inspect</h2>
+<p><code>util.inspect(object,[showHidden],[depth],[colors])</code>是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>
+<p>showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。</p>
+<p>depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归 2 层，指定为 null 表示将不限递归层数完整遍历对象。 如果 colors 值为 true，输出格式将会以 ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。</p>
+<p>特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对 象定义了 toString 方法也不会调用。</p>
+<pre><code class="language-js">var util = require('util'); 
+function Person() { 
+    this.name = 'byvoid'; 
+    this.toString = function() { 
+    return this.name; 
+    }; 
+} 
+var obj = new Person(); 
+console.log(util.inspect(obj)); 
+console.log(util.inspect(obj, true)); 
+</code></pre>
+<h2 id="utilisarrayobject">util.isArray(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个数组返回 true，否则返回 false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isArray([]) // true
+util.isArray(new Array) // true
+util.isArray({}) // false
+</code></pre>
+<h2 id="utilisregexpobject">util.isRegExp(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个正则表达式返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+util.isRegExp(/some regexp/) // true
+util.isRegExp(new RegExp('another regexp')) // true
+util.isRegExp({}) // false
+</code></pre>
+<h2 id="utilisdateobject">util.isDate(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个日期返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+util.isDate(new Date()) // true
+util.isDate(Date()) // false (without 'new' returns a String)
+util.isDate({}) // false
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-        </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -263,6 +414,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

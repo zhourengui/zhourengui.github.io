@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>搜索结果 | LittleBoy-前端爱好者</title>
+<title>工具模块 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,18 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <script src="/media/gridea-search/fuse.js"></script>
-    <script src="/media/gridea-search/ejs.min.js"></script>
-    <script src="/media/gridea-search/gridea-search.js"></script>
-    <script src="/media/gridea-search/result-template.ejs" type="text/ejs"></script>
-</head>
+    <meta name="referrer" content="never">
+    <meta name="description" content="前言：
+在 Node.js 模块库中有很多好用的模块。接下来我们为大家介绍几种常用模块的使用：OS、Path、Net、DNS、Domain。
+OS
+const OS = require(&quot;os&quot;)
 
+// 返回操作系统的..." />
+    <meta name="keywords" content="" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,22 +80,143 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-          <div class="main-article post">
-            <div id="gridea-search-result">
-              <h2 class="searching">搜索中......</h2>
-              <h2 class="no-result" style="display:none">未搜索到相关文章</h2>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-09-27"><i class="fa fa-calendar"></i><span class="lately">2 天前</span></time>
+              
+              <a href="/gong-ju-mo-kuai#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/gong-ju-mo-kuai/"> </span>
+              </a>
+              <span id="/gong-ju-mo-kuai/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+              </div>
+              <h1 class="title ularge white bold">工具模块</h1>
             </div>
           </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>前言：</p>
+<p>在 Node.js 模块库中有很多好用的模块。接下来我们为大家介绍几种常用模块的使用：<code>OS</code>、<code>Path</code>、<code>Net</code>、<code>DNS</code>、<code>Domain</code>。</p>
+<h2 id="os">OS</h2>
+<pre><code class="language-js">const OS = require(&quot;os&quot;)
+
+// 返回操作系统的默认临时文件夹。
+OS.tmpdir() // /var/folders/kl/f7kr9kds7fddc5j2tz6mh51h0000gn/T
+// 返回 CPU 的字节序，可能的是 &quot;BE&quot; 或 &quot;LE&quot;。
+OS.endianness() // LE
+// 返回操作系统的主机名。
+OS.hostname() // LittleBoydeMacBook-Pro.local
+// 返回操作系统名
+OS.type() // Darwin
+// 返回编译时的操作系统名
+OS.platform() // darwin
+// 返回操作系统 CPU 架构，可能的值有 &quot;x64&quot;、&quot;arm&quot; 和 &quot;ia32&quot;。
+OS.arch() // x64
+// 返回操作系统的发行版本。
+OS.release() // 18.7.0
+// 返回操作系统运行的时间，以秒为单位。
+OS.uptime() // 11296
+// 返回一个包含 1、5、15 分钟平均负载的数组。
+OS.loadavg() // [ 3.28515625, 2.6826171875, 2.4609375 ]
+// 返回系统内存总量，单位为字节。
+OS.totalmem() // 17179869184
+// 返回操作系统空闲内存量，单位是字节。
+OS.freemem() // 983805952
+// 返回一个对象数组，包含所安装的每个 CPU/内核的信息：型号、速度（单位 MHz）、时间（一个包含 user、nice、sys、idle 和 irq 所使用 CPU/内核毫秒数的对象）。
+OS.cpus()
+// 获得网络接口列表。
+OS.networkInterfaces()
+</code></pre>
+<h2 id="path">Path</h2>
+<pre><code class="language-js">const path = require(&quot;path&quot;)
+
+// 规范化路径，注意'..' 和 '.'。
+path.normalize(&quot;.//test/test&quot;) // test/test
+// 用于连接路径。该方法的主要用途在于，会正确使用当前系统的路径分隔符，Unix系统是&quot;/&quot;，Windows系统是&quot;\&quot;。
+path.join(&quot;./test&quot;, &quot;/test1&quot;) // test/test1
+// 将 to 参数解析为绝对路径，给定的路径的序列是从右往左被处理的，后面每个 path 被依次解析，直到构造完成一个绝对路径。 例如，给定的路径片段的序列为：/foo、/bar、baz，则调用 path.resolve('/foo', '/bar', 'baz') 会返回 /bar/baz。
+path.resolve(&quot;test&quot;, &quot;test1&quot;, &quot;test2&quot;) // /Users/littleboy/Desktop/node-test/test/test1/test2
+// 判断参数 path 是否是绝对路径。
+path.isAbsolute(&quot;./test&quot;) // false
+// 用于将绝对路径转为相对路径，返回从 from 到 to 的相对路径（基于当前工作目录）。
+path.relative(&quot;/&quot;, &quot;test1&quot;) // Users/littleboy/Desktop/node-test/test1
+// 返回路径中代表文件夹的部分，同 Unix 的dirname 命令类似。
+path.dirname(&quot;./test&quot;) // .
+// 返回路径中的最后一部分。同 Unix 命令 bashname 类似。
+path.basename(&quot;./test&quot;) // test
+// 返回路径中文件的后缀名，即路径中最后一个'.'之后的部分。如果一个路径中并不包含'.'或该路径只包含一个'.' 且这个'.'为路径的第一个字符，则此命令返回空字符串。
+path.normalize(&quot;./test&quot;) // test
+// 返回路径字符串的对象。
+path.parse(&quot;./test.js&quot;) // { root: '', dir: '.', base: 'test.js', ext: '.js', name: 'test' }
+// 从对象中返回路径字符串，和 path.parse 相反。
+path.format({ root: &quot;&quot;, dir: &quot;.&quot;, base: &quot;test.js&quot;, ext: &quot;.js&quot;, name: &quot;test&quot; }) // ./test.js
+
+// 平台的文件路径分隔符，'\\' 或 '/'。
+path.sep // /
+// 平台的分隔符, ; or ':'.
+path.delimiter // :
+// 提供上述 path 的方法，不过总是以 posix 兼容的方式交互。
+path.posix
+// 提供上述 path 的方法，不过总是以 win32 兼容的方式交互。
+path.win32
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-        </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -263,6 +386,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->
