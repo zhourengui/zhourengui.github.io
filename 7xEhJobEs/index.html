@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Stream（流） | LittleBoy-前端爱好者</title>
+<title>Docker | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,16 +14,11 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <meta name="referrer" content="never">
-    <meta name="description" content="Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。
-Node.js，Stream 有四种流类型：
-
-Readabl..." />
-    <meta name="keywords" content="" />
-    <script src="/media/js/waterfall.min.js"></script>
-    <script src="/media/js/prism.min.js"></script>
   </head>
   <body>
+    <!-- start: #wrapper -->
+    <div class="wrapper">
+      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -78,194 +73,45 @@ Readabl..." />
         </div>
       </div>
 
-      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+      <main id="home" class="main fullcover no-sidebar content">
+        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
+                
+            <!-- start: .articles -->
+            <div class="main-article post">
+  <h2 class="year"># Docker</h2>
+    
+      <article class="item default grid-33 tablet-grid-50 np-mobile">
+        <a href="/docker-ru-men" class="thumb hover-effect">
+          <span class="fullimage cover" style="display: block;background-image: url('/media/images/gridea.jpg');"></span>
+        </a>
+        <div class="info gradient-effect">
+          <time datetime="2020-09-29">2020-09-29</time>
+          <h4 class="title usmall">
+            <a href="/docker-ru-men">Docker 入门</a>
+          </h4>
+        </div>
+      </article>
 
-        <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
-            <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-09-18"><i class="fa fa-calendar"></i><span class="lately">14 天前</span></time>
-              
-              <a href="/streamliu#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/streamliu/"> </span>
-              </a>
-              <span id="/streamliu/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
-              
-            </div>
-            <div class="info">
-              <div class="tags ">
+    
+    <div class="clear"></div>
+</div>
+            <!-- end: .articles -->
+            
+                        <div class="epcl-pagination section">
+              <div class="nav">
+                
                 
               </div>
-              <h1 class="title ularge white bold">Stream（流）</h1>
             </div>
-          </div>
-        </div>  
-
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile">
-            <article class="main-article post">
-              <section class="post-content">
-                <div class="text">
-                  <p>Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。</p>
-<p>Node.js，Stream 有四种流类型：</p>
-<ul>
-<li>Readable - 可读操作</li>
-<li>Writable - 可写操作</li>
-<li>Duplex - 可读可写操作</li>
-<li>Transform - 操作被写入数据，然后读出结果</li>
-</ul>
-<p>所有的 Stream 对象都是 EventEmitter 的实例。常用的事件有：</p>
-<ul>
-<li>data - 当有数据可读是触发</li>
-<li>end - 没有更多的数据可读性触发</li>
-<li>error - 在接收和写入过程中发生错误时接触</li>
-<li>finish - 所有数据已被写入到底层系统时触发</li>
-</ul>
-<h2 id="从流中读取数据">从流中读取数据</h2>
-<p>创建 input.txt 文件，内容如下：</p>
-<pre><code class="language-js">大前度测试 Little Boy
-</code></pre>
-<p>创建 main.js 文件, 代码如下：</p>
-<pre><code class="language-js">const fs = require(&quot;fs&quot;)
-let data = &quot;&quot;
-
-// 创建可读流
-const readSteam = fs.createReadStream(&quot;input.txt&quot;)
-// 设置编码为 utf8
-readSteam.setEncoding(&quot;UTF8&quot;)
-
-// 处理流事件 --&gt; data, end, and error
-readSteam.on(&quot;data&quot;, (chunk) =&gt; {
-  // 读取文件并不是一下子读出来
-  data += chunk
-})
-
-readSteam.on(&quot;end&quot;, () =&gt; {
-  console.log(data)
-})
-
-readSteam.on(&quot;error&quot;, (error) =&gt; {
-  console.log(error)
-})
-</code></pre>
-<h2 id="写入流">写入流</h2>
-<p>创建 main.js 文件, 代码如下：</p>
-<pre><code class="language-js">const fs = require(&quot;fs&quot;)
-const data = `
-大前端测试 Little Boy
-`
-
-// 创建一个可写入的流， 写入到文件 output.txt 中
-const writeSteam = fs.createWriteStream(&quot;output.txt&quot;)
-
-// 使用 uft8 编码写入输出
-writeSteam.write(data, &quot;UTF8&quot;)
-
-// 标记文件末尾
-writeSteam.end()
-
-// 处理流事件 --&gt; data, end, and error
-writeSteam.on(&quot;finish&quot;, () =&gt; {
-  console.log(&quot;写入完成。&quot;)
-})
-
-writeSteam.on(&quot;error&quot;, (error) =&gt; {
-  console.log(error)
-})
-</code></pre>
-<h2 id="管道流">管道流</h2>
-<p>管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。</p>
-<p>!(管道流)[https://raw.githubusercontent.com/zhourengui/blog-image/master/stream.png]</p>
-<p>如上面的图片所示，我们把文件比作装水的桶，而水就是文件里的内容，我们用一根管子(pipe)连接两个桶使得水从一个桶流入另一个桶，这样就慢慢的实现了大文件的复制过程。</p>
-<p>以下实例我们通过读取一个文件内容并将内容写入到另外一个文件中。</p>
-<p>设置 input.txt 文件内容如下：</p>
-<pre><code class="language-js">大前度测试 Little Boy
-</code></pre>
-<p>创建 main.js 文件, 代码如下：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-
-// 创建一个可读流
-var readerStream = fs.createReadStream('input.txt');
-
-// 创建一个可写流
-var writerStream = fs.createWriteStream('output.txt');
-
-// 管道读写操作
-// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
-readerStream.pipe(writerStream);
-
-console.log(&quot;程序执行完毕&quot;);
-</code></pre>
-<h2 id="链式流">链式流</h2>
-<p>链式是通过连接输出流到另外一个流并创建多个流操作链的机制。链式流一般用于管道操作。</p>
-<p>接下来我们就是用管道和链式来压缩和解压文件。</p>
-<p>创建 compress.js 文件, 代码如下：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var zlib = require('zlib');
-
-// 压缩 input.txt 文件为 input.txt.gz
-fs.createReadStream('input.txt')
-  .pipe(zlib.createGzip())
-  .pipe(fs.createWriteStream('input.txt.gz'));
-  
-console.log(&quot;文件压缩完成。&quot;);
-</code></pre>
-<p>执行完以上操作后，我们可以看到当前目录下生成了 input.txt 的压缩文件 input.txt.gz。</p>
-<p>接下来，让我们来解压该文件，创建 decompress.js 文件，代码如下：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var zlib = require('zlib');
-
-// 解压 input.txt.gz 文件为 input.txt
-fs.createReadStream('input.txt.gz')
-  .pipe(zlib.createGunzip())
-  .pipe(fs.createWriteStream('input.txt'));
-  
-console.log(&quot;文件解压完成。&quot;);
-</code></pre>
-
-                </div>
-                <div class="clear"></div>
-              </section>
-            </article>
-            <div class="clear"></div>
-
-            <section class="related section">
-              
-              
-
-                <div class="clear"></div>
-            </section>
-
-              <div class="clear"></div>
-              
             
-              <div id="comments" class="bg-white hosted ">
-                <div class="clear"></div>
-<script>
-jQuery(document).ready(function($){
-    $('.vemoji-btn').text('😀');
-    $("#comments").on('click', 'span.vat',function(){
-        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
-        $('textarea#veditor').focus();
-    })
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-            if ($(window.location.hash).length) {
-                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
-                clearInterval(checkExist);
-            }
-        }, 100);
-    }
-})
-</script>
-
-              </div>
-            
-
-            </div>
           </div>
+          </div>
+        </div>
       </main>
 
-          <footer id="footer" class="grid-container">
+        <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -445,9 +291,6 @@ jQuery(document).ready(function($){
     })
 </script>
     
-
-      
-    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

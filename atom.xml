@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-09-29T08:16:09.066Z</updated>
+    <updated>2020-10-02T04:49:59.420Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -11,45 +11,141 @@
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
     <entry>
-        <title type="html"><![CDATA[SSH密钥方式远程连接Linux]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/">
+        <title type="html"><![CDATA[前端工程化入门]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/qian-duan-gong-cheng-hua/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/qian-duan-gong-cheng-hua/">
         </link>
-        <updated>2020-09-29T06:06:57.000Z</updated>
+        <updated>2020-10-02T01:33:44.000Z</updated>
         <content type="html"><![CDATA[<p>前言：</p>
-<p>我们经常使用账号密码的方式登陆服务器，这种方式还是有点繁琐，我们可以通过ssh密钥的方式远程连接Linux。</p>
-<h2 id="修改服务器ssh默认端口">修改服务器ssh默认端口</h2>
-<p>服务器的ssh默认端口一般是22，也可以用过<code>netstat -anlp | grep sshd</code>命令查看默认的端口，如下：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/ssh-default-port.png" alt="" loading="lazy"></figure>
-<p>可以看到我的LInux服务器的sshd默认端口是10022</p>
-<p>接下来我们就来修改sshd的默认端口：</p>
-<p>同<code>vi /etc/ssh/sshd_config</code>编辑文件，默认有个<code># Port 22</code>，我们可以把井号去掉，然后修改需要的端口，这里我是用的是10022端口。</p>
-<p>然后<code>AuthorizedKeysFile</code>这个几点默认是<code>.ssh/authorized_keys</code>的，不建议修改，如果修改了的小伙伴，在下面的讲述中将<code>authorized_keys</code>修改成自己修改的文件即可。</p>
-<p>然后就是一定我们自定义添加的端口了，使用<code>semanage port -a -t ssh_port_t -p tcp 10022</code>，如果没有<code>semanage</code>命令的话请查找下资料，自行安装，运行了这段代码后，我们可以验证我们这个命令是否操作成功，使用<code>semanage port -l | grep ssh</code>，如下图：</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/view-ssh-ports.png" alt="" loading="lazy"></figure>
-<p>说明了我们之前的代码运行成功。</p>
-<p>最后重启sshd，<code>service sshd restart</code>。</p>
-<h2 id="ssh密钥登陆">ssh密钥登陆</h2>
-<p>首先我们需要在本地的.ssh目录下通过<code>ssh-keygen</code>创建密钥，我创建的密钥名是<code>baiduyun_key</code>，.ssh目录下就会生成<code>baiduyun_key</code>和<code>baiduyun_key.pub</code>文件。</p>
-<p>创建完之后，修改服务器上的<code>/.ssh/authorized_keys</code>文件，将上一步生成的<code>baiduyun_key.pub</code>的密钥复制到<code>authorized_keys</code>文件中。</p>
-<p>最后一步就是修改本地的<code>/.ssh/config</code>文件，文件中添加</p>
-<pre><code>Host littleboy
-  Port 10022
-  HostName 服务器ip地址
-  User root
-  IdentityFile ~/.ssh/baiduyun_key
-  IdentitiesOnly yes
+<p>前端工程化 是指将前端开发的流程规范化、标准化，包括开发流程、技术选型、代码规范、构建发布等，用于提升前端工程师的开发效率和代码质量。</p>
+<p>为什么要前端工程化：</p>
+<ul>
+<li>复杂度高：前端项目的多功能、多页面、多状态、多系统</li>
+<li>规模大：团队开发，多人协作，代码质量管理</li>
+<li>要求高：页面性能优化（CDN/异步加载/请求合并），CSS兼容性、单页面应用、服务端渲染。。。</li>
+</ul>
+<p>怎么做前端工程化：</p>
+<ul>
+<li>从业务着手：简单的单页面应用，使用gulp打包+同步工具实现开发全流程。</li>
+<li>从复杂度考虑：jenkenis、git/gitlab、webpack、React/Vue/Angular</li>
+</ul>
+<h2 id="webpack">Webpack</h2>
+<ul>
+<li>入口：</li>
+</ul>
+<pre><code class="language-js">module.exports = {
+    entry: &quot;..&quot;
+}
 </code></pre>
-<p>到这里就所有的工作完成了，可以通过<code>ssh littleboy</code>验证是否设置成功。</p>
+<ul>
+<li>输出：</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;)
+module.exports = {
+    output: {
+        path: path.resolve(__dirname, &quot;dist&quot;),
+        filename: &quot;webpack.bundle.js&quot;
+    }
+}
+</code></pre>
+<ul>
+<li>loaders：处理静态文件</li>
+</ul>
+<pre><code class="language-js">module.exports = {
+    module: {
+        rules: [
+            { test: /\.txt$/, use:  'raw-loader' }
+        ]
+    }
+}
+</code></pre>
+<ul>
+<li>plugins: 插件</li>
+</ul>
+<pre><code class="language-js">const HtmlWepackPlugin = require(&quot;html-webpack-plugin&quot;)
+module.exports = {
+    plugins: [ new HtmlWepackPlugin({ template: &quot;..&quot; })  ]
+}
+</code></pre>
+<ul>
+<li>模式/兼容性</li>
+</ul>
+<h2 id="gulp">Gulp</h2>
+<p>项目的根目录下必须有<code>gulpfile.js</code>文件，流程为：定义任务、输入文件、处理文件、输出、完成任务</p>
+<pre><code class="language-js">// 压缩js uglifyis
+function js() {}
+
+// 对scss/less编译，压缩，输出css文件
+function css() {}
+
+// 监听这些文件的变化
+function watcher() {}
+
+// 删除dis目录
+function clean() {}
+
+exports.scripts = js
+exports.sytles = css
+exports.default = () =&gt; {}
+</code></pre>
+<p>任务的调用方式：</p>
+<p><code>gulp</code>默认调用的是default<br>
+<code>gulp scripts</code>调用的是js</p>
+<p>热编译、浏览器自动刷新：browser-sync</p>
+<p>事例demo：<a href="https://github.com/zhourengui/blog-example/tree/master/gulp-test"></a></p>
+<h2 id="yeoman创建自定义脚手架">yeoman创建自定义脚手架</h2>
+<p>安装yeoman：<code>npm install -g yo</code><br>
+安装generator-generator：<code>npm install -g generator-generator</code></p>
+<p>然后在glup项目中执行<code>yo generator</code></p>
+<p>将我们之前写好的demo复制到<code>generator-glup-zhourengui&gt;genertors&gt;app&gt;templates</code></p>
+<p>配置<code>generator-glup-zhourengui&gt;genertors&gt;app&gt;index.js</code>：</p>
+<pre><code class="language-js">writing() {
+    this.fs.copy(
+      this.templatePath(&quot;**&quot;), // 代表将templates的文件复制到generator
+      this.destinationPath(&quot;./&quot;)
+    );
+  }
+</code></pre>
+<p>测试：然后在<code>generator-glup-zhourengui</code>执行<code>npm link</code>，就会这个目录下的npm的依赖包连接到全局，</p>
+<p>然后在根目录下创建一个测试文件夹，在这个测试文件夹执行<code>yo glup-zhourengui</code>，执行的时候可能会报bower不存在，然后配置<code>generator-glup-zhourengui&gt;genertors&gt;app&gt;index.js</code>：</p>
+<pre><code class="language-js">iinstall() {
+    this.installDependencies({ bower: false });
+}
+</code></pre>
+<p>将脚手架发布到npm：</p>
+<p>npm publish</p>
+<p>使用yeoman总结：</p>
+<ul>
+<li>脚手架的名称是<code>generator-</code>打头</li>
+<li>全局安装generator-generator</li>
+<li>link命令本地测试，发布时设置npm registry</li>
+</ul>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Linux 安装 Docker]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/linux-an-zhuang-docker/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/linux-an-zhuang-docker/">
+        <title type="html"><![CDATA[Docker 入门]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/docker-ru-men/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/docker-ru-men/">
         </link>
-        <updated>2020-09-29T01:35:28.000Z</updated>
+        <updated>2020-09-29T09:16:36.000Z</updated>
         <content type="html"><![CDATA[<p>前言：</p>
+<p>容器是打包代码及其所有依赖项的软件的标准单元，因此该应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。Docker容器映像是一个轻量级的，独立的，可执行的软件软件包，其中包含运行应用程序所需的一切：代码，运行时，系统工具，系统库和设置。</p>
+<p>容器映像在运行时会成为容器，对于Docker容器，映像会在Docker Engine上运行时成为容器。不论基础架构如何，容器化软件都可用于基于Linux和Windows的应用程序，始终运行相同。容器将软件与其环境隔离开来，并确保尽管开发和登台之间存在差异，但软件仍可以均匀运行。</p>
+<p>在Docker Engine上运行的Docker容器：</p>
+<ul>
+<li>标准： Docker创建了容器的行业标准，因此它们可以在任何地方移植</li>
+<li>轻巧：容器共享计算机的OS系统内核，因此不需要每个应用程序都具有OS，从而提高了服务器效率，并降低了服务器和许可成本</li>
+<li>安全：应用程序在容器中更安全，并且Docker提供了业界最强大的默认隔离功能</li>
+</ul>
+<h2 id="docker-vs-虚拟机">Docker vs 虚拟机</h2>
+<p>Docker 与 虚拟机的共同点就是都是用的同一个基础设施和操作系统或者是虚拟化平台，不同的是，在Docker中，当有多个应用的时候可以使用同一个Docker和同一个操作系统，并不会去瓜分基础设施的内存，而虚拟机一个应用就对应一个操作系统，并且会瓜分基础设施的内存，这样最大的缺点就是慢，还会影响到主系统的运行。</p>
+<p>Docker特性：</p>
+<ul>
+<li>文件和资源和网络 隔离 所有的ap都可以运行在同一个docker，所有的docker可以运行在同一个操作系统里</li>
+<li>变更管理和日志记录</li>
+<li>写时复制</li>
+</ul>
+<p>前言：</p>
 <p>容器是打包代码及其所有依赖项的软件的标准单元，因此该应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。Docker容器映像是一个轻量级的，独立的，可执行的软件软件包，其中包含运行应用程序所需的一切：代码，运行时，系统工具，系统库和设置。</p>
 <p>容器映像在运行时会成为容器，对于Docker容器，映像会在Docker Engine上运行时成为容器。不论基础架构如何，容器化软件都可用于基于Linux和Windows的应用程序，始终运行相同。容器将软件与其环境隔离开来，并确保尽管开发和登台之间存在差异，但软件仍可以均匀运行。</p>
 <p>在Docker Engine上运行的Docker容器：</p>
@@ -82,12 +178,30 @@ sh get-docker.sh
 <h2 id="查看镜像">查看镜像</h2>
 <pre><code class="language-bash">docker images
 </code></pre>
+<h2 id="查看正在运行的镜像">查看正在运行的镜像</h2>
+<pre><code class="language-bash">docker ps
+</code></pre>
 <h2 id="运行镜像">运行镜像</h2>
 <pre><code class="language-bash">docker run -d --name test-mongo  -p 10080:27017 mongo
 </code></pre>
 <p><code>-d</code>在后台运行<br>
 <code>--name</code>启动的镜像名称<br>
 <code>-p</code>设置端口映射</p>
+<h2 id="重启docker">重启docker</h2>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+<h2 id="删除已停止容器">删除已停止容器</h2>
+<pre><code class="language-bash">docker rm &lt;容器 ID&gt;
+</code></pre>
+<h2 id="查看日志">查看日志</h2>
+<pre><code class="language-bash">docker logs -fs test-mql
+</code></pre>
+<h2 id="停止容器">停止容器</h2>
+<pre><code class="language-bash">docker stop &lt;容器 ID&gt;
+</code></pre>
+<h2 id="推送镜像到docker-hub">推送镜像到Docker Hub</h2>
+<p>使用<code>docker login</code>进行登陆，然后使用<code>docker commit &lt;容器ID&gt; zhourengui/mysql:1.0</code>，最后使用<code>docker push zhourengui/mysql:1.0</code>到远程Hub</p>
 <h2 id="设置防火墙-避免端口被不能被访问">设置防火墙 避免端口被不能被访问</h2>
 <h3 id="关闭防火墙">关闭防火墙</h3>
 <pre><code class="language-bash">service firewalld stop
@@ -96,9 +210,42 @@ sh get-docker.sh
 <pre><code class="language-bash">firewall-cmd --zone=public --add-port=10080/tcp --permanent
 firewall-com reload
 </code></pre>
-<h2 id="停止容器">停止容器</h2>
-<pre><code class="language-bash">docker stop &lt;容器 ID&gt;
+<h3 id="查看已放行的所有端口">查看已放行的所有端口</h3>
+<pre><code class="language-bash">firewall-cmd --list-all
 </code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SSH密钥方式远程连接Linux]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/ssh-mi-yao-fang-shi-yuan-cheng-lian-jie-linux/">
+        </link>
+        <updated>2020-09-29T06:06:57.000Z</updated>
+        <content type="html"><![CDATA[<p>前言：</p>
+<p>我们经常使用账号密码的方式登陆服务器，这种方式还是有点繁琐，我们可以通过ssh密钥的方式远程连接Linux。</p>
+<h2 id="修改服务器ssh默认端口">修改服务器ssh默认端口</h2>
+<p>服务器的ssh默认端口一般是22，也可以用过<code>netstat -anlp | grep sshd</code>命令查看默认的端口，如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/ssh-default-port.png" alt="" loading="lazy"></figure>
+<p>可以看到我的LInux服务器的sshd默认端口是10022</p>
+<p>接下来我们就来修改sshd的默认端口：</p>
+<p>同<code>vi /etc/ssh/sshd_config</code>编辑文件，默认有个<code># Port 22</code>，我们可以把井号去掉，然后修改需要的端口，这里我是用的是10022端口。</p>
+<p>然后<code>AuthorizedKeysFile</code>这个几点默认是<code>.ssh/authorized_keys</code>的，不建议修改，如果修改了的小伙伴，在下面的讲述中将<code>authorized_keys</code>修改成自己修改的文件即可。</p>
+<p>然后就是一定我们自定义添加的端口了，使用<code>semanage port -a -t ssh_port_t -p tcp 10022</code>，如果没有<code>semanage</code>命令的话请查找下资料，自行安装，运行了这段代码后，我们可以验证我们这个命令是否操作成功，使用<code>semanage port -l | grep ssh</code>，如下图：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/view-ssh-ports.png" alt="" loading="lazy"></figure>
+<p>说明了我们之前的代码运行成功。</p>
+<p>最后重启sshd，<code>service sshd restart</code>。</p>
+<h2 id="ssh密钥登陆">ssh密钥登陆</h2>
+<p>首先我们需要在本地的.ssh目录下通过<code>ssh-keygen</code>创建密钥，我创建的密钥名是<code>baiduyun_key</code>，.ssh目录下就会生成<code>baiduyun_key</code>和<code>baiduyun_key.pub</code>文件。</p>
+<p>创建完之后，修改服务器上的<code>/.ssh/authorized_keys</code>文件，将上一步生成的<code>baiduyun_key.pub</code>的密钥复制到<code>authorized_keys</code>文件中。</p>
+<p>最后一步就是修改本地的<code>/.ssh/config</code>文件，文件中添加</p>
+<pre><code>Host littleboy
+  Port 10022
+  HostName 服务器ip地址
+  User root
+  IdentityFile ~/.ssh/baiduyun_key
+  IdentitiesOnly yes
+</code></pre>
+<p>到这里就所有的工作完成了，可以通过<code>ssh littleboy</code>验证是否设置成功。</p>
 ]]></content>
     </entry>
     <entry>
