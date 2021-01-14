@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2020-10-05T06:36:55.656Z</updated>
+    <updated>2021-01-14T06:12:31.054Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
     <subtitle>一位前端爱好者的大前端养成记</subtitle>
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, LittleBoy-前端爱好者</rights>
+    <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
     <entry>
         <title type="html"><![CDATA[Webpack4从入门到精通]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/webpack4-cong-ru-men-dao-jing-tong/</id>
