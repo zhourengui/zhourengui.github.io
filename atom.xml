@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-14T07:08:00.034Z</updated>
+    <updated>2021-01-15T02:55:19.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,99 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之栈]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/">
+        </link>
+        <updated>2021-01-15T02:46:59.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>栈</code></li>
+<li><code>栈</code>的常用操作</li>
+<li><code>栈</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>栈</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="什么是栈">什么是栈</h3>
+<p><code>栈</code>是一个后进先出的数据结构，在JavaScript中没有栈，但是可以使用Array来实现栈的所有功能。</p>
+<h3 id="栈的常用操作">栈的常用操作</h3>
+<pre><code class="language-js">const stack = [] // 栈
+stack.push(1) // 入栈
+const item = stack.pop() // 出栈
+</code></pre>
+<h3 id="栈的使用场景">栈的使用场景</h3>
+<ul>
+<li>
+<p>十进制转二进制</p>
+<p>可以从图中可以看到，我们如果按照顺序求出来的商是00111001，但是十进制转二进制得出来的结果是10011100，明显有后进先出的意思，所以遇到十进制转二进制的问题的时候，使用栈是最适合的。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/decimal2binary.png" alt="十进制转二进制" loading="lazy"></figure>
+</li>
+<li>
+<p>有效的括号</p>
+<p>在我们开发中经常也会用到括号，例如<code>([])</code>，这样的括号会发现，<code>(</code>是先进的，<code>[</code>是后进的，但是<code>]</code>是先出的，这就符合栈的<code>后进先出的特点</code>，所以遇到有效括号这类的问题的时候，使用栈是最合适的。后面也会通过一道<a href="https://leetcode-cn.com/problems/valid-parentheses/">有效的括号</a>LeetCode算法题来巩固栈的知识。</p>
+</li>
+<li>
+<p>函数调用堆栈</p>
+<p>可以通过下面的代码进行断点进行调试，我们会发现我们先调用fn1，但是最后执行结束的是fn1</p>
+<pre><code class="language-js">const fn1 = () =&gt; {
+  fn2()
+}
+
+const fn2 = () =&gt; {
+  fn3()
+}
+
+const fn3 = () =&gt; {}
+
+fn1()
+</code></pre>
+</li>
+</ul>
+<h3 id="leetcode算法题题号20有效的括号">LeetCode算法题：题号20，<a href="https://leetcode-cn.com/problems/valid-parentheses/">有效的括号</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>对于没有闭合的左括号而言，越靠后的左括号，对应的有括号越靠前</li>
+<li>满足后进先出的特点</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新建一个栈</li>
+<li>判断字符串的长度是否是偶数，奇数直接判定为不合法</li>
+<li>扫描字符串，遇到左括号入栈，遇到和栈顶括号类型匹配的括号就出栈，类型不匹配直接判定为不合法</li>
+<li>遍历结束后，栈为空代表合法，不为空代表不合法</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+  if (s.length % 2 === 1) { return false; }
+ 	const stack = [];
+  const m = new Map();
+  m.set(&quot;(&quot;, &quot;)&quot;);
+  m.set(&quot;{&quot;, &quot;}&quot;);
+  m.set(&quot;[&quot;, &quot;]&quot;);
+  for (let i = 0; i &lt; s.length; i ++) {
+    if (m.has(s[i])) {
+      stack.push(s[i]);
+    } else {
+      if (m.get(stack[stack.length - 1]) !== s[i]) {
+        return false
+      }
+      stack.pop()
+    }
+  }
+  return stack.length === 0;
+};
+</code></pre>
+<h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度：</h3>
+<p>因为代码中有一个for循环，循环的次数可能是传进来的字符串长度，所以时间复杂度是O(n)，n就是传进来的字符串长度。</p>
+<p>代码中定义了两个数据结构，<code>Array</code>和<code>Map</code>，因为<code>Array</code>并不会线性的增长所以是O(n)，<code>Map</code>是O(1)，所以最终的空间复杂度是O(n)，n是传进来的字符串长度。</p>
+<p>最后，希望读者可以通过本篇文章对<code>栈</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构与算法介绍]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/</id>
@@ -58,7 +151,7 @@
 <h3 id="认识每个数据结构">认识每个数据结构</h3>
 <ul>
 <li>
-<p><code>栈（Stack）</code>：一个后进先出的数据结构，JavaScript 中并没有栈，通过 Array 来实现栈的功能，通过方法<code>push</code>、<code>pop</code>来实现入栈和出栈。</p>
+<p><a href="/shu-ju-jie-gou-zhi-zhan/">栈（Stack）</a>：一个后进先出的数据结构，JavaScript 中并没有栈，通过 Array 来实现栈的功能，通过方法<code>push</code>、<code>pop</code>来实现入栈和出栈。</p>
 </li>
 <li>
 <p><code>队列（Queue）</code>：一个先进先出的数据结构，JavaScript 中没有队列，通过 Array 来实现队列的功能，通过方法<code>push</code>、<code>shift</code>来实现入队(<code>enqueue</code>)和出队(<code>dequeue</code>)。</p>

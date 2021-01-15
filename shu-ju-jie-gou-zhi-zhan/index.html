@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>数据结构与算法 | LittleBoy-前端爱好者</title>
+<title>数据结构之栈 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,11 +14,22 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="本篇文章可以收获的知识：
+
+什么是栈
+栈的常用操作
+栈的使用场景
+一道LeetCode算法题巩固栈
+如何分析时间复杂度和空间复杂度
+
+什么是栈
+栈是一个后进先出的数据结构，在JavaScript中没有栈，但是可以使用Array来实现栈的所有..." />
+    <meta name="keywords" content="" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
   </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -73,45 +84,176 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-                
-            <!-- start: .articles -->
-            <div class="main-article post">
-  <h2 class="year"># 数据结构与算法</h2>
-    
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="/shu-ju-yu-jie-gou-suan-fa-jie-shao" class="thumb hover-effect">
-          <span class="fullimage cover" style="display: block;background-image: url('/media/images/gridea.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2021-01-14">2021-01-14</time>
-          <h4 class="title usmall">
-            <a href="/shu-ju-yu-jie-gou-suan-fa-jie-shao">数据结构与算法介绍</a>
-          </h4>
-        </div>
-      </article>
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
-    
-    <div class="clear"></div>
-</div>
-            <!-- end: .articles -->
-            
-                        <div class="epcl-pagination section">
-              <div class="nav">
-                
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2021-01-15"><i class="fa fa-calendar"></i><span class="lately">8 分钟前</span></time>
+              
+              <a href="/shu-ju-jie-gou-zhi-zhan#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shu-ju-jie-gou-zhi-zhan/"> </span>
+              </a>
+              <span id="/shu-ju-jie-gou-zhi-zhan/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
                 
               </div>
+              <h1 class="title ularge white bold">数据结构之栈</h1>
             </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>栈</code></li>
+<li><code>栈</code>的常用操作</li>
+<li><code>栈</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>栈</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="什么是栈">什么是栈</h3>
+<p><code>栈</code>是一个后进先出的数据结构，在JavaScript中没有栈，但是可以使用Array来实现栈的所有功能。</p>
+<h3 id="栈的常用操作">栈的常用操作</h3>
+<pre><code class="language-js">const stack = [] // 栈
+stack.push(1) // 入栈
+const item = stack.pop() // 出栈
+</code></pre>
+<h3 id="栈的使用场景">栈的使用场景</h3>
+<ul>
+<li>
+<p>十进制转二进制</p>
+<p>可以从图中可以看到，我们如果按照顺序求出来的商是00111001，但是十进制转二进制得出来的结果是10011100，明显有后进先出的意思，所以遇到十进制转二进制的问题的时候，使用栈是最适合的。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/decimal2binary.png" alt="十进制转二进制" loading="lazy"></figure>
+</li>
+<li>
+<p>有效的括号</p>
+<p>在我们开发中经常也会用到括号，例如<code>([])</code>，这样的括号会发现，<code>(</code>是先进的，<code>[</code>是后进的，但是<code>]</code>是先出的，这就符合栈的<code>后进先出的特点</code>，所以遇到有效括号这类的问题的时候，使用栈是最合适的。后面也会通过一道<a href="https://leetcode-cn.com/problems/valid-parentheses/">有效的括号</a>LeetCode算法题来巩固栈的知识。</p>
+</li>
+<li>
+<p>函数调用堆栈</p>
+<p>可以通过下面的代码进行断点进行调试，我们会发现我们先调用fn1，但是最后执行结束的是fn1</p>
+<pre><code class="language-js">const fn1 = () =&gt; {
+  fn2()
+}
+
+const fn2 = () =&gt; {
+  fn3()
+}
+
+const fn3 = () =&gt; {}
+
+fn1()
+</code></pre>
+</li>
+</ul>
+<h3 id="leetcode算法题题号20有效的括号">LeetCode算法题：题号20，<a href="https://leetcode-cn.com/problems/valid-parentheses/">有效的括号</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>对于没有闭合的左括号而言，越靠后的左括号，对应的有括号越靠前</li>
+<li>满足后进先出的特点</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新建一个栈</li>
+<li>判断字符串的长度是否是偶数，奇数直接判定为不合法</li>
+<li>扫描字符串，遇到左括号入栈，遇到和栈顶括号类型匹配的括号就出栈，类型不匹配直接判定为不合法</li>
+<li>遍历结束后，栈为空代表合法，不为空代表不合法</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+  if (s.length % 2 === 1) { return false; }
+ 	const stack = [];
+  const m = new Map();
+  m.set(&quot;(&quot;, &quot;)&quot;);
+  m.set(&quot;{&quot;, &quot;}&quot;);
+  m.set(&quot;[&quot;, &quot;]&quot;);
+  for (let i = 0; i &lt; s.length; i ++) {
+    if (m.has(s[i])) {
+      stack.push(s[i]);
+    } else {
+      if (m.get(stack[stack.length - 1]) !== s[i]) {
+        return false
+      }
+      stack.pop()
+    }
+  }
+  return stack.length === 0;
+};
+</code></pre>
+<h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度：</h3>
+<p>因为代码中有一个for循环，循环的次数可能是传进来的字符串长度，所以时间复杂度是O(n)，n就是传进来的字符串长度。</p>
+<p>代码中定义了两个数据结构，<code>Array</code>和<code>Map</code>，因为<code>Array</code>并不会线性的增长所以是O(n)，<code>Map</code>是O(1)，所以最终的空间复杂度是O(n)，n是传进来的字符串长度。</p>
+<p>最后，希望读者可以通过本篇文章对<code>栈</code>有一定的认识和觉悟。。。。。。</p>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
+                 <a href="/shu-ju-yu-jie-gou-suan-fa-jie-shao" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2021-01-14">2021-01-14</time>
+                  <h4 class="title white no-margin">数据结构与算法介绍</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
             
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
           </div>
-          </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -226,6 +368,9 @@
     })
 </script>
     
+
+      
+    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->
