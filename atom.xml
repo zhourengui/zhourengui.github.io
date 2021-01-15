@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-15T05:35:37.119Z</updated>
+    <updated>2021-01-15T08:12:51.452Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,84 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之队列]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/">
+        </link>
+        <updated>2021-01-15T08:09:56.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>队列</code></li>
+<li><code>队列</code>的常用操作</li>
+<li><code>队列</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>队列</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="什么是队列">什么是队列</h3>
+<p><code>队列</code>是一个先进先出的数据结构，JavaScirpt中没有队列，但可以使用Array实现队列的所有功能。</p>
+<h3 id="队列的常用操作">队列的常用操作</h3>
+<pre><code class="language-js">const queue = [] // 队列
+queue.push(1) // 入队（enqueue）
+queue.shift() // 出队（dequeue）
+</code></pre>
+<h3 id="队列的使用场景">队列的使用场景</h3>
+<ul>
+<li>
+<p>食堂排队打饭</p>
+<p>食堂排队打饭都不陌生，先排队的学生可以先打到饭，符合<code>队列</code>的特点。</p>
+</li>
+<li>
+<p>JavaScript异步任务队列</p>
+<p>JavaScript是单线程的，无法同时处理异步任务中的并发任务，使用任务队列先后处理异步任务</p>
+</li>
+<li>
+<p>计算最近请求次数</p>
+<p>一个请求队列[[], [1], [100], [3001], [3002]],计算[t-3000, t]的请求次数，首先新请求t先入队，不在这个区间的出队。后面也会通过一道<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">LeetCode</a>算法题巩固<code>队列</code>的知识。</p>
+</li>
+</ul>
+<p>遇到这些相似的问题，都可以优先考虑使用<code>队列</code>来解决问题。</p>
+<h3 id="leetcode算法题题号933最近的请求次数">LeetCode算法题：题号933，<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">最近的请求次数</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>越早发出的请求，越靠前</li>
+<li>符合先进先出的特点，考虑使用队列。</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新请求，入队</li>
+<li>不在[t - 3000, t]区间内的成员出队</li>
+<li>最后队列的长度就是最近的请求次数</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">var RecentCounter = function() {
+  this.q = [];
+};
+
+/** 
+ * @param {number} t
+ * @return {number}
+ */
+RecentCounter.prototype.ping = function(t) {
+  this.q.push(t);
+  while(t - 3000 &gt; this.q[0]) {
+    this.q.shift();
+  }
+  return this.q.length;
+};
+
+/**
+ * Your RecentCounter object will be instantiated and called as such:
+ * var obj = new RecentCounter()
+ * var param_1 = obj.ping(t)
+ */
+</code></pre>
+<h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度</h3>
+<p>因为代码中有个while循环体，循环的次数最大是ping的次数，所以是O(n)，n是ping的次数。</p>
+<p>因为代码中用到了队列，最大的长度是3000，所以是O(n)，n最大是3000。</p>
+<p>最后，希望读者可以通过本篇文章对<code>队列</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之栈]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/</id>
@@ -109,7 +187,7 @@ var isValid = function(s) {
         <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/">
         </link>
         <updated>2021-01-14T06:19:31.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="在学习数据结构与算法之前必须知道的几个概念">在学习<code>数据结构与算法</code>之前必须知道的几个概念：</h3>
+        <content type="html"><![CDATA[<h3 id="在学习数据结构与算法之前必须知道的几个概念">在学习数据结构与算法之前必须知道的几个概念：</h3>
 <p><code>什么是数据结构</code>：</p>
 <p>为了解决问题，会将数据用特定的方式存储起来，存储的方式不同就会导致不同的算法处理，当然我们希望算法的效率越快越好，那么我们就需要考虑数据如何保存，这就是数据结构。</p>
 <p>通俗的讲数据结构就是计算机存储、组织数据的方式，就像是锅碗瓢盆，它们都是来存放东西的。</p>
@@ -117,10 +195,10 @@ var isValid = function(s) {
 <p>一系列解决问题的清晰<code>指令</code>，就像是厨房里的食谱，有特定的制作教程，根据这个教程就可以做出相应的菜。</p>
 <p><code>数据结构与算法的关系</code>：</p>
 <p>数据结构为算法提供服务，算法围绕数据结构操作。</p>
-<h3 id="如何判断一个算法是否可取">如何判断一个<code>算法</code>是否可取</h3>
+<h3 id="如何判断一个算法是否可取">如何判断一个算法是否可取</h3>
 <p>在作者身边的有一个真实的示例，一位后端工程师说：“昨天看到一个某某的算法，但是我觉得这个算法不太好...”。</p>
 <p>这位后端工程师判断一个<code>算法</code>是否可行单凭直觉，这样的判断肯定是不可取的，正确的判断方式是通过<code>时间复杂度</code>和<code>空间复杂度</code>。</p>
-<h3 id="认识时间复杂度">认识<code>时间复杂度</code></h3>
+<h3 id="认识时间复杂度">认识时间复杂度</h3>
 <ul>
 <li>
 <p><code>时间复杂度</code>，定性描述该算法的运行时间，通俗讲就是一个算法的循环次数。</p>
@@ -139,7 +217,7 @@ var isValid = function(s) {
 <ul>
 <li>它们的关系是：n! &gt; 2^n &gt; n^2 &gt; nlogN &gt; n &gt; √n &gt; logN &gt; 1</li>
 </ul>
-<h3 id="认识空间复杂度">认识<code>空间复杂度</code></h3>
+<h3 id="认识空间复杂度">认识空间复杂度</h3>
 <ul>
 <li>
 <p><code>空间复杂度</code>，对一个算法在运行过程中临时占用存储空间大小的度量。</p>
@@ -196,7 +274,7 @@ var isValid = function(s) {
 </ul>
 </li>
 </ul>
-<h3 id="认识常见算法设计思想">认识常见<code>算法设计思想</code></h3>
+<h3 id="认识常见算法设计思想">认识常见算法设计思想</h3>
 <ul>
 <li>分而治之</li>
 <li>动态规划</li>
