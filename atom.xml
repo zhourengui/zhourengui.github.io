@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-15T03:11:52.377Z</updated>
+    <updated>2021-01-15T05:35:37.119Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -62,14 +62,14 @@ fn1()
 <h3 id="leetcode算法题题号20有效的括号">LeetCode算法题：题号20，<a href="https://leetcode-cn.com/problems/valid-parentheses/">有效的括号</a></h3>
 <p>解题思路：</p>
 <ul>
-<li>对于没有闭合的左括号而言，越靠后的左括号，对应的有括号越靠前</li>
+<li>对于没有闭合的左括号而言，越靠后的左括号，对应的右括号越靠前</li>
 <li>满足后进先出的特点</li>
 </ul>
 <p>解题步骤：</p>
 <ul>
 <li>新建一个栈</li>
 <li>判断字符串的长度是否是偶数，奇数直接判定为不合法</li>
-<li>扫描字符串，遇到左括号入栈，遇到和栈顶括号类型匹配的括号就出栈，类型不匹配直接判定为不合法</li>
+<li>扫描字符串，遇到左括号入栈，遇到和栈顶括号类型匹配的右括号就出栈，类型不匹配直接判定为不合法</li>
 <li>遍历结束后，栈为空代表合法，不为空代表不合法</li>
 </ul>
 <p>代码实现：</p>
@@ -99,7 +99,7 @@ var isValid = function(s) {
 </code></pre>
 <h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度：</h3>
 <p>因为代码中有一个for循环，循环的次数可能是传进来的字符串长度，所以时间复杂度是O(n)，n就是传进来的字符串长度。</p>
-<p>代码中定义了两个数据结构，<code>Array</code>和<code>Map</code>，因为<code>Array</code>并不会线性的增长所以是O(n)，<code>Map</code>是O(1)，所以最终的空间复杂度是O(n)，n是传进来的字符串长度。</p>
+<p>代码中定义了两个数据结构，<code>Array</code>和<code>Map</code>，因为<code>Array</code>并不会线性的增长所以是O(n)，<code>Map</code>是O(n)，所以最终的空间复杂度是O(n)，n是传进来的字符串长度。</p>
 <p>最后，希望读者可以通过本篇文章对<code>栈</code>有一定的认识和觉悟。。。。。。</p>
 ]]></content>
     </entry>
