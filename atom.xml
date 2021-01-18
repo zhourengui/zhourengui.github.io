@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-18T01:00:46.347Z</updated>
+    <updated>2021-01-18T06:53:15.036Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,294 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之链表]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/">
+        </link>
+        <updated>2021-01-18T06:50:43.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>链表</code></li>
+<li><code>链表</code>的常用操作与数组的对比</li>
+<li>四道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>链表</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+<li>详解JavaScript中的<code>原型链</code></li>
+<li>详解<code>instanceof</code>的原理</li>
+<li>使用链表指针获取<code>JSON</code> 的节点值</li>
+</ul>
+<h3 id="什么是链表">什么是链表</h3>
+<p><code>链表</code>是由多个元素组成的列表，元素存储是不连续的，元素之间用<code>next</code>指针连在一起，在JavaScript中没有链表，使用Object来模拟链表的功能。</p>
+<h3 id="链表的常用操作">链表的常用操作</h3>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
+const n1 = new ListNode(1) // 链表1
+const n2 = new ListNode(2) // 链表2
+const n3 = new ListNode(3) // 链表3
+n1.next = n2 // 给n1链表，插入元素
+n2.next = n3 // 给n2链表，插入元素
+n1.next = n3 // 删除n2元素，一开始n1的指针指向n2的，让n1的指针指向n3就删除n2
+
+// 遍历链表操作
+// 思路
+// 定义一个指针
+// 循环遍历指针，访问当前指针，指针指向下一针，直到指针为空
+let p = n1;
+while(p) {
+  console.log(p.val)
+  p = p.next;
+}
+</code></pre>
+<p>了解了链表的操作之后，我们会发现链表的新增元素和删除元素只需要修改某个指针就能实现需求，而数组在这些操作之后，需要移动元素来实现（除操作首尾元素），所以做增删操作的时候，链表的性能是比数据的性能高的。</p>
+<h3 id="leetcode算法题题号237删除链表中的节点">LeetCode算法题：题号237，<a href="https://leetcode-cn.com/problems/delete-node-in-a-linked-list/">删除链表中的节点</a></h3>
+<p>其实这道题相对简单，做题人一开始的思路肯定是让传进来的node的上一个元素的next指向node的下一个元素就可以了，但是我们并不知道node的上一个元素，所以我们可以在node的下一个元素做文章。</p>
+<p>解题思路：</p>
+<ul>
+<li>不能拿到node的上一个元素，只能拿到node的下一个元素</li>
+<li>将node的元素替换成node的下一个元素</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>将node的下一个元素的值赋值给node</li>
+<li>让node的下一个元素指向node的下下个元素</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} node
+ * @return {void} Do not return anything, modify node in-place instead.
+ */
+var deleteNode = function(node) {
+  node.val = node.next.val;
+  node.next = node.next.next;
+};
+</code></pre>
+<p>这道题因为没有循环体，没有额外的产生数据结构，所以时间复杂度和空间复杂度都是O(1)。</p>
+<h3 id="leetcode算法题题号206反转链表">LeetCode算法题：题号206，<a href="https://leetcode-cn.com/problems/reverse-linked-list/">反转链表</a></h3>
+<h4 id="方法一正向反转指针">方法一，正向反转指针：</h4>
+<p>解题思路：</p>
+<ul>
+<li>反转两个节点，将n+1的指针指向n</li>
+<li>反转多个节点，重复上面的操作就能实现。</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>一定一前一后指针，遍历链表</li>
+<li>反转指针</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+  let p1 = null;
+  let p2 = head
+  while(p2) {
+    const tmp = p2.next;
+    p2.next = p1;
+    p1 = p2;
+    p2 = tmp
+  }
+  return p1;
+};
+</code></pre>
+<p>因为代码中有个while循环体，循环的次数是传进来的链表长度，所以时间复杂度是O(n)，n是链表的长度。</p>
+<p>因为代码中没有产生额外的数据结构，所以空间复杂度是O(1)。</p>
+<h4 id="方法二反向反转指针">方法二，反向反转指针：</h4>
+<p>解题思路：</p>
+<ul>
+<li>反向反转指针，从链表的尾指针开始反转指针</li>
+<li>这个场景非常适合递归来实现</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>两个节点的反转，让当前指针的下下指针等于当前指针，然后将当前的下个指针等于null，解决闭环问题。</li>
+<li>重复上一步骤</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+  if (head === null || head.next === null) {
+    return head;
+  }
+  const newHead = reverseList(head.next);
+  head.next.next = head;
+  head.next = null;
+  return newHead;
+};
+</code></pre>
+<p>因为代码中是使用递归实现的，需要对链表的每个节点进行反转操作，所以时间复杂度是O(n)，n是链表的长度。</p>
+<p>代码中虽然没有产生额外的数据结构，但是这里使用递归，递归的空间复杂度主要取决于递归调用栈的空间，也就是链表的长度，所以空间复杂度是O(n)。</p>
+<h3 id="leetcode算法题题号83删除排序链表中的重复元素">LeetCode算法题：题号83，<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/">删除排序链表中的重复元素</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>给定的链表是有序的</li>
+<li>当前指针的值等于下一指针的值时，删除下一个指针。</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>遍历链表，当前指针的值等于下一指针的值时，将当前指针的指向下下个指针。</li>
+<li>遍历结束后，返回链表的头部。</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function(head) {
+  let p = head;
+  while(p &amp;&amp; p.next) {
+    if (p.val === p.next.val) {
+      p.next = p.next.next;
+    } else {
+      p = p.next;
+    }
+  }
+  return head;
+};
+</code></pre>
+<p>因为代码中有个while循环体，循环的次数是链表的长度，所以时间复杂度是O(n)，n是链表的长度。</p>
+<p>因为代码中没有产生额外的数据结构，所以空间复杂度是O(1)。</p>
+<h3 id="leetcode算法题题号141环形链表">LeetCode算法题：题号141，<a href="https://leetcode-cn.com/problems/linked-list-cycle/">环形链表</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>把这个场景想像成操场上跑步，跑的快的人，在某个时间会再遇到跑得快的人。</li>
+<li>定义一快一慢指针，如果再某个时间两个指针能相遇，说明有环。</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>定义一快一慢指针</li>
+<li>如果在跑的过程在能遇到，返回true，如果快指针为null或者下一针为null，说明没有环，返回false</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+	let slowP = head;
+  let fastP = head;
+  while(fastP &amp;&amp; fastP.next) {
+    slowP = slowP.next;
+    fastP = fastP.next.next;
+    if (slowP === fastP) {
+      return true;
+    }
+  }
+  return false;
+};
+</code></pre>
+<p>因为代码中有个while循环体，循环的次数最大的链表的长度，所以时间复杂度是O(n)，n是链表的长度。</p>
+<p>因为代码中没有产生额外的数据结构，所以空间复杂度是O(1)。</p>
+<h3 id="javascript中的原型链">JavaScript中的原型链</h3>
+<h4 id="原型">原型</h4>
+<p><code>原型</code>是实例对象的共有祖先，通俗的讲，构造函数有<code>prototype</code>属性，由这个构造函数构造出来的实例可以访问到<code>prototype</code>里的属性。</p>
+<pre><code class="language-js">function Person() {}
+Person.prototype.name = &quot;nickname&quot;
+
+const p = new Person();
+p.name; // nickname
+</code></pre>
+<h4 id="原型链">原型链</h4>
+<p>原型链本质上是链表，通过<code>__proto__</code>属性进行连接，每个对象都有<code>__proto__</code>属性，如果访问的属性不存在的时候，会沿着对象的<code>__proto__</code>属性去寻找，直到为<code>null</code>，<code>__proto__</code>指向构造函数的<code>prototype</code>对象，也就是<code>原型</code>。</p>
+<pre><code class="language-js">const n = Number(1)
+n.__proto__ = Number.prototype
+Number.prototype.__proto__ = Object.prototype
+Object.prototype.__proto__ = null
+
+const o = Object.create({})
+o.__proto__ = Object.prototype
+Object.prototype.__proto__ = null
+
+// 数组、布尔、字符串也如此
+...
+...
+...
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/prototype.jpeg" alt="原型链图解" loading="lazy"></figure>
+<h3 id="instanceof的原理">Instanceof的原理</h3>
+<p>记住一句话，如果<code>A instanceof B</code>为true，说明在A的原型链上可以找到B的原型。</p>
+<p>实现<code>instanceof</code>的代码：</p>
+<pre><code class="language-js">// 思路
+// 定义一个指针
+// 遍历A的原型链，如果A的原型链上有B的原型，返回true
+// 遍历完之后，说明找不到，但会false
+const coInstanceof = (A, B) =&gt; {
+  let p = A
+  while(p) {
+    if (p.__proto__ === B.prototype) {
+      return true
+    }
+    p = p.__proto__
+  }
+  return false
+}
+</code></pre>
+<h3 id="使用链表指针获取json的节点值">使用链表指针获取JSON的节点值</h3>
+<pre><code class="language-js">const json = {
+  a: { b: { c: 1 } },
+  d: { e: 2 },
+}
+const path = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
+let p = json
+path.forEach(i =&gt; {
+  p = p[i]
+  console.log(`${i}：${JSON.stringify(p)}`)
+})
+
+// 日志输出
+// a: { b: { c: 1 } }
+// b: { c: 1 }
+// c: 1
+</code></pre>
+<p>最后，希望读者可以通过本篇文章对<code>链表</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之队列]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/</id>
@@ -232,7 +520,7 @@ var isValid = function(s) {
 <p><a href="/shu-ju-jie-gou-zhi-zhan/">栈（Stack）</a>：一个后进先出的数据结构，JavaScript 中并没有栈，通过 Array 来实现栈的功能，通过方法<code>push</code>、<code>pop</code>来实现入栈和出栈。</p>
 </li>
 <li>
-<p><code>队列（Queue）</code>：一个先进先出的数据结构，JavaScript 中没有队列，通过 Array 来实现队列的功能，通过方法<code>push</code>、<code>shift</code>来实现入队(<code>enqueue</code>)和出队(<code>dequeue</code>)。</p>
+<p><a href="/shu-ju-jie-gou-zhi-dui-lie/">队列（Queue）</a>：一个先进先出的数据结构，JavaScript 中没有队列，通过 Array 来实现队列的功能，通过方法<code>push</code>、<code>shift</code>来实现入队(<code>enqueue</code>)和出队(<code>dequeue</code>)。</p>
 </li>
 <li>
 <p><code>链表（LinkedList）</code>：一个由多个元素组成的列表，元素存储是不连续，通过<code>next</code>指针连在一起，JavaScript 中没有链表，通过 Object 来实现链表的功能。</p>
