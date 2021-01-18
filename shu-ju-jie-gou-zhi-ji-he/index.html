@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>数据结构之队列 | LittleBoy-前端爱好者</title>
+<title>数据结构之集合 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -17,15 +17,16 @@
     <meta name="referrer" content="never">
     <meta name="description" content="本篇文章可以收获的知识：
 
-什么是队列
-队列的常用操作
-队列的使用场景
-一道LeetCode算法题巩固队列
+什么是集合
+集合的使用场景
+一道LeetCode算法题巩固集合
 如何分析时间复杂度和空间复杂度
+JavaScript中的集合
 
-什么是队列
-队列是一个先进先出的数据结构，JavaScirpt中没有队列，但可以使用Array实现..." />
-    <meta name="keywords" content="数据结构与算法" />
+什么是集合
+集合是一种无序且唯一的数据结构，ES6中的集合，名为Set
+集合的使用场..." />
+    <meta name="keywords" content="" />
     <script src="/media/js/waterfall.min.js"></script>
     <script src="/media/js/prism.min.js"></script>
   </head>
@@ -89,21 +90,19 @@
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2021-01-15"><i class="fa fa-calendar"></i><span class="lately">3 天前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2021-01-18"><i class="fa fa-calendar"></i><span class="lately">3 分钟前</span></time>
               
-              <a href="/shu-ju-jie-gou-zhi-dui-lie#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shu-ju-jie-gou-zhi-dui-lie/"> </span>
+              <a href="/shu-ju-jie-gou-zhi-ji-he#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shu-ju-jie-gou-zhi-ji-he/"> </span>
               </a>
-              <span id="/shu-ju-jie-gou-zhi-dui-lie/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/shu-ju-jie-gou-zhi-ji-he/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="/c8Ru9Le1h" class="ctag ctag-0 ctag-c8Ru9Le1h" aria-label="">数据结构与算法</a>
-                    
               </div>
-              <h1 class="title ularge white bold">数据结构之队列</h1>
+              <h1 class="title ularge white bold">数据结构之集合</h1>
             </div>
           </div>
         </div>  
@@ -115,74 +114,82 @@
                 <div class="text">
                   <p>本篇文章可以收获的知识：</p>
 <ul>
-<li>什么是<code>队列</code></li>
-<li><code>队列</code>的常用操作</li>
-<li><code>队列</code>的使用场景</li>
-<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>队列</code></li>
+<li>什么是<code>集合</code></li>
+<li><code>集合</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>集合</code></li>
 <li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+<li>JavaScript中的<code>集合</code></li>
 </ul>
-<h3 id="什么是队列">什么是队列</h3>
-<p><code>队列</code>是一个先进先出的数据结构，JavaScirpt中没有队列，但可以使用Array实现队列的所有功能。</p>
-<h3 id="队列的常用操作">队列的常用操作</h3>
-<pre><code class="language-js">const queue = [] // 队列
-queue.push(1) // 入队（enqueue）
-queue.shift() // 出队（dequeue）
-</code></pre>
-<h3 id="队列的使用场景">队列的使用场景</h3>
+<h3 id="什么是集合">什么是集合</h3>
+<p><code>集合</code>是一种无序且唯一的数据结构，ES6中的集合，名为<code>Set</code></p>
+<h3 id="集合的使用场景">集合的使用场景</h3>
 <ul>
 <li>
-<p>食堂排队打饭</p>
-<p>食堂排队打饭都不陌生，先排队的学生可以先打到饭，符合<code>队列</code>的特点。</p>
+<p>数组去重</p>
+<pre><code class="language-js">const a1 = [1, 1, 2, 2, 3, 4, 5];
+const a2 = [...new Set(a1)]
+</code></pre>
 </li>
 <li>
-<p>JavaScript异步任务队列</p>
-<p>JavaScript是单线程的，无法同时处理异步任务中的并发任务，使用任务队列先后处理异步任务</p>
+<p>判断元素是否存在集合中</p>
+<pre><code class="language-js">const s = new Set([1, 2, 3, 4])
+s.has(1) // 返回boolean
+</code></pre>
 </li>
 <li>
-<p>计算最近请求次数</p>
-<p>一个请求队列[[], [1], [100], [3001], [3002]],计算[t-3000, t]的请求次数，首先新请求t先入队，不在这个区间的出队。后面也会通过一道<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">LeetCode</a>算法题巩固<code>队列</code>的知识。</p>
+<p>求两个集合的交集</p>
+<pre><code class="language-js">const s1 = new Set([1, 2, 3, 4])
+const s2 = new Set([2, 3])
+const s3 = new Set([...s1].filter(i =&gt; s1.has(i)))
+</code></pre>
 </li>
 </ul>
-<p>遇到这些相似的问题，都可以优先考虑使用<code>队列</code>来解决问题。</p>
-<h3 id="leetcode算法题题号933最近的请求次数">LeetCode算法题：题号933，<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">最近的请求次数</a></h3>
+<h3 id="leetcode算法题题号349两个数组的交集">LeetCode算法题：题号349，<a href="https://leetcode-cn.com/problems/intersection-of-two-arrays/">两个数组的交集</a></h3>
 <p>解题思路：</p>
 <ul>
-<li>越早发出的请求，越靠前</li>
-<li>符合先进先出的特点，考虑使用队列。</li>
+<li>求交集且唯一</li>
+<li>使用集合</li>
 </ul>
 <p>解题步骤：</p>
 <ul>
-<li>新请求，入队</li>
-<li>不在[t - 3000, t]区间内的成员出队</li>
-<li>最后队列的长度就是最近的请求次数</li>
+<li>使用集合对数组进行去重</li>
+<li>遍历其中一个数据，判断另一个数据是否包含</li>
 </ul>
-<p>代码实现：</p>
-<pre><code class="language-js">var RecentCounter = function() {
-  this.q = [];
-};
-
-/** 
- * @param {number} t
- * @return {number}
+<p>实现代码：</p>
+<pre><code class="language-js">/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
  */
-RecentCounter.prototype.ping = function(t) {
-  this.q.push(t);
-  while(t - 3000 &gt; this.q[0]) {
-    this.q.shift();
-  }
-  return this.q.length;
+var intersection = function(nums1, nums2) {
+  const s1 = new Set(nums1);
+  const s2 = new Set(nums2);
+  const res = [...s1].filter(i =&gt; s2.has(i))
+  return res
 };
-
-/**
- * Your RecentCounter object will be instantiated and called as such:
- * var obj = new RecentCounter()
- * var param_1 = obj.ping(t)
- */
 </code></pre>
-<h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度</h3>
-<p>因为代码中有个while循环体，循环的次数最大是ping的次数，所以时间复杂度是O(n)，n是ping的次数。</p>
-<p>因为代码中用到了队列，最大的长度是3000，所以空间复杂度是O(n)，n最大是3000。</p>
-<p>最后，希望读者可以通过本篇文章对<code>队列</code>有一定的认识和觉悟。。。。。。</p>
+<p>因为代码有用到了filter，每一个元素都要进行过滤，循环次数最大可能是nums1的长度乘以nums2的长度，所以时间复杂度是O(n * m)，n是nums1的长度，m是nums2的长度。</p>
+<p>因为代码中用到了set数据结构，长度最大是两个数组中最大的长度，所以空间复杂度是O(n)，n是数组的长度。</p>
+<p>这道LeetCode的算法题的最优解法是使用字典数据结构解决，在<code>数据结构之字典</code>文章中也会提及。</p>
+<h3 id="javascript中的集合">JavaScript中的集合</h3>
+<pre><code class="language-js">// JavaScript中集合的常用操作
+const s = new Set()
+s.add(1) // 添加操作
+s.delete(1) // 删除操作
+s.size() // 获取集合的长度
+s.has(1) // 判断集合中是否有当前元素
+
+// JavaScript中集合的迭代
+for(let item of m) {}
+for(let item of m.keys()) {}
+for(let item of m.values()) {}
+for(let [key, value] of m.entries()) {} // key === value
+
+// JavaScript中集合与数组互转
+const a = Array.from(new Set([1, 2]))
+const s1 = new Set(a)
+</code></pre>
+<p>最后，希望读者可以通过本篇文章对<code>集合</code>有一定的认识和觉悟。。。。。。</p>
 
                 </div>
                 <div class="clear"></div>
@@ -192,26 +199,13 @@ RecentCounter.prototype.ping = function(t) {
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
                 <div class="thumb cover lazy loaded" style="background-image: url('/media/images/gridea.jpg');"></div>
                  <a href="/shu-ju-jie-gou-zhi-lian-biao" class="full-link"></a>
                  <div class="info">
                   <time datetime="2021-01-18">2021-01-18</time>
                   <h4 class="title white no-margin">数据结构之链表</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-              
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
-                 <a href="/shu-ju-jie-gou-zhi-zhan" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2021-01-15">2021-01-15</time>
-                  <h4 class="title white no-margin">数据结构之栈</h4>
                 </div>
                  <span class="epcl-button red">
                   <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">

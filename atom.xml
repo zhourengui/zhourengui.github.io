@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-18T06:53:47.917Z</updated>
+    <updated>2021-01-18T07:43:39.905Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,92 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之集合]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/">
+        </link>
+        <updated>2021-01-18T07:40:36.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>集合</code></li>
+<li><code>集合</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>集合</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+<li>JavaScript中的<code>集合</code></li>
+</ul>
+<h3 id="什么是集合">什么是集合</h3>
+<p><code>集合</code>是一种无序且唯一的数据结构，ES6中的集合，名为<code>Set</code></p>
+<h3 id="集合的使用场景">集合的使用场景</h3>
+<ul>
+<li>
+<p>数组去重</p>
+<pre><code class="language-js">const a1 = [1, 1, 2, 2, 3, 4, 5];
+const a2 = [...new Set(a1)]
+</code></pre>
+</li>
+<li>
+<p>判断元素是否存在集合中</p>
+<pre><code class="language-js">const s = new Set([1, 2, 3, 4])
+s.has(1) // 返回boolean
+</code></pre>
+</li>
+<li>
+<p>求两个集合的交集</p>
+<pre><code class="language-js">const s1 = new Set([1, 2, 3, 4])
+const s2 = new Set([2, 3])
+const s3 = new Set([...s1].filter(i =&gt; s1.has(i)))
+</code></pre>
+</li>
+</ul>
+<h3 id="leetcode算法题题号349两个数组的交集">LeetCode算法题：题号349，<a href="https://leetcode-cn.com/problems/intersection-of-two-arrays/">两个数组的交集</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求交集且唯一</li>
+<li>使用集合</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用集合对数组进行去重</li>
+<li>遍历其中一个数据，判断另一个数据是否包含</li>
+</ul>
+<p>实现代码：</p>
+<pre><code class="language-js">/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+  const s1 = new Set(nums1);
+  const s2 = new Set(nums2);
+  const res = [...s1].filter(i =&gt; s2.has(i))
+  return res
+};
+</code></pre>
+<p>因为代码有用到了filter，每一个元素都要进行过滤，循环次数最大可能是nums1的长度乘以nums2的长度，所以时间复杂度是O(n * m)，n是nums1的长度，m是nums2的长度。</p>
+<p>因为代码中用到了set数据结构，长度最大是两个数组中最大的长度，所以空间复杂度是O(n)，n是数组的长度。</p>
+<p>这道LeetCode的算法题的最优解法是使用字典数据结构解决，在<code>数据结构之字典</code>文章中也会提及。</p>
+<h3 id="javascript中的集合">JavaScript中的集合</h3>
+<pre><code class="language-js">// JavaScript中集合的常用操作
+const s = new Set()
+s.add(1) // 添加操作
+s.delete(1) // 删除操作
+s.size() // 获取集合的长度
+s.has(1) // 判断集合中是否有当前元素
+
+// JavaScript中集合的迭代
+for(let item of m) {}
+for(let item of m.keys()) {}
+for(let item of m.values()) {}
+for(let [key, value] of m.entries()) {} // key === value
+
+// JavaScript中集合与数组互转
+const a = Array.from(new Set([1, 2]))
+const s1 = new Set(a)
+</code></pre>
+<p>最后，希望读者可以通过本篇文章对<code>集合</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之链表]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/</id>
