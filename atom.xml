@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-15T08:17:51.497Z</updated>
+    <updated>2021-01-18T01:00:46.347Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -83,8 +83,8 @@ RecentCounter.prototype.ping = function(t) {
  */
 </code></pre>
 <h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度</h3>
-<p>因为代码中有个while循环体，循环的次数最大是ping的次数，所以是O(n)，n是ping的次数。</p>
-<p>因为代码中用到了队列，最大的长度是3000，所以是O(n)，n最大是3000。</p>
+<p>因为代码中有个while循环体，循环的次数最大是ping的次数，所以时间复杂度是O(n)，n是ping的次数。</p>
+<p>因为代码中用到了队列，最大的长度是3000，所以空间复杂度是O(n)，n最大是3000。</p>
 <p>最后，希望读者可以通过本篇文章对<code>队列</code>有一定的认识和觉悟。。。。。。</p>
 ]]></content>
     </entry>
