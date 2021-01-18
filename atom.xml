@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-18T07:46:41.157Z</updated>
+    <updated>2021-01-18T07:51:26.592Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -609,10 +609,10 @@ var isValid = function(s) {
 <p><a href="/shu-ju-jie-gou-zhi-dui-lie/">队列（Queue）</a>：一个先进先出的数据结构，JavaScript 中没有队列，通过 Array 来实现队列的功能，通过方法<code>push</code>、<code>shift</code>来实现入队(<code>enqueue</code>)和出队(<code>dequeue</code>)。</p>
 </li>
 <li>
-<p><code>链表（LinkedList）</code>：一个由多个元素组成的列表，元素存储是不连续，通过<code>next</code>指针连在一起，JavaScript 中没有链表，通过 Object 来实现链表的功能。</p>
+<p><a href="/shu-ju-jie-gou-zhi-lian-biao/">链表（LinkedList）</a>：一个由多个元素组成的列表，元素存储是不连续，通过<code>next</code>指针连在一起，JavaScript 中没有链表，通过 Object 来实现链表的功能。</p>
 </li>
 <li>
-<p><code>集合（Set）</code>：一个<code>无序</code>且<code>唯一</code>的数据结构，ES6 中的集合, 名<code>Set</code>。</p>
+<p><a href="/shu-ju-jie-gou-zhi-ji-he/">集合（Set）</a>：一个<code>无序</code>且<code>唯一</code>的数据结构，ES6 中的集合, 名<code>Set</code>。</p>
 </li>
 <li>
 <p><code>字典（Map）</code>：一个用<code>键值对</code>存储<code>唯一值</code>的数据结构，ES6 中的字典，名<code>Map</code></p>
