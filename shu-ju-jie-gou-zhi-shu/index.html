@@ -1,0 +1,783 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据结构之树 | LittleBoy-前端爱好者</title>
+<meta name="description" content="一位前端爱好者的大前端养成记" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="stylesheet" href="/styles/main.css">
+
+<script src="/media/js/jquery.min.js"></script>
+<script src="/media/js/masonry.pkgd.min.js"></script>
+<script src="/media/js/aos.js"></script>
+<script src="/media/js/pace.min.js"></script>
+<script src="/media/js/view-image.min.js"></script>
+<script src="/media/js/jquery.magnific-popup.min.js"></script>
+<script src="/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="本篇文章可以收获的知识：
+
+
+什么是树
+
+
+树的常用操作
+
+
+五道LeetCode算法题巩固树
+
+
+如何分析时间复杂度和空间复杂度
+
+
+什么是树
+树是一种分层数据的抽象模型，在JavaScript中没有树，但是可以使用Array和Objec..." />
+    <meta name="keywords" content="数据结构与算法" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href=""><img src="/media/images/custom-headerLogo.png" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <li class=""><a href="" class="menu">首页</a></li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1612343857729" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2021-02-03"><i class="fa fa-calendar"></i><span class="lately">1 分钟前</span></time>
+              
+              <a href="/shu-ju-jie-gou-zhi-shu#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shu-ju-jie-gou-zhi-shu/"> </span>
+              </a>
+              <span id="/shu-ju-jie-gou-zhi-shu/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="/c8Ru9Le1h" class="ctag ctag-0 ctag-c8Ru9Le1h" aria-label="">数据结构与算法</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">数据结构之树</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <p>本篇文章可以收获的知识：</p>
+<ul>
+<li>
+<p>什么是<code>树</code></p>
+</li>
+<li>
+<p><code>树</code>的常用操作</p>
+</li>
+<li>
+<p>五道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>树</code></p>
+</li>
+<li>
+<p>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></p>
+</li>
+</ul>
+<h3 id="什么是树">什么是树</h3>
+<p><code>树</code>是一种分层数据的抽象模型，在JavaScript中没有树，但是可以使用Array和Object构建树，前端工作中常见的树包括：Dom树、级联选择器、树形控件等。</p>
+<h3 id="树的常用操作">树的常用操作</h3>
+<ul>
+<li>
+<p>树的深度/广度遍历</p>
+<pre><code class="language-js">// 构建一颗树
+const tree = {
+  value: &quot;A&quot;,
+  children: [
+    {
+      value: &quot;B&quot;,
+      children: [
+        {
+          value: &quot;D&quot;,
+          children: []
+        },
+        {
+          value: &quot;E&quot;,
+          children: []
+        }
+      ]
+    },
+    {
+      value: &quot;C&quot;,
+      children: [
+        {
+          value: &quot;F&quot;,
+          children: []
+        },
+        {
+          value: &quot;G&quot;,
+          children: []
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li>
+<p>深度优先遍历：尽可能的搜索树的分支</p>
+<pre><code class="language-js">// 深度优先遍历思路
+// 访问根节点
+// 遍历子节点，深度优先遍历子节点
+const dfs = (root) =&gt; {
+  console.log(root.value) // 访问根节点
+  dfs.children.forEach(i =&gt; dfs(i)
+}
+dfs(tree)
+</code></pre>
+</li>
+<li>
+<p>广度优先遍历：先访问离根节点最近的节点</p>
+<pre><code class="language-js">// 广度优先遍历思路
+// 新建一个队列
+// 根节点入队
+// 把队头出队并访问
+// 将队头的子节点依次入队
+// 重复最后两步
+const bfs = (root) =&gt; {
+  const q = [root] // 根节点入队
+  while(q.length) {
+    const t = q.shift() // 队头出队
+    console.log(t.value) // 访问队头元素
+    t.children.forEach(i =&gt; q.push(i)) // 将对头的子节点依次入队
+  }
+}
+bfs(tree)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>二叉树先中后序遍历（递归与非递归版）</p>
+<pre><code class="language-js">// 二叉树就是树中的每个节点最多只能有两个子节点
+// 构建一颗二叉树
+const binaryTree = {
+  value: &quot;A&quot;,
+  left: {
+    value: &quot;B&quot;,
+    left: {
+      value: &quot;D&quot;,
+      left: null,
+      right: null
+    },
+    right: {
+      value: &quot;E&quot;,
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    value: &quot;C&quot;,
+    left: {
+      value: &quot;F&quot;,
+      left: null,
+      right: null,
+    },
+    right: {
+      value: &quot;G&quot;,
+      left: null,
+      right: null
+    }
+  }
+}
+</code></pre>
+<ul>
+<li>
+<p>先序遍历</p>
+<pre><code class="language-js">// 先序遍历思路
+// 访问根节点
+// 先序遍历根节点的左子树
+// 先序遍历根节点的右子树
+
+// 递归版
+const preorder = (root) =&gt; {
+  if (!root) return
+  console.log(root.value) // 访问根节点
+  preorder(root.left) // 先序遍历根节点的左子树
+  preorder(root.right) // 先序遍历根节点的右子树
+}
+
+preorder(binaryTree)
+
+// 非递归版
+// 除了先序遍历的基本思路外，非递归版借用栈来实现
+// 因为栈是后进先出的，所以入栈的时候我们需要先把右子树入栈，再左子树入栈
+const preorder = (root) =&gt; {
+  if (root) return
+  const stack = [root]
+  while(stack.length) {
+    const p = stack.pop()
+    console.log(p.value) // 访问根节点
+    stack.push(p.right) // 将根节点的右子树入栈
+    stack.push(p.left) // 将根节点的左子树入栈
+  }
+}
+
+preorder(binaryTree)
+</code></pre>
+</li>
+<li>
+<p>中序遍历</p>
+<pre><code class="language-js">// 中序遍历的思路
+// 中序遍历根节点的左子树
+// 访问根节点
+// 中序遍历根节点的右子树
+
+// 递归版
+const inorder = (root) =&gt; {
+  if (root) return
+  inorder(root.left) // 中序遍历根节点的左子树
+  console.log(root.value) // 访问根节点
+  inorrder(root.right) // 中序遍历根节点的右子树
+}
+
+inorder(binaryTree)
+
+// 非递归版
+// 除了中序遍历的思路外，非递归版借用栈来实现
+// 定义一个指针，将指针的左子树入栈，直到指针为空，访问根节点，将指针赋值有指针
+const inorder = (root) =&gt; {
+  if (!root) return
+  const stack = []
+  let p = root
+  while(stack.length || p) {
+    while(p) { // 中序遍历左子树
+      stack.push(p)
+      p = p.left
+    }
+    const t = stack.pop()
+    console.log(t.value) // 访问根节点
+    p = t.right // 中序遍历右子树
+  }
+}
+
+inorder(binaryTree)
+</code></pre>
+</li>
+<li>
+<p>后序遍历</p>
+<pre><code class="language-js">// 后序遍历的思路
+// 后序遍历根节点的左子树
+// 后序遍历根节点的右子树
+// 访问根节点
+
+// 递归版
+const postorder = (root) =&gt; {
+  if (root) return
+  postorder(root.left) // 后序遍历左子树
+  postorder(root.right) // 后序遍历左子树
+  console.log(root.value) // 访问根节点
+}
+
+postorder(binaryTree)
+
+// 非递归版
+// 出了后序遍历的思路外，非递归版借用栈来实现
+// 因为最后访问的根节点，所以我们可以把所有的节点按照规则进栈后，再出栈访问
+
+const postorder = (root) =&gt; {
+  if (!root) return
+  const stack = [root]
+  const outputStack = []
+  while(stack.length) {
+    const t = stack.pop()
+    outputStack.push(t)
+    if (t.left) {
+      stack.push(t.left)
+    }
+    if (t.right) {
+      stack.push(t.right)
+    }
+  }
+  
+  while(outputStack.length) {
+    const t = outputStack.pop()
+    console.log(t.value)
+  }
+}
+
+postorder(binaryTree)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="leetcode算法题题号104二叉树的最大深度">LeetCode算法题：题号104，<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/">二叉树的最大深度</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求最大深度，考虑使用深度优先遍历</li>
+<li>在遍历的过程中，记录每个节点的层级，找出最大的层级</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用深度优先遍历，遍历过程中，如果左子树和右子树为空时，记录该层级</li>
+<li>遍历结束后返回最大层级</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    let max = 0
+    const dfs = (root, d) =&gt; {
+        if (!root) return
+        if (!root.left &amp;&amp; !root.right) {
+          max = Math.max(m, d)
+        }
+        dfs(root.left, d + 1)
+        dfs(root.right, d + 1)
+    }
+    dfs(root, 1)
+    return m
+};
+</code></pre>
+<p>因为代码中使用了递归，循环的次数是树的节点数，所以时间复杂度是O(n)，n是树的节点数。</p>
+<p>因为代码中使用了递归，函数调用堆栈的大小可能是树的节点数或者是树的层级，所以空间复杂度是O(n)或者是O(logn)，n是树的节点数。</p>
+<h3 id="leetcode算法题题号111二叉树的最小深度">LeetCode算法题：题号111，<a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/">二叉树的最小深度</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求二叉树的最小深度，使用广度优先遍历</li>
+<li>遇到叶子节点，停止遍历，返回当前层级</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用广度优先遍历二叉度，并记录每一层的层数</li>
+<li>遇到叶子节点，停止遍历返回当前层级</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minDepth = function(root) {
+	  if (!root) return 0
+    const q = [[root, 1]]
+    while(q.length) {
+      const [n, d] = q.shift()
+      if (!n.left &amp;&amp; !n.right) {
+        return d
+      }
+      if (n.left) {
+        q.push([n.left, d + 1])
+      }
+      if (n.right) {
+        q.push([n.right, d + 1])
+      }
+    }
+};
+
+</code></pre>
+<p>由于代码中有个while循环，循环的次数最大是树的节点数，所以时间复杂度是O(n)，n是树的节点数。</p>
+<p>由于代码中用到了队列的数据结构，长度并不会线性的增长，最大长度是树的节点数，所以空间复杂度是O(n)，n是树的节点数。</p>
+<h3 id="leetcode算法题题号102二叉树的层序遍历">LeetCode算法题：题号102，<a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/">二叉树的层序遍历</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>层序遍历顺序就是广度优先遍历</li>
+<li>不过遍历时需要记录当前节点所在的层级，目的是为了添加到数组中</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用广度优先遍历二叉树</li>
+<li>遍历过程中，记录每个节点的层级，并将其添加到不同的数组中</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+  if (!root) { return [] }
+  const q = [[root, 0]]
+  const res = []
+  while(q.length) {
+    const [n, d] = q.shift();
+    res[d] = res[d] ? [...res[d], n.val] : [n.val]
+    if (n.left) {
+      q.push([n.left, d + 1])
+    }
+    if (n.right) {
+      q.push([n.right, d + 1])
+    }
+  }
+  
+  return res
+};
+</code></pre>
+<p>由于代码中有个while循环，循环的次数是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码中用到了队列的数据结构，长度并不会线性的增长，长度最大是二叉树的节点数，所以空间复杂度是O(n)，n是二叉树的节点数。</p>
+<h3 id="leetcode算法题题号94二叉树的中序遍历">LeetCode算法题：题号94，<a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/">二叉树的中序遍历</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>使用二叉树的中序遍历，在遍历过程中记录每个节点的值</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用二叉树的中序遍历，把访问根节点修改成对应的逻辑即可</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+  if (!root) { return [] }
+  const stack = []
+  let p = root
+  const res = []
+  while(stack.length || p) {
+    while(p) {
+      stack.push(p)
+      p = p.left
+    }
+    const t = stack.pop()
+    res.push(t.val)
+    p = t.right
+  }
+  
+  return res
+};
+</code></pre>
+<p>由于代码中使用while循环，循环的次数是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码中用到了栈数据结构，长度不会线性增长，最大长度是二叉树的节点数，所以空间复杂度是O(n)，n是二叉树的节点数。</p>
+<h3 id="leetcode算法题题号112路径总和">LeetCode算法题：题号112，<a href="https://leetcode-cn.com/problems/path-sum/">路径总和</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求路径总和，使用深度优先遍历</li>
+<li>遍历过程中记录路径的总和</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用深度优先遍历二叉树，记录路径的总和，如果是叶子节点并且总和与传入的目标值相等，结束循环。</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {boolean}
+ */
+var hasPathSum = function(root, targetSum) {
+  if (!root) { return false }
+  let res = false
+  const dfs = (n, c) =&gt; {
+    if (!n.left &amp;&amp; !n.right &amp;&amp; c === targetSum) {
+      res = true
+      return
+    }
+    if (n.left) {
+      dfs(n.left, c + n.left.val)
+    }
+    if (n.right) {
+      dfs(n.right, c + n.right.val)
+    }
+  }
+  dfs(root, root.val)
+  return res
+};
+</code></pre>
+<p>由于代码使用递归，调用的次数最大是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码使用递归，函数调用堆栈可能是二叉树的节点数，或者是二叉树的层级，所以空间复杂度是O(n)或者是O(logn)，n是二叉树的节点数。</p>
+<p>最后，希望读者可以通过本篇文章对<code>树</code>有一定的认识和觉悟。。。。。。</p>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
+                 <a href="/shu-ju-jie-gou-zhi-zi-dian" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2021-01-29">2021-01-29</time>
+                  <h4 class="title white no-margin">数据结构之字典</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/shu-ju-jie-gou-zhi-shu" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-02-03">2021-02-03</time>
+                      <h4 class="title usmall">
+                        <a href="/shu-ju-jie-gou-zhi-shu">数据结构之树</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/shu-ju-jie-gou-zhi-zi-dian" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-01-29">2021-01-29</time>
+                      <h4 class="title usmall">
+                        <a href="/shu-ju-jie-gou-zhi-zi-dian">数据结构之字典</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/shu-ju-jie-gou-zhi-ji-he" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-01-18">2021-01-18</time>
+                      <h4 class="title usmall">
+                        <a href="/shu-ju-jie-gou-zhi-ji-he">数据结构之集合</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="/c8Ru9Le1h" class="ctag ctag-0 ctag-c8Ru9Le1h" aria-label="">数据结构与算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">LittleBoy-前端爱好者</a></h4>
+                    <p class="founder">一位前端爱好者的大前端养成记</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/zhourengui" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href=""><img src="/media/images/custom-footerLogo.png" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2020 共 7 篇文章
+          Author by <a href="javascript:void(0)">「LittleBoy」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/valine/1.3.10/Valine.Pure.min.js"></script>
+<script>
+    new Valine({
+        el: '#comments',
+        appId: 'bEuEMACG0o7iNnryQQYgfLE2-gzGzoHsz' ,
+        appKey: 'Xkv8kTC4SwEtYxpQs6EuyuSS',
+        pageSize: 30,
+        placeholder: '既然来了，那就留个痕迹吧~',
+        visitor: true // 阅读量统计
+    })
+</script>
+    
+
+      
+    <script src="/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

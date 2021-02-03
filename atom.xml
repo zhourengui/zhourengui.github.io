@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-01-29T12:30:31.680Z</updated>
+    <updated>2021-02-03T09:17:39.645Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,472 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之树]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-shu/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-shu/">
+        </link>
+        <updated>2021-02-03T09:16:24.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>
+<p>什么是<code>树</code></p>
+</li>
+<li>
+<p><code>树</code>的常用操作</p>
+</li>
+<li>
+<p>五道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>树</code></p>
+</li>
+<li>
+<p>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></p>
+</li>
+</ul>
+<h3 id="什么是树">什么是树</h3>
+<p><code>树</code>是一种分层数据的抽象模型，在JavaScript中没有树，但是可以使用Array和Object构建树，前端工作中常见的树包括：Dom树、级联选择器、树形控件等。</p>
+<h3 id="树的常用操作">树的常用操作</h3>
+<ul>
+<li>
+<p>树的深度/广度遍历</p>
+<pre><code class="language-js">// 构建一颗树
+const tree = {
+  value: &quot;A&quot;,
+  children: [
+    {
+      value: &quot;B&quot;,
+      children: [
+        {
+          value: &quot;D&quot;,
+          children: []
+        },
+        {
+          value: &quot;E&quot;,
+          children: []
+        }
+      ]
+    },
+    {
+      value: &quot;C&quot;,
+      children: [
+        {
+          value: &quot;F&quot;,
+          children: []
+        },
+        {
+          value: &quot;G&quot;,
+          children: []
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li>
+<p>深度优先遍历：尽可能的搜索树的分支</p>
+<pre><code class="language-js">// 深度优先遍历思路
+// 访问根节点
+// 遍历子节点，深度优先遍历子节点
+const dfs = (root) =&gt; {
+  console.log(root.value) // 访问根节点
+  dfs.children.forEach(i =&gt; dfs(i)
+}
+dfs(tree)
+</code></pre>
+</li>
+<li>
+<p>广度优先遍历：先访问离根节点最近的节点</p>
+<pre><code class="language-js">// 广度优先遍历思路
+// 新建一个队列
+// 根节点入队
+// 把队头出队并访问
+// 将队头的子节点依次入队
+// 重复最后两步
+const bfs = (root) =&gt; {
+  const q = [root] // 根节点入队
+  while(q.length) {
+    const t = q.shift() // 队头出队
+    console.log(t.value) // 访问队头元素
+    t.children.forEach(i =&gt; q.push(i)) // 将对头的子节点依次入队
+  }
+}
+bfs(tree)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>二叉树先中后序遍历（递归与非递归版）</p>
+<pre><code class="language-js">// 二叉树就是树中的每个节点最多只能有两个子节点
+// 构建一颗二叉树
+const binaryTree = {
+  value: &quot;A&quot;,
+  left: {
+    value: &quot;B&quot;,
+    left: {
+      value: &quot;D&quot;,
+      left: null,
+      right: null
+    },
+    right: {
+      value: &quot;E&quot;,
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    value: &quot;C&quot;,
+    left: {
+      value: &quot;F&quot;,
+      left: null,
+      right: null,
+    },
+    right: {
+      value: &quot;G&quot;,
+      left: null,
+      right: null
+    }
+  }
+}
+</code></pre>
+<ul>
+<li>
+<p>先序遍历</p>
+<pre><code class="language-js">// 先序遍历思路
+// 访问根节点
+// 先序遍历根节点的左子树
+// 先序遍历根节点的右子树
+
+// 递归版
+const preorder = (root) =&gt; {
+  if (!root) return
+  console.log(root.value) // 访问根节点
+  preorder(root.left) // 先序遍历根节点的左子树
+  preorder(root.right) // 先序遍历根节点的右子树
+}
+
+preorder(binaryTree)
+
+// 非递归版
+// 除了先序遍历的基本思路外，非递归版借用栈来实现
+// 因为栈是后进先出的，所以入栈的时候我们需要先把右子树入栈，再左子树入栈
+const preorder = (root) =&gt; {
+  if (root) return
+  const stack = [root]
+  while(stack.length) {
+    const p = stack.pop()
+    console.log(p.value) // 访问根节点
+    stack.push(p.right) // 将根节点的右子树入栈
+    stack.push(p.left) // 将根节点的左子树入栈
+  }
+}
+
+preorder(binaryTree)
+</code></pre>
+</li>
+<li>
+<p>中序遍历</p>
+<pre><code class="language-js">// 中序遍历的思路
+// 中序遍历根节点的左子树
+// 访问根节点
+// 中序遍历根节点的右子树
+
+// 递归版
+const inorder = (root) =&gt; {
+  if (root) return
+  inorder(root.left) // 中序遍历根节点的左子树
+  console.log(root.value) // 访问根节点
+  inorrder(root.right) // 中序遍历根节点的右子树
+}
+
+inorder(binaryTree)
+
+// 非递归版
+// 除了中序遍历的思路外，非递归版借用栈来实现
+// 定义一个指针，将指针的左子树入栈，直到指针为空，访问根节点，将指针赋值有指针
+const inorder = (root) =&gt; {
+  if (!root) return
+  const stack = []
+  let p = root
+  while(stack.length || p) {
+    while(p) { // 中序遍历左子树
+      stack.push(p)
+      p = p.left
+    }
+    const t = stack.pop()
+    console.log(t.value) // 访问根节点
+    p = t.right // 中序遍历右子树
+  }
+}
+
+inorder(binaryTree)
+</code></pre>
+</li>
+<li>
+<p>后序遍历</p>
+<pre><code class="language-js">// 后序遍历的思路
+// 后序遍历根节点的左子树
+// 后序遍历根节点的右子树
+// 访问根节点
+
+// 递归版
+const postorder = (root) =&gt; {
+  if (root) return
+  postorder(root.left) // 后序遍历左子树
+  postorder(root.right) // 后序遍历左子树
+  console.log(root.value) // 访问根节点
+}
+
+postorder(binaryTree)
+
+// 非递归版
+// 出了后序遍历的思路外，非递归版借用栈来实现
+// 因为最后访问的根节点，所以我们可以把所有的节点按照规则进栈后，再出栈访问
+
+const postorder = (root) =&gt; {
+  if (!root) return
+  const stack = [root]
+  const outputStack = []
+  while(stack.length) {
+    const t = stack.pop()
+    outputStack.push(t)
+    if (t.left) {
+      stack.push(t.left)
+    }
+    if (t.right) {
+      stack.push(t.right)
+    }
+  }
+  
+  while(outputStack.length) {
+    const t = outputStack.pop()
+    console.log(t.value)
+  }
+}
+
+postorder(binaryTree)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="leetcode算法题题号104二叉树的最大深度">LeetCode算法题：题号104，<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/">二叉树的最大深度</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求最大深度，考虑使用深度优先遍历</li>
+<li>在遍历的过程中，记录每个节点的层级，找出最大的层级</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用深度优先遍历，遍历过程中，如果左子树和右子树为空时，记录该层级</li>
+<li>遍历结束后返回最大层级</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    let max = 0
+    const dfs = (root, d) =&gt; {
+        if (!root) return
+        if (!root.left &amp;&amp; !root.right) {
+          max = Math.max(m, d)
+        }
+        dfs(root.left, d + 1)
+        dfs(root.right, d + 1)
+    }
+    dfs(root, 1)
+    return m
+};
+</code></pre>
+<p>因为代码中使用了递归，循环的次数是树的节点数，所以时间复杂度是O(n)，n是树的节点数。</p>
+<p>因为代码中使用了递归，函数调用堆栈的大小可能是树的节点数或者是树的层级，所以空间复杂度是O(n)或者是O(logn)，n是树的节点数。</p>
+<h3 id="leetcode算法题题号111二叉树的最小深度">LeetCode算法题：题号111，<a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/">二叉树的最小深度</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求二叉树的最小深度，使用广度优先遍历</li>
+<li>遇到叶子节点，停止遍历，返回当前层级</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用广度优先遍历二叉度，并记录每一层的层数</li>
+<li>遇到叶子节点，停止遍历返回当前层级</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minDepth = function(root) {
+	  if (!root) return 0
+    const q = [[root, 1]]
+    while(q.length) {
+      const [n, d] = q.shift()
+      if (!n.left &amp;&amp; !n.right) {
+        return d
+      }
+      if (n.left) {
+        q.push([n.left, d + 1])
+      }
+      if (n.right) {
+        q.push([n.right, d + 1])
+      }
+    }
+};
+
+</code></pre>
+<p>由于代码中有个while循环，循环的次数最大是树的节点数，所以时间复杂度是O(n)，n是树的节点数。</p>
+<p>由于代码中用到了队列的数据结构，长度并不会线性的增长，最大长度是树的节点数，所以空间复杂度是O(n)，n是树的节点数。</p>
+<h3 id="leetcode算法题题号102二叉树的层序遍历">LeetCode算法题：题号102，<a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/">二叉树的层序遍历</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>层序遍历顺序就是广度优先遍历</li>
+<li>不过遍历时需要记录当前节点所在的层级，目的是为了添加到数组中</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用广度优先遍历二叉树</li>
+<li>遍历过程中，记录每个节点的层级，并将其添加到不同的数组中</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+  if (!root) { return [] }
+  const q = [[root, 0]]
+  const res = []
+  while(q.length) {
+    const [n, d] = q.shift();
+    res[d] = res[d] ? [...res[d], n.val] : [n.val]
+    if (n.left) {
+      q.push([n.left, d + 1])
+    }
+    if (n.right) {
+      q.push([n.right, d + 1])
+    }
+  }
+  
+  return res
+};
+</code></pre>
+<p>由于代码中有个while循环，循环的次数是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码中用到了队列的数据结构，长度并不会线性的增长，长度最大是二叉树的节点数，所以空间复杂度是O(n)，n是二叉树的节点数。</p>
+<h3 id="leetcode算法题题号94二叉树的中序遍历">LeetCode算法题：题号94，<a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/">二叉树的中序遍历</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>使用二叉树的中序遍历，在遍历过程中记录每个节点的值</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用二叉树的中序遍历，把访问根节点修改成对应的逻辑即可</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+  if (!root) { return [] }
+  const stack = []
+  let p = root
+  const res = []
+  while(stack.length || p) {
+    while(p) {
+      stack.push(p)
+      p = p.left
+    }
+    const t = stack.pop()
+    res.push(t.val)
+    p = t.right
+  }
+  
+  return res
+};
+</code></pre>
+<p>由于代码中使用while循环，循环的次数是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码中用到了栈数据结构，长度不会线性增长，最大长度是二叉树的节点数，所以空间复杂度是O(n)，n是二叉树的节点数。</p>
+<h3 id="leetcode算法题题号112路径总和">LeetCode算法题：题号112，<a href="https://leetcode-cn.com/problems/path-sum/">路径总和</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>求路径总和，使用深度优先遍历</li>
+<li>遍历过程中记录路径的总和</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>使用深度优先遍历二叉树，记录路径的总和，如果是叶子节点并且总和与传入的目标值相等，结束循环。</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {boolean}
+ */
+var hasPathSum = function(root, targetSum) {
+  if (!root) { return false }
+  let res = false
+  const dfs = (n, c) =&gt; {
+    if (!n.left &amp;&amp; !n.right &amp;&amp; c === targetSum) {
+      res = true
+      return
+    }
+    if (n.left) {
+      dfs(n.left, c + n.left.val)
+    }
+    if (n.right) {
+      dfs(n.right, c + n.right.val)
+    }
+  }
+  dfs(root, root.val)
+  return res
+};
+</code></pre>
+<p>由于代码使用递归，调用的次数最大是二叉树的节点数，所以时间复杂度是O(n)，n是二叉树的节点数。</p>
+<p>由于代码使用递归，函数调用堆栈可能是二叉树的节点数，或者是二叉树的层级，所以空间复杂度是O(n)或者是O(logn)，n是二叉树的节点数。</p>
+<p>最后，希望读者可以通过本篇文章对<code>树</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之字典]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/</id>
@@ -779,10 +1245,10 @@ var isValid = function(s) {
 <p><a href="/shu-ju-jie-gou-zhi-ji-he/">集合（Set）</a>：一个<code>无序</code>且<code>唯一</code>的数据结构，ES6 中的集合, 名<code>Set</code>。</p>
 </li>
 <li>
-<p><code>字典（Map）</code>：一个用<code>键值对</code>存储<code>唯一值</code>的数据结构，ES6 中的字典，名<code>Map</code></p>
+<p><a href="/shu-ju-jie-gou-zhi-zi-dian/">字典（Map）</a>：一个用<code>键值对</code>存储<code>唯一值</code>的数据结构，ES6 中的字典，名<code>Map</code></p>
 </li>
 <li>
-<p><code>树（Tree）</code>：一种分层数据的抽象模型，JavaScript 中没有树，通过 Array 和 Object 构建树。</p>
+<p><a href="/shu-ju-jie-gou-zhi-shu/">树（Tree）</a>：一种分层数据的抽象模型，JavaScript 中没有树，通过 Array 和 Object 构建树。</p>
 </li>
 <li>
 <p><code>图（graph）</code>：一种网络结构的抽象模型，是一组由边连接的节点，JavaScript 中没有图，通过 Array 和 Object 构建图。</p>
