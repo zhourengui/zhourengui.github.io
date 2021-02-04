@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-02-03T09:18:01.287Z</updated>
+    <updated>2021-02-04T08:32:37.546Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,273 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之图]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-tu/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-tu/">
+        </link>
+        <updated>2021-02-04T08:31:18.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>
+<p>什么是<code>图</code></p>
+</li>
+<li>
+<p><code>图</code>的常用操作</p>
+</li>
+<li>
+<p>三道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>树</code></p>
+</li>
+<li>
+<p>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></p>
+</li>
+</ul>
+<h3 id="什么是图">什么是图</h3>
+<p><code>图</code>是网络结构的抽象模型，是一组由边连接的节点，JavaScript中没有图，使用Object和Array构建图，图的表示法有领接矩阵、领接表（JavaScript中常用）、关联矩阵等，图可以表示二元关系比如：道路、航班等。</p>
+<p>领接矩阵表示：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/lead_matrix.jpg" alt="矩阵" loading="lazy"></figure>
+<p>领接表表示：</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/graph.png" alt="图" loading="lazy"></figure>
+<pre><code class="language-js">const graph = {
+  A: [&quot;B&quot;, &quot;D&quot;],
+  B: [&quot;E&quot;],
+  C: [&quot;D&quot;],
+  D: [&quot;E&quot;],
+  E: []
+}
+</code></pre>
+<h3 id="图的常用操作">图的常用操作</h3>
+<ul>
+<li>
+<p>深度优先遍历</p>
+<pre><code class="language-js">// 深度优先遍历思路
+// 访问根节点
+// 对根节点没访问过的相邻节点进行深度优先遍历
+
+const graph = {
+  A: [&quot;B&quot;, &quot;D&quot;],
+  B: [&quot;E&quot;],
+  C: [&quot;D&quot;],
+  D: [&quot;E&quot;],
+  E: []
+}
+
+const set = new Set()
+
+const dfs = (root) =&gt; {
+  set.add(root)
+  console.log(graph[root]) // 访问根节点
+  graph[root].forEach(i =&gt; {
+    if (!set.has(i)) {
+      dfs(i)
+    }
+  })
+}
+
+dfs(&quot;A&quot;)
+
+</code></pre>
+</li>
+<li>
+<p>广度优先遍历</p>
+<pre><code class="language-js">// 广度优先遍历思路
+// 新建一个队列，把根节点入队
+// 把队头出队访问
+// 把队头没访问过的相邻节点入队
+// 重复二三步
+
+const graph = {
+  A: [&quot;B&quot;, &quot;D&quot;],
+  B: [&quot;E&quot;],
+  C: [&quot;D&quot;],
+  D: [&quot;E&quot;],
+  E: []
+}
+
+const bfs = (root) =&gt; {
+  const q = [root]
+  const set = new Set()
+  while(q.length) {
+    const h = q.shift()
+    set.add(h)
+    console.log(graph[h])
+    graph[h].forEach(i =&gt; {
+      if (!set.has(i)) {
+        q.push(i)
+      }
+    })
+  }
+}
+
+bfs(&quot;A&quot;)
+</code></pre>
+</li>
+</ul>
+<h3 id="leetcode算法题题号65有效的数字">LeetCode算法题：题号65，<a href="https://leetcode-cn.com/problems/valid-number/">有效的数字</a></h3>
+<p>根据题目的要求，可以构建出下面的图，3、5、6是题目中所说的有效的数字</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/leetcode65.jpg" alt="leetcode65" loading="lazy"></figure>
+<p>解题思路：</p>
+<ul>
+<li>构建一个表示状态的图</li>
+<li>遍历字符串，并沿着图走，如果到了某个节点无路可走，说明是个无效的数字，返回false</li>
+<li>遍历结束后，如果状态在3、5、6的时候说明是有效的数字</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isNumber = function(s) {
+  const graph = {
+    0: { &quot;black&quot;: 0, &quot;sign&quot;: 1, &quot;number&quot;: 6, &quot;.&quot;: 2 },
+    1: { &quot;number&quot;: 6, &quot;.&quot;: 2 },
+    2: { &quot;number&quot;: 3 },
+    3: { &quot;e&quot;: 4, &quot;number&quot;: 3 },
+    4: { &quot;number&quot;: 5, &quot;sign&quot;: 7 },
+    5: { &quot;number&quot;: 5 },
+    6: { &quot;number&quot;: 6, &quot;.&quot;: 3, &quot;e&quot;: 4 },
+    7: { &quot;number&quot;: 5 }
+  }
+  let state = 0
+  for (let c of s.trim()) {
+    if (c &gt;= 0 &amp;&amp; c &lt;= 9) {
+      c = &quot;number&quot;
+    }
+    if ([&quot;+&quot;, &quot;-&quot;].includes(c)) {
+      c = &quot;sign&quot;
+    }
+    if ([&quot;e&quot;, &quot;E&quot;].includes(c)) {
+      c = &quot;e&quot;
+    }
+    state = graph[state][c]
+    if (state === undefined) {
+      return false
+    }
+  }
+  return [3, 5, 6].includes(state)
+};
+</code></pre>
+<p>由于代码用到了for循环，循环的次数最多是字符串的长度，所以时间复杂度是O(n)，n是字符串的长度。</p>
+<p>由于代码中没有用到临时的数据结构，所以空间复杂度是O(1)。</p>
+<h3 id="leetcode算法题题号417太平洋大西洋水流问题">LeetCode算法题：题号417，<a href="https://leetcode-cn.com/problems/pacific-atlantic-water-flow/">太平洋大西洋水流问题</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>把矩阵想象成图</li>
+<li>从海岸线逆流而上遍历图，所到之处就是可以流到某个大洋的坐标</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新建两个矩阵，分别记录能流到两个大洋的目标</li>
+<li>从海岸线，同时深度优先遍历图，过程中填充矩阵</li>
+<li>遍历两个矩阵，找出能流到两个大洋的坐标</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">var pacificAtlantic = function(matrix) {
+  if (!matrix || matrix.length === 0) {
+    return []
+  }
+  const m = matrix.length
+  const n = matrix[0].length
+  const flow1 = Array.from({ length: m }, () =&gt;
+    Array.from({ length: n }, () =&gt; false)
+  )
+  const flow2 = Array.from({ length: m }, () =&gt;
+    Array.from({ length: n }, () =&gt; false)
+  )
+
+  const dfs = (x, y, flow) =&gt; {
+    flow[x][y] = true
+    ;[
+      [x + 1, y],
+      [x - 1, y],
+      [x, y + 1],
+      [x, y - 1],
+    ].forEach(([ix, iy]) =&gt; {
+      if (
+        ix &gt;= 0 &amp;&amp;
+        iy &gt;= 0 &amp;&amp;
+        ix &lt;= m - 1 &amp;&amp;
+        iy &lt;= n - 1 &amp;&amp;
+        !flow[ix][iy] &amp;&amp;
+        matrix[ix][iy] &gt;= matrix[x][y]
+      ) {
+        dfs(ix, iy, flow)
+      }
+    })
+  }
+
+  for (let i = 0; i &lt; m; i++) {
+    dfs(i, 0, flow1)
+    dfs(i, n - 1, flow2)
+  }
+
+  for (let j = 0; j &lt; n; j++) {
+    dfs(0, j, flow1)
+    dfs(m - 1, j, flow2)
+  }
+
+  const res = []
+
+  for (let i = 0; i &lt; m; i++) {
+    for (let j = 0; j &lt; n; j++) {
+      if (flow1[i][j] &amp;&amp; flow2[i][j]) {
+        res.push([i, j])
+      }
+    }
+  }
+
+  return res
+}
+</code></pre>
+<p>由于代码中遍历了整个矩阵，所以空间复杂度是O(m * n)，m是矩阵的列数，n是矩阵的行数。</p>
+<p>由于代码中使用了递归，调用的堆栈是m * n也就是堆栈的列数*行数，所以空间复杂度是O(m * n)。</p>
+<h3 id="leetcode算法题题号133克隆图">LeetCode算法题：题号133，<a href="https://leetcode-cn.com/problems/clone-graph/">克隆图</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>拷贝所有的节点</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>深度或者广度优先遍历所有节点</li>
+<li>拷贝所有节点，存储起来</li>
+<li>将拷贝的节点，按照原图的连接方法进行连接</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * // Definition for a Node.
+ * function Node(val, neighbors) {
+ *    this.val = val === undefined ? 0 : val;
+ *    this.neighbors = neighbors === undefined ? [] : neighbors;
+ * };
+ */
+
+/**
+ * @param {Node} node
+ * @return {Node}
+ */
+var cloneGraph = function(node) {
+    if (!node) { return }
+    const q = [node]
+    const map = new Map()
+    map.set(node, new Node(node.val))
+    while(q.length) {
+        const h = q.shift()
+        ;(h.neighbors || []).forEach((i) =&gt; {
+            if (!map.has(i)) {
+                q.push(i)
+                map.set(i, new Node(i.val))
+            }
+            map.get(h).neighbors.push(map.get(i))
+        })
+    }
+    return map.get(node)
+};
+</code></pre>
+<p>由于代码中使用了while循环，循环的次数是节点数，所以时间复杂度是O(n)，n是节点的数量。</p>
+<p>由于代码中使用了队列数据结构，最大的长度是节点数量，所以空间复杂度是O(n)，n是节点的数量。</p>
+<p>最后，希望读者可以通过本篇文章对<code>图</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之树]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-shu/</id>
@@ -1251,7 +1518,7 @@ var isValid = function(s) {
 <p><a href="/shu-ju-jie-gou-zhi-shu/">树（Tree）</a>：一种分层数据的抽象模型，JavaScript 中没有树，通过 Array 和 Object 构建树。</p>
 </li>
 <li>
-<p><code>图（graph）</code>：一种网络结构的抽象模型，是一组由边连接的节点，JavaScript 中没有图，通过 Array 和 Object 构建图。</p>
+<p><a href="/shu-ju-jie-gou-zhi-tu/">图（graph）</a>：一种网络结构的抽象模型，是一组由边连接的节点，JavaScript 中没有图，通过 Array 和 Object 构建图。</p>
 </li>
 <li>
 <p><code>堆（Heap）</code>：一种特殊的完全二叉树，所有的节点大于等于（最大堆）或小于等于（最小堆）它的子节点，JavaScript 中没有堆，通过 Array 表示堆。</p>
