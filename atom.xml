@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/zhourengui/zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-02-04T08:35:19.764Z</updated>
+    <updated>2021-02-05T06:36:41.637Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
     <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
@@ -10,6 +10,447 @@
     <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
     <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构之堆]]></title>
+        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui/</id>
+        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui/">
+        </link>
+        <updated>2021-02-05T06:35:18.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>堆</code></li>
+<li><code>堆</code>的使用场景</li>
+<li>使用JavaScript构建<code>堆</code></li>
+<li>三道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>堆</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="什么是堆">什么是堆</h3>
+<p><code>堆</code>是一种特殊的完全二叉树，所有的节点都大于等于（最大堆）或者小于等于（最小堆）它的子节点，JavaScript通常使用数组表示堆，左侧子节点的位置是<code>2 * index + 1</code>，右侧子节点的位置是<code>2 * index + 2</code>，父节点位置是<code>（index - 1）/ 2</code>。</p>
+<h3 id="堆的使用场景">堆的使用场景</h3>
+<ul>
+<li>堆能高效、快速地找出最大值和最小值，时间复杂度是O(1)。</li>
+<li>找出第K个最大(小)元素思路
+<ul>
+<li>构建一个推，并将元素依次插入堆中</li>
+<li>当堆的容量超过K，就删除堆顶</li>
+<li>插入结束后，堆顶就是第K个最大元素</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用javascript构建堆">使用JavaScript构建堆</h3>
+<pre><code class="language-js">// 最小堆
+// 构建堆的思路
+// 在类里声明一个数组，用来装元素
+// 主要方法：插入、删除堆顶、获取堆顶、获取堆大小
+class MinHead {
+  constructor() {
+    this.heap = []
+  }
+
+  /**
+   * 获取左节点索引
+   * @param {number} index
+   */
+  getLeftIndex(index) {
+    return index * 2 + 1
+  }
+
+  /**
+   * 获取右节点索引
+   * @param {number} index
+   */
+  getRightIndex(index) {
+    return index * 2 + 2
+  }
+
+  /**
+   * 获取堆顶
+   */
+  peek() {
+    return this.heap[0]
+  }
+
+  /**
+   * 获取堆大小
+   */
+  size() {
+    return this.heap.length
+  }
+
+  /**
+   * 交换元素
+   * @param {number} i1
+   * @param {number} i2
+   */
+  swap(i1, i2) {
+    const tmp = this.heap[i1]
+    this.heap[i1] = this.heap[i2]
+    this.heap[i2] = tmp
+  }
+
+  /**
+   * 获取父节点索引
+   * @param {number} index
+   */
+  getParentIndex(index) {
+    return (index - 1) &gt;&gt; 1
+  }
+
+  /**
+   * 将元素往上移
+   * @param {number} index
+   */
+  shiftUp(index) {
+    // 如果元素已到堆顶退出即可
+    // 获取父节点与当前节点进行比较，如果父节点大于当前节点，则进行交换，并递归
+    if (index === 0) return
+    const parentIndex = this.getParentIndex(index)
+    if (this.heap[parentIndex] &gt; this.heap[index]) {
+      this.swap(parentIndex, index)
+      this.shiftUp(parentIndex)
+    }
+  }
+
+  /**
+   * 插入方法
+   * @param {number} target
+   */
+  insert(target) {
+    // 将值插入到堆的底部，即数组的结尾
+    // 然后上移：将这个值与父节点进行交换，直到父节点小于等于插入的这个值
+    // 大小为K的堆中插入元素的时间复杂度是O(logK)
+    this.heap.push(target)
+    this.shiftUp(this.heap.length - 1)
+  }
+
+  /**
+   * 下移元素
+   * @param {number} index
+   */
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index)
+    const rightIndex = this.getRightIndex(index)
+    if (this.heap[index] &gt; this.heap[leftIndex]) {
+      this.swap(leftIndex, index)
+      this.shiftDown(leftIndex)
+    }
+
+    if (this.heap[index] &gt; this.heap[rightIndex]) {
+      this.swap(rightIndex, index)
+      this.shiftDown(rightIndex)
+    }
+  }
+
+  /**
+   * 删除堆顶
+   */
+  pop() {
+    // 使用数组的尾元素替换堆顶（直接删除堆顶会破坏堆的结构）
+    // 然后下移操作：将新堆顶和他的子节点进行交换，直到新堆顶小于等于子节点
+    // 大小为K的堆下移操作的时间复杂度是O(logK)
+    this.heap[0] = this.heap.pop()
+    this.shiftDown(0)
+  }
+}
+</code></pre>
+<h3 id="leetcode算法题题号215数组中的第k个最大元素">LeetCode算法题：题号215，<a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/">数组中的第K个最大元素</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>看到第K个最大元素，考虑使用最小堆</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>构建一个最小堆，并依次把数组的值插入到堆中</li>
+<li>当堆的容量大于K时，就删除堆顶</li>
+<li>插入结束后，返回堆顶，堆顶就是第K个最大元素</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">class MinHead {
+  constructor() {
+    this.heap = []
+  }
+  getLeftIndex(index) {
+    return index * 2 + 1
+  }
+  getRightIndex(index) {
+    return index * 2 + 2
+  }
+  peek() {
+    return this.heap[0]
+  }
+  size() {
+    return this.heap.length
+  }
+  swap(i1, i2) {
+    const tmp = this.heap[i1]
+    this.heap[i1] = this.heap[i2]
+    this.heap[i2] = tmp
+  }
+  getParentIndex(index) {
+    return (index - 1) &gt;&gt; 1
+  }
+  shiftUp(index) {
+    if (index === 0) return
+    const parentIndex = this.getParentIndex(index)
+    if (this.heap[parentIndex] &gt; this.heap[index]) {
+      this.swap(parentIndex, index)
+      this.shiftUp(parentIndex)
+    }
+  }
+  insert(target) {
+    this.heap.push(target)
+    this.shiftUp(this.heap.length - 1)
+  }
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index)
+    const rightIndex = this.getRightIndex(index)
+    if (this.heap[index] &gt; this.heap[leftIndex]) {
+      this.swap(leftIndex, index)
+      this.shiftDown(leftIndex)
+    }
+
+    if (this.heap[index] &gt; this.heap[rightIndex]) {
+      this.swap(rightIndex, index)
+      this.shiftDown(rightIndex)
+    }
+  }
+  pop() {
+    this.heap[0] = this.heap.pop()
+    this.shiftDown(0)
+  }
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function(nums, k) {
+  const heap = new MinHead()
+  for(let i = 0; i &lt; nums.length; i ++) {
+    heap.insert(nums[i])
+    if (heap.size() === k + 1) {
+      heap.pop()
+    }
+  }
+  return heap.peek()
+};
+</code></pre>
+<p>由于代码中使用了循环，并且在堆中插入或者删除堆顶的时候的有个递归，所以时间复杂度时O(n * logK)，n时数组的长度，K是堆的大小。</p>
+<p>由于代码中使用了堆，堆的空间复杂度是O(n)，n是堆的大小。</p>
+<h3 id="leetcode算法题题号347前k个高频元素">LeetCode算法题：题号347，<a href="https://leetcode-cn.com/problems/top-k-frequent-elements/">前K个高频元素</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>前K个高频元素，使用最小堆解决问题</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>构建一个最小堆，并依次把处理过的数据的值插入到堆中</li>
+<li>当堆的容量大于K时，删除堆顶</li>
+<li>遍历结束后返回处理后的堆</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">class MinHead {
+  constructor() {
+    this.heap = []
+  }
+  getLeftIndex(index) {
+    return index * 2 + 1
+  }
+  getRightIndex(index) {
+    return index * 2 + 2
+  }
+  peek() {
+    return this.heap[0]
+  }
+  size() {
+    return this.heap.length
+  }
+  swap(i1, i2) {
+    const tmp = this.heap[i1]
+    this.heap[i1] = this.heap[i2]
+    this.heap[i2] = tmp
+  }
+  getParentIndex(index) {
+    return (index - 1) &gt;&gt; 1
+  }
+  shiftUp(index) {
+    if (index === 0) return
+    const parentIndex = this.getParentIndex(index)
+    if (
+      this.heap[parentIndex] &amp;&amp;
+      this.heap[parentIndex][1] &gt; this.heap[index][1]
+    ) {
+      this.swap(parentIndex, index)
+      this.shiftUp(parentIndex)
+    }
+  }
+  insert(target) {
+    this.heap.push(target)
+    this.shiftUp(this.heap.length - 1)
+  }
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index)
+    const rightIndex = this.getRightIndex(index)
+    if (this.heap[leftIndex] &amp;&amp; this.heap[index][1] &gt; this.heap[leftIndex][1]) {
+      this.swap(leftIndex, index)
+      this.shiftDown(leftIndex)
+    }
+
+    if (
+      this.heap[rightIndex] &amp;&amp;
+      this.heap[index][1] &gt; this.heap[rightIndex][1]
+    ) {
+      this.swap(rightIndex, index)
+      this.shiftDown(rightIndex)
+    }
+  }
+  pop() {
+    this.heap[0] = this.heap.pop()
+    this.shiftDown(0)
+  }
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function(nums, k) {
+  const heap = new MinHead()
+  const map = new Map()
+  for (let i = 0; i &lt; nums.length; i++) {
+    const c = nums[i]
+    map.set(c, map.get(c) ? map.get(c) + 1 : 1)
+  }
+  map.forEach((value, key) =&gt; {
+    heap.insert([key, value])
+    if (heap.size() === k + 1) {
+      heap.pop()
+    }
+  })
+
+  return heap.heap.map((i) =&gt; i[0])
+}
+
+</code></pre>
+<p>由于代码中使用了遍历了数组，所以时间复杂度是O(n)，n是数组的长度，在遍历的时候操作堆，在上移元素或者下移元素的操作中的时间复杂度是O(logK)，K是堆的大小，所以时间复杂度是O(n * logK)。</p>
+<p>由于代码中使用了堆，所以空间复杂度是O(K)，K是堆的大小。</p>
+<h3 id="leetcode算法题题号23合并k个排序链表">LeetCode算法题：题号23，<a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/">合并k个排序链表</a></h3>
+<p>解题思路；</p>
+<ul>
+<li>排序可以使用堆数据结构，由于这道题目是链表，所以在取出堆顶的时候，如果next不为空，则还需要将next插入的堆中</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>构建一个最小堆，并依次把链头插入到堆中</li>
+<li>弹出堆顶接到输出链表，并将堆顶所在链表的新链表头插入到堆中</li>
+<li>等堆元素全部弹出，合并工作就完成了</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">class MinHead {
+  constructor() {
+    this.heap = []
+  }
+  getLeftIndex(index) {
+    return index * 2 + 1
+  }
+  getRightIndex(index) {
+    return index * 2 + 2
+  }
+  peek() {
+    return this.heap[0]
+  }
+  size() {
+    return this.heap.length
+  }
+  swap(i1, i2) {
+    const tmp = this.heap[i1]
+    this.heap[i1] = this.heap[i2]
+    this.heap[i2] = tmp
+  }
+  getParentIndex(index) {
+    return (index - 1) &gt;&gt; 1
+  }
+  shiftUp(index) {
+    if (index === 0) return
+    const parentIndex = this.getParentIndex(index)
+    if (
+      this.heap[parentIndex] &amp;&amp;
+      this.heap[parentIndex].val &gt; this.heap[index].val
+    ) {
+      this.swap(parentIndex, index)
+      this.shiftUp(parentIndex)
+    }
+  }
+  insert(target) {
+    this.heap.push(target)
+    this.shiftUp(this.heap.length - 1)
+  }
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index)
+    const rightIndex = this.getRightIndex(index)
+    if (
+      this.heap[leftIndex] &amp;&amp;
+      this.heap[index].val &gt; this.heap[leftIndex].val
+    ) {
+      this.swap(leftIndex, index)
+      this.shiftDown(leftIndex)
+    }
+
+    if (
+      this.heap[rightIndex] &amp;&amp;
+      this.heap[index].val &gt; this.heap[rightIndex].val
+    ) {
+      this.swap(rightIndex, index)
+      this.shiftDown(rightIndex)
+    }
+  }
+  pop() {
+    const t = this.heap.pop()
+    if (this.size() === 0) {
+      return
+    }
+    this.heap[0] = t
+    this.shiftDown(0)
+  }
+}
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeKLists = function(lists) {
+  const heap = new MinHead()
+  for (let i = 0; i &lt; lists.length; i++) {
+    lists[i] &amp;&amp; heap.insert(lists[i])
+  }
+  const ln = new ListNode(0)
+  let p = ln
+  while (heap.size() &gt; 0) {
+    const t = heap.peek()
+    p.next = t
+    p = p.next
+    heap.pop()
+    if (t.next) {
+      heap.insert(t.next)
+    }
+  }
+  return ln.next
+}
+</code></pre>
+<p>由于代码中使用了while循环，循环的次数是所有链表的长度，时间复杂度是O(n)，在循环的过程在堆在进行上移或者下移的操作，时间复杂度是O(logK)，K是K个链表，所以最终时间复杂度是O(n * logK)。</p>
+<p>由于代码中使用了堆数据结构，所以空间复杂度是O(n)，n是K个链表。</p>
+<p>最后，希望读者可以通过本篇文章对<code>堆</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之图]]></title>
         <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-tu/</id>
@@ -1521,7 +1962,7 @@ var isValid = function(s) {
 <p><a href="/shu-ju-jie-gou-zhi-tu/">图（graph）</a>：一种网络结构的抽象模型，是一组由边连接的节点，JavaScript 中没有图，通过 Array 和 Object 构建图。</p>
 </li>
 <li>
-<p><code>堆（Heap）</code>：一种特殊的完全二叉树，所有的节点大于等于（最大堆）或小于等于（最小堆）它的子节点，JavaScript 中没有堆，通过 Array 表示堆。</p>
+<p><a href="/shu-ju-jie-gou-zhi-dui/">堆（Heap）</a>：一种特殊的完全二叉树，所有的节点大于等于（最大堆）或小于等于（最小堆）它的子节点，JavaScript 中没有堆，通过 Array 表示堆。</p>
 </li>
 </ul>
 <h3 id="认识常见算法">认识常见算法</h3>
