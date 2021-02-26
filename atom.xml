@@ -1,19 +1,325 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://github.com/zhourengui/zhourengui.github.io</id>
+    <id>https://zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-02-05T06:36:41.637Z</updated>
+    <updated>2021-02-26T09:03:48.570Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://github.com/zhourengui/zhourengui.github.io"/>
-    <link rel="self" href="https://github.com/zhourengui/zhourengui.github.io/atom.xml"/>
+    <link rel="alternate" href="https://zhourengui.github.io"/>
+    <link rel="self" href="https://zhourengui.github.io/atom.xml"/>
     <subtitle>一位前端爱好者的大前端养成记</subtitle>
-    <logo>https://github.com/zhourengui/zhourengui.github.io/images/avatar.png</logo>
-    <icon>https://github.com/zhourengui/zhourengui.github.io/favicon.ico</icon>
+    <logo>https://zhourengui.github.io/images/avatar.png</logo>
+    <icon>https://zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
     <entry>
+        <title type="html"><![CDATA[排序与搜索]]></title>
+        <id>https://zhourengui.github.io/pai-xu-yu-sou-suo/</id>
+        <link href="https://zhourengui.github.io/pai-xu-yu-sou-suo/">
+        </link>
+        <updated>2021-02-26T07:26:39.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>排序算法
+<ul>
+<li><code>冒泡排序</code>的实现及分析</li>
+<li><code>选择排序</code>的实现及分析</li>
+<li><code>插入排序</code>的实现及分析</li>
+<li><code>归并排序</code>的实现及分析</li>
+<li><code>快速排序</code>的实现及分析</li>
+</ul>
+</li>
+<li>搜素算法
+<ul>
+<li><code>顺序搜索</code>的实现及分析</li>
+<li><code>二分搜索</code>的实现及分析</li>
+</ul>
+</li>
+<li>两道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>搜索与排序</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="排序算法">排序算法</h3>
+<h4 id="冒泡排序">冒泡排序</h4>
+<pre><code class="language-js">// 实现思路
+// 比较所有相邻，如果第一个比第二个大，则替换位置
+// 一轮下来，可以保证最后一个数是最大的
+// 执行n - 1轮就可以完成排序
+// 时间复杂度是O(n ^ 2)
+Array.prototype.bubbleSort = function() {
+  for (let i = 0; i &lt; this.length - 1; i++) {
+    for (let j = 0; j &lt; this.length - 1 - i; j++) {
+      if (this[j] &gt; this[j + 1]) {
+        const tmp = currentItem
+        this[j] = this[j + 1]
+        this[j + 1] = tmp
+      }
+    }
+  }
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.bubbleSort()
+</code></pre>
+<h4 id="选择排序">选择排序</h4>
+<pre><code class="language-js">// 实现思路
+// 找到第一个最小的值，将它保存在第一位
+// 找到第二个最小的值，将它保存在第二位
+// 以此类推，执行n - 1轮之后，排序完成
+// 时间复杂度是O(n ^ 2)
+Array.prototype.selectionSort = function () {
+  for (let i = 0; i &lt; this.length - 1; i++) {
+    let minIndex = i
+    for (let j = i; j &lt; this.length; j++) {
+      if (this[minIndex] &gt; this[j]) {
+        minIndex = j
+      }
+    }
+    if (i !== minIndex) {
+      let tmp = this[minIndex]
+      this[minIndex] = this[i]
+      this[i] = tmp
+    }
+  }
+}
+
+const arr = [3, 1, 5, 9, 4]
+arr.selectionSort()
+</code></pre>
+<h4 id="插入排序">插入排序</h4>
+<pre><code class="language-js">// 插入排序相对于选择排序、冒泡排序来说，效率相对较高，但是还是不推荐在实际应用中使用
+// 实现思路
+// 从第二个往前比
+// 前面比后面大的往后排
+// 以此类推，执行n - 1轮之后，排序完成
+// 时间复杂度是O(n ^ 2)
+Array.prototype.insertionSort = function () {
+  for (let i = 1; i &lt; this.length; i++) {
+    let tmp = this[i]
+    let j = i
+    while (j &gt; 0) {
+      if (this[j - 1] &gt; tmp) {
+        this[j] = this[j - 1]
+      } else {
+        break
+      }
+      j -= 1
+    }
+    this[j] = tmp
+  }
+}
+
+const arr = [3, 1, 5, 9, 4]
+arr.insertionSort()
+</code></pre>
+<h4 id="归并排序">归并排序</h4>
+<pre><code class="language-js">// 归并排序比冒泡排序、选择排序、插入排序的效率都高，而且归并排序是可以应用到实际的项目中的，火狐浏览器的sort算法使用的就是归并排序
+// 实现思路
+// 分：把数组分成两半，再递归地对子数组进行分操作，直到全部子数组分成一个个单独的数
+// 合：把两个数合并为有序的数组，再对有序的数组进行合并，直到全部子数组合并为一个完整的数组
+// 新建一个空数组res，用于存放最终排序后的数组
+// 比较两个有序数组的头部，较小者出队并推入res中
+// 如果两个数组还有值，重复上一步操作
+// 分的时间复杂度是O(logn)
+// 合的时间复杂度是O(n)
+// 归并排序时间复杂度是O(nlogn)
+Array.prototype.mergeSort = function () {
+  const rec = (arr) =&gt; {
+    if (arr.length === 1) {
+      return arr
+    }
+    const mid = Math.floor(arr.length / 2)
+    const left = arr.slice(0, mid)
+    const right = arr.slice(mid, arr.length)
+    const orderLeft = rec(left)
+    const orderRight = rec(right)
+    const res = []
+    while (orderLeft.length || orderRight.length) {
+      if (orderLeft.length &amp;&amp; orderRight.length) {
+        res.push(
+          orderLeft[0] &gt; orderRight[0] ? orderRight.shift() : orderLeft.shift()
+        )
+      } else if (orderLeft.length) {
+        res.push(orderLeft.shift())
+      } else if (orderRight.length) {
+        res.push(orderRight.shift())
+      }
+    }
+    return res
+  }
+  const res = rec(this)
+  res.forEach((v, k) =&gt; (this[k] = v))
+}
+
+const arr = [3, 1, 5, 9, 4]
+arr.mergeSort()
+</code></pre>
+<h3 id="快速排序">快速排序</h3>
+<pre><code class="language-js">// 快速排序比冒泡排序、选择排序、插入排序的效率都高，而且快速排序是可以应用到实际的项目中的，曾经的Chrome的sort算法使用的是快速排序
+// 实现思路
+// 分区：从数组中任意选择一个“基准”，所有比基准小的元素放在基准前面，所有比基准大的元素放在基准后面
+// 递归：递归地对基准前后的子数组进行分区
+// 递归的时间复杂度：O(logn)
+// 分区操作的时间复杂度是O(n)
+// 快速排序的时间复杂度是：O(nlogn)
+Array.prototype.quickSort = function () {
+  const rec = (arr) =&gt; {
+    if ([0, 1].includes(arr.length)) return arr
+    const left = []
+    const right = []
+    const mid = arr[0]
+    for (let i = 1; i &lt; arr.length; i++) {
+      const c = arr[i]
+      c &gt; mid ? right.push(c) : left.push(c)
+    }
+    return [...rec(left), mid, ...rec(right)]
+  }
+  const res = rec(this)
+  res.forEach((v, k) =&gt; (this[k] = v))
+}
+
+const arr = [5, 3, 6, 2, 8, 0]
+arr.quickSort()
+</code></pre>
+<h3 id="搜索算法">搜索算法</h3>
+<h4 id="顺序搜索">顺序搜索</h4>
+<pre><code class="language-JS">// 实现思路
+// 遍历数组
+// 找到目标值相等的元素，就返回它的下标
+// 遍历结束后，如果没有搜索到目标值，就返回-1
+// 时间复杂度是O(n)
+Array.prototype.sequentialSearch = function (target) {
+  for (let i = 0; i &lt; this.length; i++) {
+    if (this[i] === target) {
+      return i
+    }
+  }
+  return -1
+}
+[5, 3, 6, 2, 8, 0].sequentialSearch(3)
+</code></pre>
+<h3 id="二分搜索">二分搜索</h3>
+<pre><code class="language-js">// 二分搜索（折半搜索），前提是这个数组是有序的
+// 实现思路
+// 从数组的中间元素开始，如果中间元素正好是目标值，则搜索结束
+// 如果目标值大于或小于中间元素，则在大于或小于中间元素的那一半数组中搜索
+// 时间复杂度是O(logn)
+Array.prototype.binarySearch = function (target) {
+  let low = 0
+  let high = this.length - 1
+  while (low &lt;= high) {
+    const mid = Math.floor((low + high) / 2)
+    const c = this[mid]
+    if (c &gt; target) {
+      high = mid - 1
+    } else if (c &lt; target) {
+      low = mid + 1
+    } else {
+      return mid
+    }
+  }
+  return -1
+}
+console.error([1, 2, 3, 4, 5].binarySearch(3)) // 2
+</code></pre>
+<h3 id="leetcode算法题题号21合并两个有序链表">LeetCode算法题：题号21，<a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/">合并两个有序链表</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>与归并排序中合并两个有序数组很相似</li>
+<li>将数组替换成链表即可</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新建一个新链表，作为返回结果</li>
+<li>用指针遍历两个有序链表，并比较两个链表的当前节点，较小者先接入新链表，并将指针后移一步</li>
+<li>遍历结束，返回新链表</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+  let res = new ListNode(0)
+  let p = n
+  let p1 = l1
+  let p2 = l2
+  while(p1 &amp;&amp; p2) {
+    if (p1.val &gt; p2.val) {
+      p.next = p2
+      p2 = p2.next
+    } else {
+      p.next = p1
+      p1 = p1.next
+    }
+    p = p.next
+  }
+  if (p1) {
+    p.next = p1
+  }
+  if (p2) {
+    p.next = p2
+  }
+  return res.next
+};
+</code></pre>
+<p>由于代码中使用了while循环，循环的最大次数是两个链表的数量之和，所以时间复杂度是O(n)，n是两个链表的数量之和。</p>
+<p>由于代码中没有额外的使用线性增长的数据结构，所以空间复杂度是O(1)。</p>
+<h3 id="leetcode算法题题号374猜数字大小">LeetCode算法题：题号374，<a href="https://leetcode-cn.com/problems/guess-number-higher-or-lower/">猜数字大小</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>这到题明显使用的二分算法解题</li>
+<li>调用guess函数，来判断中间元素是否是目标值</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>从数组中间元素取值，如果中间元素正好是目标值，则搜索结束</li>
+<li>如果目标值大于或者小于中间元素，则在数组大于或小于中间元素的那一半搜索</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">/** 
+ * Forward declaration of guess API.
+ * @param {number} num   your guess
+ * @return 	            -1 if num is lower than the guess number
+ *			             1 if num is higher than the guess number
+ *                       otherwise return 0
+ * var guess = function(num) {}
+ */
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var guessNumber = function(n) {
+  let low = 0;
+  let high = n;
+  while(low &lt;= high) {
+    const mid = Math.floor((low + high) / 2);
+    const ret = guess(mid)
+    if (ret === -1) {
+      high = mid - 1
+    } else if (ret === 1) {
+      low = mid + 1
+    } else if (ret === 0) {
+      return mid
+    }
+  }
+};
+</code></pre>
+<p>代码中使用的是二分搜索，所以时间复杂度是O(logn)。</p>
+<p>代码中没有使用到线性增长的数据结构，所以空间复杂度是O(1)。</p>
+<p>最后，希望读者可以通过本篇文章对<code>排序与搜索</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[数据结构之堆]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui/">
         </link>
         <updated>2021-02-05T06:35:18.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -453,8 +759,8 @@ var mergeKLists = function(lists) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之图]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-tu/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-tu/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-tu/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-tu/">
         </link>
         <updated>2021-02-04T08:31:18.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -720,8 +1026,8 @@ var cloneGraph = function(node) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之树]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-shu/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-shu/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-shu/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-shu/">
         </link>
         <updated>2021-02-03T09:16:24.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1186,8 +1492,8 @@ var hasPathSum = function(root, targetSum) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之字典]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/">
         </link>
         <updated>2021-01-29T12:24:12.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1350,8 +1656,8 @@ var minWindow = function(s, t) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之集合]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/">
         </link>
         <updated>2021-01-18T07:40:36.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1436,8 +1742,8 @@ const s1 = new Set(a)
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之链表]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/">
         </link>
         <updated>2021-01-18T06:50:43.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1724,8 +2030,8 @@ path.forEach(i =&gt; {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之队列]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/">
         </link>
         <updated>2021-01-15T08:09:56.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1802,8 +2108,8 @@ RecentCounter.prototype.ping = function(t) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之栈]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-zhan/">
         </link>
         <updated>2021-01-15T02:46:59.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1895,8 +2201,8 @@ var isValid = function(s) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构与算法介绍]]></title>
-        <id>https://github.com/zhourengui/zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/</id>
-        <link href="https://github.com/zhourengui/zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/">
+        <id>https://zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/</id>
+        <link href="https://zhourengui.github.io/shu-ju-yu-jie-gou-suan-fa-jie-shao/">
         </link>
         <updated>2021-01-14T06:19:31.000Z</updated>
         <content type="html"><![CDATA[<h3 id="在学习数据结构与算法之前必须知道的几个概念">在学习数据结构与算法之前必须知道的几个概念：</h3>
