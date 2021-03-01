@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>数据结构之集合 | LittleBoy-前端爱好者</title>
+<title>数据结构与算法 | LittleBoy-前端爱好者</title>
 <meta name="description" content="一位前端爱好者的大前端养成记" />
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="/styles/main.css">
@@ -14,23 +14,11 @@
 <script src="/media/js/view-image.min.js"></script>
 <script src="/media/js/jquery.magnific-popup.min.js"></script>
 <script src="/media/js/functions.js"></script>
-    <meta name="referrer" content="never">
-    <meta name="description" content="本篇文章可以收获的知识：
-
-什么是集合
-集合的使用场景
-一道LeetCode算法题巩固集合
-如何分析时间复杂度和空间复杂度
-JavaScript中的集合
-
-什么是集合
-集合是一种无序且唯一的数据结构，ES6中的集合，名为Set
-集合的使用场..." />
-    <meta name="keywords" content="数据结构与算法" />
-    <script src="/media/js/waterfall.min.js"></script>
-    <script src="/media/js/prism.min.js"></script>
   </head>
   <body>
+    <!-- start: #wrapper -->
+    <div class="wrapper">
+      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -85,184 +73,47 @@ JavaScript中的集合
         </div>
       </div>
 
-      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
-
-        <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
-            <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2021-01-18"><i class="fa fa-calendar"></i><span class="lately">1 个月前</span></time>
-              
-              <a href="/shu-ju-jie-gou-zhi-ji-he#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/shu-ju-jie-gou-zhi-ji-he/"> </span>
-              </a>
-              <span id="/shu-ju-jie-gou-zhi-ji-he/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
-              
-            </div>
-            <div class="info">
-              <div class="tags ">
-                
-                      <a href="/c8Ru9Le1h" class="ctag ctag-0 ctag-c8Ru9Le1h" aria-label="">数据结构与算法</a>
-                    
-              </div>
-              <h1 class="title ularge white bold">数据结构之集合</h1>
-            </div>
-          </div>
-        </div>  
-
+      <main id="home" class="main fullcover no-sidebar content">
+        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
         <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile">
-            <article class="main-article post">
-              <section class="post-content">
-                <div class="text">
-                  <p>本篇文章可以收获的知识：</p>
-<ul>
-<li>什么是<code>集合</code></li>
-<li><code>集合</code>的使用场景</li>
-<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>集合</code></li>
-<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
-<li>JavaScript中的<code>集合</code></li>
-</ul>
-<h3 id="什么是集合">什么是集合</h3>
-<p><code>集合</code>是一种无序且唯一的数据结构，ES6中的集合，名为<code>Set</code></p>
-<h3 id="集合的使用场景">集合的使用场景</h3>
-<ul>
-<li>
-<p>数组去重</p>
-<pre><code class="language-js">const a1 = [1, 1, 2, 2, 3, 4, 5];
-const a2 = [...new Set(a1)]
-</code></pre>
-</li>
-<li>
-<p>判断元素是否存在集合中</p>
-<pre><code class="language-js">const s = new Set([1, 2, 3, 4])
-s.has(1) // 返回boolean
-</code></pre>
-</li>
-<li>
-<p>求两个集合的交集</p>
-<pre><code class="language-js">const s1 = new Set([1, 2, 3, 4])
-const s2 = new Set([2, 3])
-const s3 = new Set([...s1].filter(i =&gt; s1.has(i)))
-</code></pre>
-</li>
-</ul>
-<h3 id="leetcode算法题题号349两个数组的交集">LeetCode算法题：题号349，<a href="https://leetcode-cn.com/problems/intersection-of-two-arrays/">两个数组的交集</a></h3>
-<p>解题思路：</p>
-<ul>
-<li>求交集且唯一</li>
-<li>使用集合</li>
-</ul>
-<p>解题步骤：</p>
-<ul>
-<li>使用集合对数组进行去重</li>
-<li>遍历其中一个数据，判断另一个数据是否包含</li>
-</ul>
-<p>实现代码：</p>
-<pre><code class="language-js">/**
- * @param {number[]} nums1
- * @param {number[]} nums2
- * @return {number[]}
- */
-var intersection = function(nums1, nums2) {
-  const s1 = new Set(nums1);
-  const s2 = new Set(nums2);
-  const res = [...s1].filter(i =&gt; s2.has(i))
-  return res
-};
-</code></pre>
-<p>因为代码有用到了filter，每一个元素都要进行过滤，循环次数最大可能是nums1的长度乘以nums2的长度，所以时间复杂度是O(n * m)，n是nums1的长度，m是nums2的长度。</p>
-<p>因为代码中用到了set数据结构，长度最大是两个数组中最大的长度，所以空间复杂度是O(n)，n是数组的长度。</p>
-<p>这道LeetCode的算法题的最优解法是使用字典数据结构解决，在<code>数据结构之字典</code>文章中也会提及。</p>
-<h3 id="javascript中的集合">JavaScript中的集合</h3>
-<pre><code class="language-js">// JavaScript中集合的常用操作
-const s = new Set()
-s.add(1) // 添加操作
-s.delete(1) // 删除操作
-s.size() // 获取集合的长度
-s.has(1) // 判断集合中是否有当前元素
+          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
+                
+            <!-- start: .articles -->
+            <div class="main-article post">
+  <h2 class="year"># 数据结构与算法</h2>
+    
+      <article class="item default grid-33 tablet-grid-50 np-mobile">
+        <a href="/shu-ju-yu-jie-gou-suan-fa-jie-shao" class="thumb hover-effect">
+          <span class="fullimage cover" style="display: block;background-image: url('/media/images/gridea.jpg');"></span>
+        </a>
+        <div class="info gradient-effect">
+          <time datetime="2021-01-14">2021-01-14</time>
+          <h4 class="title usmall">
+            <a href="/shu-ju-yu-jie-gou-suan-fa-jie-shao">数据结构与算法介绍</a>
+          </h4>
+        </div>
+      </article>
 
-// JavaScript中集合的迭代
-for(let item of m) {}
-for(let item of m.keys()) {}
-for(let item of m.values()) {}
-for(let [key, value] of m.entries()) {} // key === value
-
-// JavaScript中集合与数组互转
-const a = Array.from(new Set([1, 2]))
-const s1 = new Set(a)
-</code></pre>
-<p>最后，希望读者可以通过本篇文章对<code>集合</code>有一定的认识和觉悟。。。。。。</p>
-
-                </div>
-                <div class="clear"></div>
-              </section>
-            </article>
-            <div class="clear"></div>
-
-            <section class="related section">
-              
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
-                 <a href="/shu-ju-jie-gou-zhi-zi-dian" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2021-01-29">2021-01-29</time>
-                  <h4 class="title white no-margin">数据结构之字典</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-              
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
-                 <a href="/shu-ju-jie-gou-zhi-lian-biao" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2021-01-18">2021-01-18</time>
-                  <h4 class="title white no-margin">数据结构之链表</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-
-                <div class="clear"></div>
-            </section>
-
-              <div class="clear"></div>
-              
+    
+    <div class="clear"></div>
+</div>
+            <!-- end: .articles -->
             
-              <div id="comments" class="bg-white hosted ">
-                <div class="clear"></div>
-<script>
-jQuery(document).ready(function($){
-    $('.vemoji-btn').text('😀');
-    $("#comments").on('click', 'span.vat',function(){
-        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
-        $('textarea#veditor').focus();
-    })
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-            if ($(window.location.hash).length) {
-                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
-                clearInterval(checkExist);
-            }
-        }, 100);
-    }
-})
-</script>
-
+                        <div class="epcl-pagination section">
+              <div class="nav">
+                
+                  <a href="https://zhourengui.github.io/c8Ru9Le1h" class="prev button red">上一页</a>
+                
+                
               </div>
-            
-
             </div>
+            
           </div>
+          </div>
+        </div>
       </main>
 
-          <footer id="footer" class="grid-container">
+        <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -408,9 +259,6 @@ jQuery(document).ready(function($){
     })
 </script>
     
-
-      
-    <script src="/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->
