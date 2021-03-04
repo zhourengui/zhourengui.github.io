@@ -1,0 +1,929 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>设计模式介绍 | LittleBoy-前端爱好者</title>
+<meta name="description" content="一位前端爱好者的大前端养成记" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="stylesheet" href="/styles/main.css">
+
+<script src="/media/js/jquery.min.js"></script>
+<script src="/media/js/masonry.pkgd.min.js"></script>
+<script src="/media/js/aos.js"></script>
+<script src="/media/js/pace.min.js"></script>
+<script src="/media/js/view-image.min.js"></script>
+<script src="/media/js/jquery.magnific-popup.min.js"></script>
+<script src="/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="设计模式介绍
+设计模式是软件开发过程中面临的一般问题的解决方案，这些方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。
+在认识23种设计模式之前，需要知道什..." />
+    <meta name="keywords" content="设计模式" />
+    <script src="/media/js/waterfall.min.js"></script>
+    <script src="/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href=""><img src="/media/images/custom-headerLogo.png" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <li class=""><a href="" class="menu">首页</a></li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1614826388097" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/gridea.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2021-03-04"><i class="fa fa-calendar"></i><span class="lately">5 分钟前</span></time>
+              
+              <a href="/she-ji-mo-shi-jie-shao#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/she-ji-mo-shi-jie-shao/"> </span>
+              </a>
+              <span id="/she-ji-mo-shi-jie-shao/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="/SLwZCyjTF" class="ctag ctag-0 ctag-SLwZCyjTF" aria-label="">设计模式</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">设计模式介绍</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <h1 id="设计模式介绍">设计模式介绍</h1>
+<p>设计模式是软件开发过程中面临的一般问题的解决方案，这些方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
+<p>在认识23种设计模式之前，需要知道什么是面向对象、UML类图、设计原则，因为设计模式最开始是通过面向对象语言总结出来的。</p>
+<h2 id="1-认识面向对象">1、认识面向对象</h2>
+<h3 id="11-面向对象和面向过程的区别">1.1、面向对象和面向过程的区别</h3>
+<ul>
+<li>面向过程----步骤化：面向过程就是分析出现需求所需要的步骤，通过函数（方法）一步一步实现这些步骤。</li>
+<li>面向对象----行为化：面向对象是把整个需求<code>按照特点</code>、<code>功能划分</code>，将这些存在共性的部分封装成类（类实例化后才是对象），创建了对象不是为了完成某一个步骤，而是描述某个事物在解决问题的步骤的行为。</li>
+</ul>
+<h3 id="12-面向对象和面向过程的优缺点">1.2、面向对象和面向过程的优缺点</h3>
+<ul>
+<li>面向过程
+<ul>
+<li>优点：性能上比面向对象好，因为类在调用的时候需要实例化，开销大。</li>
+<li>缺点：不容易维护、复用、拓展</li>
+<li>应用：单片机、嵌入式开发、Linux/Unix等对性能要求较高的地方</li>
+</ul>
+</li>
+<li>面向对象
+<ul>
+<li>优点：易维护、易复用、易拓展，由于面向对象有封装、继承、多态的特性，可以设计出低耦合的系统，使系统更加灵活。</li>
+<li>缺点：性能低，类的实例化开销大。</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-面向对象的三大特征">1.3、面向对象的三大特征</h3>
+<ul>
+<li>
+<p>封装（public、private、proteted）</p>
+<ul>
+<li>减少耦合性，不该外露的不外露</li>
+<li>利于数据、结构权限管理</li>
+</ul>
+</li>
+<li>
+<p>继承（extends）</p>
+<ul>
+<li>子类继承父类</li>
+</ul>
+</li>
+<li>
+<p>多态（implements）</p>
+<ul>
+<li>同一个接口不同实现</li>
+</ul>
+</li>
+</ul>
+<p>通过一段代码了解面向对象的三大特性</p>
+<pre><code class="language-typescript">interface IUser {
+  name: string;
+  age: number;
+  speak(): void;
+}
+
+// implements：People类实现IUser接口，这时候People类必须包含接口的属性和方法
+// public：允许通过子类或者当前类的实例对象访问
+// private: 只允许当前类访问，子类或者当前类的实例对象不可访问
+// protected：只允许在类之前访问，实例对象不可访问
+class People implements IUser {
+  constructor(public name: string, public age: number, private weight: number) { }
+  public speak(): void {
+    console.error(`My name is ${this.name}, age ${this.age}`)
+  }
+  public getWeight(): void {
+    console.error(this.weight)
+  }
+}
+
+// extends: Student类继承父类People
+class Student extends People {
+  constructor(public name: string, public age: number, private sWeight: number) {
+    super(name, age, sWeight)
+  }
+}
+
+const student = new Student(&quot;littleboy&quot;, 24, 50)
+student.age // 24
+student.name // littleboy
+student.weight // 访问不到weight属性，因为private不允许实例访问
+</code></pre>
+<h2 id="2-认识uml类图">2、认识UML类图</h2>
+<h3 id="21-什么是uml类图">2.1、什么是UML类图</h3>
+<p>类是具有相似结构、行为和关系的一组对象的描述符。类是面向对象系统中最重要的构造块。类图显示了一组类、接口、协作以及他们之间的关系。在UML中问题域最终要被逐步转化，通过类来建模，通过编程语言构建这些类从而实现系统。类加上他们之间的关系就构成了类图，类图中还可以包含接口、包等元素，也可以包括对象、链等实例。</p>
+<h3 id="22-如何画uml类图">2.2、如何画UML类图</h3>
+<pre><code class="language-typescript">// People中引用House，使用实心的箭头
+// Student和Teacher继承People，使用空心的箭头
+// public用+表示
+// private用-表示
+// protected用#表示
+class House {
+  constructor(public city: string, public price: number) { }
+}
+
+class People {
+  constructor(public name: string, public house?: House) { }
+  public sayHello(): void {
+    console.error(`My name is ${this.name}`)
+  }
+}
+
+class Student extends People {
+  constructor(public name: string, public house?: House) {
+    super(name, house)
+  }
+  public study(): void { }
+}
+
+class Teacher extends People {
+  constructor(public name: string, public house?: House) {
+    super(name, house)
+  }
+  public teacher(): void { }
+}
+</code></pre>
+<p>上面代码对应的UML类图是：</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml.png" alt="" loading="lazy"></figure>
+<p>正常情况下，是先设计出UML类图再根据类图编写代码，这里为了方便理解，所以先看懂代码，再理解UML类图是如何画的。</p>
+<h2 id="3-两道面试题">3、两道面试题</h2>
+<h3 id="31-第一题画出uml类图和写出相应的代码">3.1、第一题（画出UML类图和写出相应的代码）</h3>
+<p>1、打车时，可以打专车或者快车。任何车都有车牌号和名称。</p>
+<p>2、不同车不同价格，快车每公里1元，专车每公里2元。</p>
+<p>3、行程开始时，显示车辆信息</p>
+<p>4、行程结束时，显示打车金额（假定行程就5公里）</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml1.png" alt="" loading="lazy"></figure>
+<pre><code class="language-typescript">class Car {
+  constructor(public carNo: string, public name: string) { }
+}
+
+class QuickCar extends Car {
+  constructor(public carNo: string, public name: string, public perKPrice: number) {
+    super(carNo, name)
+  }
+}
+
+class SpecialCar extends Car {
+  constructor(public carNo: string, public name: string, public perKPrice: number) {
+    super(carNo, name)
+  }
+}
+
+class Trip {
+  public start(): void {
+    console.error(`车牌号：${this.car.carNo}，车辆名称： ${this.car.name}。`)
+  }
+  public end(): void {
+    console.error(`需付金额：${this.car.perKPrice * 5}`)
+  }
+  constructor(public car: QuickCar | SpecialCar) { }
+}
+
+const quickCar = new QuickCar(&quot;粤A&quot;, &quot;丰田&quot;, 1)
+const specialCar = new SpecialCar(&quot;粤C&quot;, &quot;本田&quot;, 2)
+const trip = new Trip(specialCar)
+trip.start()
+trip.end()
+</code></pre>
+<h3 id="32-第二题画出uml类图和写出相应的代码">3.2、第二题（画出UML类图和写出相应的代码）</h3>
+<p>1、某停车场，分n层，每层n个车位</p>
+<p>2、每个车位都能监控到车辆的驶入和离开</p>
+<p>3、车辆进入前，显示每层的空余车位数量</p>
+<p>4、车辆进入时，摄像头可识别车牌号和名称</p>
+<p>5、车辆出来时，出口显示器显示车牌号和停车时长</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml2.png" alt="" loading="lazy"></figure>
+<pre><code class="language-typescript">interface IDist extends Car {
+  inTime: number,
+  lot: Lot
+}
+
+class Parking {
+  public emptyLots: Array&lt;Lot&gt; = []
+  protected cars: { [key: string]: IDist } = {}
+  constructor(public layers: Array&lt;Layer&gt;, public camera: Camera, public monitor: Monitor) { }
+  public beforeEntry(): void {
+    for (let i = 0; i &lt; layers.length; i++) {
+      console.error(`${i}层空余车位数量：${layers[i].showEmptyNums()}`)
+      this.emptyLots = [...this.emptyLots, ...layers[i].getEmptyLots()]
+    }
+  }
+  public whenEntry(car: Car): void {
+    this.camera.distinguish(car)
+    this.cars[car.no] = { ...car, inTime: new Date().getTime(), lot: this.emptyLots[0] }
+    this.emptyLots[0].entry()
+  }
+  public afterLeave(car: Car): void {
+    this.monitor.show(car, this.cars[car.no].inTime)
+    this.cars[car.no].lot.leave()
+    delete this.cars[car.no]
+  }
+}
+
+class Car {
+  constructor(public no: string, public name: string) { }
+}
+
+class Lot {
+  public isUsing: boolean = false
+  public entry(): void {
+    this.isUsing = true
+  }
+  public leave(): void {
+    this.isUsing = false
+  }
+}
+
+class Layer {
+  constructor(public lots: Array&lt;Lot&gt;) { }
+  public showEmptyNums(): number {
+    return this.lots.reduce((t, c) =&gt; t + (c.isUsing ? 0 : 1), 0)
+  }
+  public getEmptyLots(): Array&lt;Lot&gt; {
+    return this.lots.filter(l =&gt; !l.isUsing)
+  }
+}
+
+class Camera {
+  public distinguish(car: Car): void {
+    console.error(`车牌号：${car.no}，车的名称：${car.name}`)
+  }
+}
+
+class Monitor {
+  public show(car: Car, inTime: number): void {
+    console.error(`车牌号：${car.no}，停车时长：${new Date().getTime() - inTime}`)
+  }
+}
+
+const car = new Car(&quot;粤A&quot;, &quot;五菱&quot;)
+const car1 = new Car(&quot;粤B&quot;, &quot;黑&quot;)
+const camera = new Camera()
+const monitor = new Monitor()
+const layers = []
+for (let i = 0; i &lt; 10; i++) {
+  const lots: Array&lt;Lot&gt; = []
+  for (let j = 0; j &lt; 100; j++) {
+    lots.push(new Lot())
+  }
+  layers.push(new Layer(lots))
+}
+const parking = new Parking(layers, camera, monitor)
+parking.beforeEntry()
+parking.whenEntry(car)
+setTimeout(() =&gt; {
+  parking.afterLeave(car)
+}, 3000)
+parking.beforeEntry()
+parking.whenEntry(car1)
+</code></pre>
+<p>输出：</p>
+<pre><code>0层空余车位数量：100
+1层空余车位数量：100
+2层空余车位数量：100
+3层空余车位数量：100
+4层空余车位数量：100
+5层空余车位数量：100
+6层空余车位数量：100
+7层空余车位数量：100
+8层空余车位数量：100
+9层空余车位数量：100
+车牌号：粤A，车的名称：五菱
+0层空余车位数量：99
+1层空余车位数量：100
+2层空余车位数量：100
+3层空余车位数量：100
+4层空余车位数量：100
+5层空余车位数量：100
+6层空余车位数量：100
+7层空余车位数量：100
+8层空余车位数量：100
+9层空余车位数量：100
+车牌号：粤B，车的名称：黑
+车牌号：粤A，停车时长：3002
+</code></pre>
+<h2 id="4-设计原则">4、设计原则</h2>
+<h3 id="41-五大设计原则">4.1、五大设计原则</h3>
+<h4 id="411-单一职责原则single">4.1.1、 单一职责原则（Single）</h4>
+<ul>
+<li>一个程序制作好一件事</li>
+<li>如果功能过于复杂就拆分开，每个部分保持独立</li>
+</ul>
+<pre><code class="language-typescript">// UserSettings的功能就是设置，如果把验证的逻辑也放进UserSettings的话，违背了单一指责的原则，所以需要把验证的逻辑放到正确的位置
+interface ISetting { }
+// Bad
+class UserSettings {
+  constructor(public setting: ISetting) { }
+  public changeSetting(setting: ISetting): void {
+    if (this.verifyCredential()) {
+      this.setting = setting
+    }
+  }
+  public verifyCredential(): boolean {
+    return true
+  }
+}
+
+// Good
+class UserSettings {
+  private auth: UserAuth = new UserAuth()
+  constructor(public setting: ISetting) { }
+  public changeSetting(setting: ISetting): void {
+    if (this.auth.verifyCredential()) {
+      this.setting = setting
+    }
+  }
+}
+
+class UserAuth {
+  public verifyCredential(): boolean {
+    return true
+  }
+}
+</code></pre>
+<h4 id="412-开放封闭原则open-close">4.1.2、 开放封闭原则（Open Close）</h4>
+<ul>
+<li>对拓展进行开发，对修改封闭</li>
+<li>增加需求时，拓展新代码，而非修改已有的代码</li>
+<li>这是软件设计的终极目标</li>
+</ul>
+<pre><code class="language-typescript">// 像第一种写法的HttpRequest，代码会出现很多逻辑都揉合到了一起，这种情况下不利于维护和拓展，并且有很多的if-else的字眼，而第二种完美的解决了第一种的问题
+class Adapter {
+  constructor(public name: AdapterType) { }
+  public request&lt;T&gt;(): Promise&lt;T&gt; {
+    return new Promise&lt;T&gt;(() =&gt; { })
+  }
+}
+enum AdapterType {
+  BrowserAdapter,
+  NodeAdapter
+}
+
+// Bad
+class BrowserAdapter extends Adapter {
+  constructor() {
+    super(AdapterType.BrowserAdapter)
+  }
+}
+class NodeAdapter extends Adapter {
+  constructor() {
+    super(AdapterType.NodeAdapter)
+  }
+}
+class HttpRequest {
+  constructor(private adapter: Adapter) { }
+  public fetch&lt;T&gt;(): Promise&lt;T&gt; {
+    if (this.adapter.name === AdapterType.BrowserAdapter) {
+      // 进行请求逻辑
+      return new Promise&lt;T&gt;(() =&gt; { })
+    } else if (this.adapter.name === AdapterType.NodeAdapter) {
+      // 进行请求逻辑
+      return new Promise&lt;T&gt;(() =&gt; { })
+    }
+  }
+}
+// Good
+class BrowserAdapter extends Adapter {
+  constructor() {
+    super(AdapterType.BrowserAdapter)
+  }
+  public request&lt;T&gt;(): Promise&lt;T&gt; {
+    return new Promise&lt;T&gt;(() =&gt; { })
+  }
+}
+class NodeAdapter extends Adapter {
+  constructor() {
+    super(AdapterType.NodeAdapter)
+  }
+  public request&lt;T&gt;(): Promise&lt;T&gt; {
+    return new Promise&lt;T&gt;(() =&gt; { })
+  }
+}
+class HttpRequest {
+  constructor(private adapter: Adapter) { }
+  public fetch&lt;T&gt;(): Promise&lt;T&gt; {
+    return this.adapter.request&lt;T&gt;().then((res) =&gt; { return res })
+  }
+}
+const httpRequest = new HttpRequest(new BrowserAdapter())
+</code></pre>
+<h4 id="413-李氏置换原则liskov-substitution">4.1.3、 李氏置换原则（Liskov Substitution）</h4>
+<ul>
+<li>
+<p>子类能够覆盖父类</p>
+</li>
+<li>
+<p>父类能出现的地方子类就能出现</p>
+</li>
+</ul>
+<pre><code class="language-typescript">// Bad
+class Rect {
+  protected width: number = 0
+  protected height: number = 0
+  protected color: string
+  public getArea(): number {
+    return this.width * this.height
+  }
+  public setWidth(width: number) {
+    this.width = width
+  }
+  public setHeight(height: number) {
+    this.height = height
+  }
+  public setColor(color: string): void {
+    this.color = color
+  }
+  public render(): void { }
+}
+
+class Square extends Rect {
+  constructor() {
+    super()
+  }
+  public setWidth(width: number) {
+    this.width = width
+    this.height = width
+  }
+  public setHeight(height: number) {
+    this.width = height
+    this.height = height
+  }
+}
+// Good
+class Shape {
+  protected color: string
+  public setColor(color: string): void {
+    this.color = color
+  }
+  public render(): void { }
+}
+
+class Rect extends Shape {
+  private width: number = 0
+  private height: number = 0
+  public getArea(): number {
+    return this.width * this.height
+  }
+  constructor() {
+    super()
+  }
+}
+
+class Square extends Shape {
+  private width: number = 0
+  public getArea(): number {
+    return this.width * this.width
+  }
+  constructor() {
+    super()
+  }
+}
+</code></pre>
+<h4 id="414-接口独立原则interface-segregation">4.1.4、 接口独立原则（Interface Segregation）</h4>
+<ul>
+<li>保持接口独立，避免出现胖接口</li>
+<li>类似单一原则，这里更关注接口</li>
+</ul>
+<pre><code class="language-typescript">interface Settings {
+  rootNode: Element
+  options: { [key: string]: any }
+}
+
+// Bad
+class DomTraverser {
+  public rootNode: Element
+  public setup(): void {
+    this.rootNode = this.settings.rootNode
+    this.settings.options.animationModule()
+  }
+  public traverse(): void { }
+  constructor(public settings: Settings) {
+    this.setup()
+  }
+}
+
+const $1 = new DomTraverser({
+  rootNode: document.querySelector(&quot;#app&quot;),
+  options: {
+    animationModule() { }
+  }
+})
+
+// Good
+class DomTraverser {
+  public rootNode: Element
+  public options: { [key: string]: any }
+  public setup(): void {
+    this.rootNode = this.settings.rootNode
+    this.setupOptions()
+  }
+  public setupOptions(): void {
+    if (this.options.animationModule) { }
+  }
+  public traverse(): void { }
+  constructor(public settings: Settings) {
+    this.options = settings.options
+    this.setup()
+  }
+}
+
+const $1 = new DomTraverser({
+  rootNode: document.querySelector(&quot;#app&quot;),
+  options: {
+    animationModule() { }
+  }
+})
+</code></pre>
+<h4 id="415-依赖倒置原则dependence-inversion">4.1.5、 依赖倒置原则（Dependence Inversion）</h4>
+<ul>
+<li>面向接口编程，依赖于抽象而不依赖于具体</li>
+<li>使用方只关注接口而不关注具体类的实现</li>
+</ul>
+<pre><code class="language-typescript">abstract class GlobalRequester {
+  abstract requestItem(...args): void
+}
+
+class InventoryRequester extends GlobalRequester {
+  requestItem(item): void { }
+}
+
+class InventoryRequesterWS extends GlobalRequester {
+  requestItem(item): void { }
+}
+
+// 库存查询的例子
+// Bad
+// 这样做，InventoryTracker的请求写死在了类里，类里应该不关心具体哪个请求，而是关心我需要这么一个接口就行
+class InventoryTracker {
+  private requeser: InventoryRequester = new InventoryRequester()
+  public requestItems(): void {
+    for (let i = 0; i &lt; this.items.length; i++) {
+      this.requeser.requestItem(this.items[i])
+    }
+  }
+  constructor(public items: Array&lt;string&gt;) { }
+}
+
+// new InventoryTracker([&quot;apple&quot;]).requestItems()
+// Good
+// 修改程下面的代码后，如果发送的请求是不一样的，下面的代码就能达到目的，而不需要去修改原有的代码
+class InventoryTracker {
+  public requestItems(): void {
+    for (let i = 0; i &lt; this.items.length; i++) {
+      this.requeser.requestItem(this.items[i])
+    }
+  }
+  constructor(public items: Array&lt;string&gt;, public requeser: GlobalRequester) { }
+}
+
+new InventoryTracker([&quot;apple&quot;], new InventoryRequester())
+new InventoryTracker([&quot;apple&quot;], new InventoryRequesterWS())
+</code></pre>
+<h3 id="42-unixlinux设计哲学中的设计原则">4.2、《UNIX/LINUX设计哲学》中的设计原则</h3>
+<h4 id="421-大准则">4.2.1、大准则</h4>
+<ul>
+<li>小即是美</li>
+<li>让每个程序只做一件事</li>
+<li>快速建立原型（搭建基础功能后续迭代）</li>
+<li>舍弃高效率而取可移植性</li>
+<li>采用纯文本来存取数据</li>
+<li>充分利用软件的杠杆效应（软件复用）</li>
+<li>使用shell脚本来提高杠杆效应的可移植性</li>
+<li>避免强制性的用户界面</li>
+<li>让每个程序都成为过滤器</li>
+</ul>
+<h3 id="422-小准则">4.2.2、小准则</h3>
+<ul>
+<li>允许用户定制环境</li>
+<li>尽量使操作系统内核小而轻量化</li>
+<li>使用小写字母并简短</li>
+<li>沉默是金</li>
+<li>各部分之和大于整体</li>
+<li>寻求90%的解决方案</li>
+</ul>
+<h2 id="5-认识23种设计模式">5、认识23种设计模式</h2>
+<h3 id="51-创建型模式">5.1、创建型模式</h3>
+<ul>
+<li>工厂模式（Factory Pattern）</li>
+<li>单例模式（Abstract Factory Pattern）</li>
+<li>原型模式（Prototype Pattern）</li>
+</ul>
+<h3 id="52-结构性模式">5.2、结构性模式</h3>
+<ul>
+<li>适配器模式（Adapter Pattern）</li>
+<li>桥接模式（Bridge Pattern）</li>
+<li>过滤器模式（Filter、Criteria Pattern）</li>
+<li>组合模式（Composite Pattern）</li>
+<li>装饰器模式（Decorator Pattern）</li>
+<li>外观模式（Facade Pattern）</li>
+<li>享元模式（Flyweight Pattern）</li>
+<li>代理模式（Proxy Pattern）</li>
+</ul>
+<h3 id="53-行为型模式">5.3、行为型模式</h3>
+<ul>
+<li>责任链模式（Chain of Responsibility Pattern）</li>
+<li>命令模式（Command Pattern）</li>
+<li>解释器模式（Interpreter Pattern）</li>
+<li>迭代器模式（Iterator Pattern）</li>
+<li>中介者模式（Mediator Pattern）</li>
+<li>备忘录模式（Memento Pattern）</li>
+<li>观察者模式（Observer Pattern）</li>
+<li>状态模式（State Pattern）</li>
+<li>空对象模式（Null Object Pattern）</li>
+<li>策略模式（Strategy Pattern）</li>
+<li>模板模式（Template Pattern）</li>
+<li>访问者模式（Visitor Pattern）</li>
+</ul>
+<p>后面的文章会详细的讲解每个设计模式是什么，如何使用，什么场景下适合使用。</p>
+<p>最后，希望读者可以通过本篇文章对<code>常用算法思想</code>有一定的认识和觉悟。。。。。。</p>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('/media/images/c8Ru9Le1h.jpg');"></div>
+                 <a href="/chang-yong-suan-fa-si-xiang" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2021-03-01">2021-03-01</time>
+                  <h4 class="title white no-margin">常用算法思想</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                <div class="clear"></div>
+<script>
+jQuery(document).ready(function($){
+    $('.vemoji-btn').text('😀');
+    $("#comments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+            if ($(window.location.hash).length) {
+                $('html, body').animate({scrollTop: $(window.location.hash).offset().top-200}, 600);
+                clearInterval(checkExist);
+            }
+        }, 100);
+    }
+})
+</script>
+
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/she-ji-mo-shi-jie-shao" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-03-04">2021-03-04</time>
+                      <h4 class="title usmall">
+                        <a href="/she-ji-mo-shi-jie-shao">设计模式介绍</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/chang-yong-suan-fa-si-xiang" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-03-01">2021-03-01</time>
+                      <h4 class="title usmall">
+                        <a href="/chang-yong-suan-fa-si-xiang">常用算法思想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="/pai-xu-yu-sou-suo" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/gridea.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2021-02-26">2021-02-26</time>
+                      <h4 class="title usmall">
+                        <a href="/pai-xu-yu-sou-suo">排序与搜索</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="/SLwZCyjTF" class="ctag ctag-0 ctag-SLwZCyjTF" aria-label="">设计模式</a>
+                    
+                      <a href="/c8Ru9Le1h" class="ctag ctag-1 ctag-c8Ru9Le1h" aria-label="">数据结构与算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">LittleBoy-前端爱好者</a></h4>
+                    <p class="founder">一位前端爱好者的大前端养成记</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/zhourengui" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href=""><img src="/media/images/custom-footerLogo.png" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2020 共 12 篇文章
+          Author by <a href="javascript:void(0)">「LittleBoy」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/valine/1.3.10/Valine.Pure.min.js"></script>
+<script>
+    new Valine({
+        el: '#comments',
+        appId: 'bEuEMACG0o7iNnryQQYgfLE2-gzGzoHsz' ,
+        appKey: 'Xkv8kTC4SwEtYxpQs6EuyuSS',
+        pageSize: 30,
+        placeholder: '既然来了，那就留个痕迹吧~',
+        visitor: true // 阅读量统计
+    })
+</script>
+    
+
+      
+    <script src="/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>
