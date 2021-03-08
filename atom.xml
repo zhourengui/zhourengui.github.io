@@ -1,633 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://zhourengui.github.io</id>
     <title>LittleBoy-前端爱好者</title>
-    <updated>2021-03-04T02:53:23.613Z</updated>
+    <updated>2021-03-08T01:08:09.871Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://zhourengui.github.io"/>
+    <link rel="self" href="https://zhourengui.github.io/atom.xml"/>
     <subtitle>一位前端爱好者的大前端养成记</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <logo>https://zhourengui.github.io/images/avatar.png</logo>
+    <icon>https://zhourengui.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, LittleBoy-前端爱好者</rights>
     <entry>
-        <title type="html"><![CDATA[设计模式介绍]]></title>
-        <id>http://localhost:4000/she-ji-mo-shi-jie-shao/</id>
-        <link href="http://localhost:4000/she-ji-mo-shi-jie-shao/">
-        </link>
-        <updated>2021-03-04T02:48:51.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="设计模式介绍">设计模式介绍</h1>
-<p>设计模式是软件开发过程中面临的一般问题的解决方案，这些方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
-<p>在认识23种设计模式之前，需要知道什么是面向对象、UML类图、设计原则，因为设计模式最开始是通过面向对象语言总结出来的。</p>
-<h2 id="1-认识面向对象">1、认识面向对象</h2>
-<h3 id="11-面向对象和面向过程的区别">1.1、面向对象和面向过程的区别</h3>
-<ul>
-<li>面向过程----步骤化：面向过程就是分析出现需求所需要的步骤，通过函数（方法）一步一步实现这些步骤。</li>
-<li>面向对象----行为化：面向对象是把整个需求<code>按照特点</code>、<code>功能划分</code>，将这些存在共性的部分封装成类（类实例化后才是对象），创建了对象不是为了完成某一个步骤，而是描述某个事物在解决问题的步骤的行为。</li>
-</ul>
-<h3 id="12-面向对象和面向过程的优缺点">1.2、面向对象和面向过程的优缺点</h3>
-<ul>
-<li>面向过程
-<ul>
-<li>优点：性能上比面向对象好，因为类在调用的时候需要实例化，开销大。</li>
-<li>缺点：不容易维护、复用、拓展</li>
-<li>应用：单片机、嵌入式开发、Linux/Unix等对性能要求较高的地方</li>
-</ul>
-</li>
-<li>面向对象
-<ul>
-<li>优点：易维护、易复用、易拓展，由于面向对象有封装、继承、多态的特性，可以设计出低耦合的系统，使系统更加灵活。</li>
-<li>缺点：性能低，类的实例化开销大。</li>
-</ul>
-</li>
-</ul>
-<h3 id="13-面向对象的三大特征">1.3、面向对象的三大特征</h3>
-<ul>
-<li>
-<p>封装（public、private、proteted）</p>
-<ul>
-<li>减少耦合性，不该外露的不外露</li>
-<li>利于数据、结构权限管理</li>
-</ul>
-</li>
-<li>
-<p>继承（extends）</p>
-<ul>
-<li>子类继承父类</li>
-</ul>
-</li>
-<li>
-<p>多态（implements）</p>
-<ul>
-<li>同一个接口不同实现</li>
-</ul>
-</li>
-</ul>
-<p>通过一段代码了解面向对象的三大特性</p>
-<pre><code class="language-typescript">interface IUser {
-  name: string;
-  age: number;
-  speak(): void;
-}
-
-// implements：People类实现IUser接口，这时候People类必须包含接口的属性和方法
-// public：允许通过子类或者当前类的实例对象访问
-// private: 只允许当前类访问，子类或者当前类的实例对象不可访问
-// protected：只允许在类之前访问，实例对象不可访问
-class People implements IUser {
-  constructor(public name: string, public age: number, private weight: number) { }
-  public speak(): void {
-    console.error(`My name is ${this.name}, age ${this.age}`)
-  }
-  public getWeight(): void {
-    console.error(this.weight)
-  }
-}
-
-// extends: Student类继承父类People
-class Student extends People {
-  constructor(public name: string, public age: number, private sWeight: number) {
-    super(name, age, sWeight)
-  }
-}
-
-const student = new Student(&quot;littleboy&quot;, 24, 50)
-student.age // 24
-student.name // littleboy
-student.weight // 访问不到weight属性，因为private不允许实例访问
-</code></pre>
-<h2 id="2-认识uml类图">2、认识UML类图</h2>
-<h3 id="21-什么是uml类图">2.1、什么是UML类图</h3>
-<p>类是具有相似结构、行为和关系的一组对象的描述符。类是面向对象系统中最重要的构造块。类图显示了一组类、接口、协作以及他们之间的关系。在UML中问题域最终要被逐步转化，通过类来建模，通过编程语言构建这些类从而实现系统。类加上他们之间的关系就构成了类图，类图中还可以包含接口、包等元素，也可以包括对象、链等实例。</p>
-<h3 id="22-如何画uml类图">2.2、如何画UML类图</h3>
-<pre><code class="language-typescript">// People中引用House，使用实心的箭头
-// Student和Teacher继承People，使用空心的箭头
-// public用+表示
-// private用-表示
-// protected用#表示
-class House {
-  constructor(public city: string, public price: number) { }
-}
-
-class People {
-  constructor(public name: string, public house?: House) { }
-  public sayHello(): void {
-    console.error(`My name is ${this.name}`)
-  }
-}
-
-class Student extends People {
-  constructor(public name: string, public house?: House) {
-    super(name, house)
-  }
-  public study(): void { }
-}
-
-class Teacher extends People {
-  constructor(public name: string, public house?: House) {
-    super(name, house)
-  }
-  public teacher(): void { }
-}
-</code></pre>
-<p>上面代码对应的UML类图是：</p>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml.png" alt="" loading="lazy"></figure>
-<p>正常情况下，是先设计出UML类图再根据类图编写代码，这里为了方便理解，所以先看懂代码，再理解UML类图是如何画的。</p>
-<h2 id="3-两道面试题">3、两道面试题</h2>
-<h3 id="31-第一题画出uml类图和写出相应的代码">3.1、第一题（画出UML类图和写出相应的代码）</h3>
-<p>1、打车时，可以打专车或者快车。任何车都有车牌号和名称。</p>
-<p>2、不同车不同价格，快车每公里1元，专车每公里2元。</p>
-<p>3、行程开始时，显示车辆信息</p>
-<p>4、行程结束时，显示打车金额（假定行程就5公里）</p>
-<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml1.png" alt="" loading="lazy"></figure>
-<pre><code class="language-typescript">class Car {
-  constructor(public carNo: string, public name: string) { }
-}
-
-class QuickCar extends Car {
-  constructor(public carNo: string, public name: string, public perKPrice: number) {
-    super(carNo, name)
-  }
-}
-
-class SpecialCar extends Car {
-  constructor(public carNo: string, public name: string, public perKPrice: number) {
-    super(carNo, name)
-  }
-}
-
-class Trip {
-  public start(): void {
-    console.error(`车牌号：${this.car.carNo}，车辆名称： ${this.car.name}。`)
-  }
-  public end(): void {
-    console.error(`需付金额：${this.car.perKPrice * 5}`)
-  }
-  constructor(public car: QuickCar | SpecialCar) { }
-}
-
-const quickCar = new QuickCar(&quot;粤A&quot;, &quot;丰田&quot;, 1)
-const specialCar = new SpecialCar(&quot;粤C&quot;, &quot;本田&quot;, 2)
-const trip = new Trip(specialCar)
-trip.start()
-trip.end()
-</code></pre>
-<h3 id="32-第二题画出uml类图和写出相应的代码">3.2、第二题（画出UML类图和写出相应的代码）</h3>
-<p>1、某停车场，分n层，每层n个车位</p>
-<p>2、每个车位都能监控到车辆的驶入和离开</p>
-<p>3、车辆进入前，显示每层的空余车位数量</p>
-<p>4、车辆进入时，摄像头可识别车牌号和名称</p>
-<p>5、车辆出来时，出口显示器显示车牌号和停车时长</p>
-<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/zhourengui/blog-image/master/uml2.png" alt="" loading="lazy"></figure>
-<pre><code class="language-typescript">interface IDist extends Car {
-  inTime: number,
-  lot: Lot
-}
-
-class Parking {
-  public emptyLots: Array&lt;Lot&gt; = []
-  protected cars: { [key: string]: IDist } = {}
-  constructor(public layers: Array&lt;Layer&gt;, public camera: Camera, public monitor: Monitor) { }
-  public beforeEntry(): void {
-    for (let i = 0; i &lt; layers.length; i++) {
-      console.error(`${i}层空余车位数量：${layers[i].showEmptyNums()}`)
-      this.emptyLots = [...this.emptyLots, ...layers[i].getEmptyLots()]
-    }
-  }
-  public whenEntry(car: Car): void {
-    this.camera.distinguish(car)
-    this.cars[car.no] = { ...car, inTime: new Date().getTime(), lot: this.emptyLots[0] }
-    this.emptyLots[0].entry()
-  }
-  public afterLeave(car: Car): void {
-    this.monitor.show(car, this.cars[car.no].inTime)
-    this.cars[car.no].lot.leave()
-    delete this.cars[car.no]
-  }
-}
-
-class Car {
-  constructor(public no: string, public name: string) { }
-}
-
-class Lot {
-  public isUsing: boolean = false
-  public entry(): void {
-    this.isUsing = true
-  }
-  public leave(): void {
-    this.isUsing = false
-  }
-}
-
-class Layer {
-  constructor(public lots: Array&lt;Lot&gt;) { }
-  public showEmptyNums(): number {
-    return this.lots.reduce((t, c) =&gt; t + (c.isUsing ? 0 : 1), 0)
-  }
-  public getEmptyLots(): Array&lt;Lot&gt; {
-    return this.lots.filter(l =&gt; !l.isUsing)
-  }
-}
-
-class Camera {
-  public distinguish(car: Car): void {
-    console.error(`车牌号：${car.no}，车的名称：${car.name}`)
-  }
-}
-
-class Monitor {
-  public show(car: Car, inTime: number): void {
-    console.error(`车牌号：${car.no}，停车时长：${new Date().getTime() - inTime}`)
-  }
-}
-
-const car = new Car(&quot;粤A&quot;, &quot;五菱&quot;)
-const car1 = new Car(&quot;粤B&quot;, &quot;黑&quot;)
-const camera = new Camera()
-const monitor = new Monitor()
-const layers = []
-for (let i = 0; i &lt; 10; i++) {
-  const lots: Array&lt;Lot&gt; = []
-  for (let j = 0; j &lt; 100; j++) {
-    lots.push(new Lot())
-  }
-  layers.push(new Layer(lots))
-}
-const parking = new Parking(layers, camera, monitor)
-parking.beforeEntry()
-parking.whenEntry(car)
-setTimeout(() =&gt; {
-  parking.afterLeave(car)
-}, 3000)
-parking.beforeEntry()
-parking.whenEntry(car1)
-</code></pre>
-<p>输出：</p>
-<pre><code>0层空余车位数量：100
-1层空余车位数量：100
-2层空余车位数量：100
-3层空余车位数量：100
-4层空余车位数量：100
-5层空余车位数量：100
-6层空余车位数量：100
-7层空余车位数量：100
-8层空余车位数量：100
-9层空余车位数量：100
-车牌号：粤A，车的名称：五菱
-0层空余车位数量：99
-1层空余车位数量：100
-2层空余车位数量：100
-3层空余车位数量：100
-4层空余车位数量：100
-5层空余车位数量：100
-6层空余车位数量：100
-7层空余车位数量：100
-8层空余车位数量：100
-9层空余车位数量：100
-车牌号：粤B，车的名称：黑
-车牌号：粤A，停车时长：3002
-</code></pre>
-<h2 id="4-设计原则">4、设计原则</h2>
-<h3 id="41-五大设计原则">4.1、五大设计原则</h3>
-<h4 id="411-单一职责原则single">4.1.1、 单一职责原则（Single）</h4>
-<ul>
-<li>一个程序制作好一件事</li>
-<li>如果功能过于复杂就拆分开，每个部分保持独立</li>
-</ul>
-<pre><code class="language-typescript">// UserSettings的功能就是设置，如果把验证的逻辑也放进UserSettings的话，违背了单一指责的原则，所以需要把验证的逻辑放到正确的位置
-interface ISetting { }
-// Bad
-class UserSettings {
-  constructor(public setting: ISetting) { }
-  public changeSetting(setting: ISetting): void {
-    if (this.verifyCredential()) {
-      this.setting = setting
-    }
-  }
-  public verifyCredential(): boolean {
-    return true
-  }
-}
-
-// Good
-class UserSettings {
-  private auth: UserAuth = new UserAuth()
-  constructor(public setting: ISetting) { }
-  public changeSetting(setting: ISetting): void {
-    if (this.auth.verifyCredential()) {
-      this.setting = setting
-    }
-  }
-}
-
-class UserAuth {
-  public verifyCredential(): boolean {
-    return true
-  }
-}
-</code></pre>
-<h4 id="412-开放封闭原则open-close">4.1.2、 开放封闭原则（Open Close）</h4>
-<ul>
-<li>对拓展进行开发，对修改封闭</li>
-<li>增加需求时，拓展新代码，而非修改已有的代码</li>
-<li>这是软件设计的终极目标</li>
-</ul>
-<pre><code class="language-typescript">// 像第一种写法的HttpRequest，代码会出现很多逻辑都揉合到了一起，这种情况下不利于维护和拓展，并且有很多的if-else的字眼，而第二种完美的解决了第一种的问题
-class Adapter {
-  constructor(public name: AdapterType) { }
-  public request&lt;T&gt;(): Promise&lt;T&gt; {
-    return new Promise&lt;T&gt;(() =&gt; { })
-  }
-}
-enum AdapterType {
-  BrowserAdapter,
-  NodeAdapter
-}
-
-// Bad
-class BrowserAdapter extends Adapter {
-  constructor() {
-    super(AdapterType.BrowserAdapter)
-  }
-}
-class NodeAdapter extends Adapter {
-  constructor() {
-    super(AdapterType.NodeAdapter)
-  }
-}
-class HttpRequest {
-  constructor(private adapter: Adapter) { }
-  public fetch&lt;T&gt;(): Promise&lt;T&gt; {
-    if (this.adapter.name === AdapterType.BrowserAdapter) {
-      // 进行请求逻辑
-      return new Promise&lt;T&gt;(() =&gt; { })
-    } else if (this.adapter.name === AdapterType.NodeAdapter) {
-      // 进行请求逻辑
-      return new Promise&lt;T&gt;(() =&gt; { })
-    }
-  }
-}
-// Good
-class BrowserAdapter extends Adapter {
-  constructor() {
-    super(AdapterType.BrowserAdapter)
-  }
-  public request&lt;T&gt;(): Promise&lt;T&gt; {
-    return new Promise&lt;T&gt;(() =&gt; { })
-  }
-}
-class NodeAdapter extends Adapter {
-  constructor() {
-    super(AdapterType.NodeAdapter)
-  }
-  public request&lt;T&gt;(): Promise&lt;T&gt; {
-    return new Promise&lt;T&gt;(() =&gt; { })
-  }
-}
-class HttpRequest {
-  constructor(private adapter: Adapter) { }
-  public fetch&lt;T&gt;(): Promise&lt;T&gt; {
-    return this.adapter.request&lt;T&gt;().then((res) =&gt; { return res })
-  }
-}
-const httpRequest = new HttpRequest(new BrowserAdapter())
-</code></pre>
-<h4 id="413-李氏置换原则liskov-substitution">4.1.3、 李氏置换原则（Liskov Substitution）</h4>
-<ul>
-<li>
-<p>子类能够覆盖父类</p>
-</li>
-<li>
-<p>父类能出现的地方子类就能出现</p>
-</li>
-</ul>
-<pre><code class="language-typescript">// Bad
-class Rect {
-  protected width: number = 0
-  protected height: number = 0
-  protected color: string
-  public getArea(): number {
-    return this.width * this.height
-  }
-  public setWidth(width: number) {
-    this.width = width
-  }
-  public setHeight(height: number) {
-    this.height = height
-  }
-  public setColor(color: string): void {
-    this.color = color
-  }
-  public render(): void { }
-}
-
-class Square extends Rect {
-  constructor() {
-    super()
-  }
-  public setWidth(width: number) {
-    this.width = width
-    this.height = width
-  }
-  public setHeight(height: number) {
-    this.width = height
-    this.height = height
-  }
-}
-// Good
-class Shape {
-  protected color: string
-  public setColor(color: string): void {
-    this.color = color
-  }
-  public render(): void { }
-}
-
-class Rect extends Shape {
-  private width: number = 0
-  private height: number = 0
-  public getArea(): number {
-    return this.width * this.height
-  }
-  constructor() {
-    super()
-  }
-}
-
-class Square extends Shape {
-  private width: number = 0
-  public getArea(): number {
-    return this.width * this.width
-  }
-  constructor() {
-    super()
-  }
-}
-</code></pre>
-<h4 id="414-接口独立原则interface-segregation">4.1.4、 接口独立原则（Interface Segregation）</h4>
-<ul>
-<li>保持接口独立，避免出现胖接口</li>
-<li>类似单一原则，这里更关注接口</li>
-</ul>
-<pre><code class="language-typescript">interface Settings {
-  rootNode: Element
-  options: { [key: string]: any }
-}
-
-// Bad
-class DomTraverser {
-  public rootNode: Element
-  public setup(): void {
-    this.rootNode = this.settings.rootNode
-    this.settings.options.animationModule()
-  }
-  public traverse(): void { }
-  constructor(public settings: Settings) {
-    this.setup()
-  }
-}
-
-const $1 = new DomTraverser({
-  rootNode: document.querySelector(&quot;#app&quot;),
-  options: {
-    animationModule() { }
-  }
-})
-
-// Good
-class DomTraverser {
-  public rootNode: Element
-  public options: { [key: string]: any }
-  public setup(): void {
-    this.rootNode = this.settings.rootNode
-    this.setupOptions()
-  }
-  public setupOptions(): void {
-    if (this.options.animationModule) { }
-  }
-  public traverse(): void { }
-  constructor(public settings: Settings) {
-    this.options = settings.options
-    this.setup()
-  }
-}
-
-const $1 = new DomTraverser({
-  rootNode: document.querySelector(&quot;#app&quot;),
-  options: {
-    animationModule() { }
-  }
-})
-</code></pre>
-<h4 id="415-依赖倒置原则dependence-inversion">4.1.5、 依赖倒置原则（Dependence Inversion）</h4>
-<ul>
-<li>面向接口编程，依赖于抽象而不依赖于具体</li>
-<li>使用方只关注接口而不关注具体类的实现</li>
-</ul>
-<pre><code class="language-typescript">abstract class GlobalRequester {
-  abstract requestItem(...args): void
-}
-
-class InventoryRequester extends GlobalRequester {
-  requestItem(item): void { }
-}
-
-class InventoryRequesterWS extends GlobalRequester {
-  requestItem(item): void { }
-}
-
-// 库存查询的例子
-// Bad
-// 这样做，InventoryTracker的请求写死在了类里，类里应该不关心具体哪个请求，而是关心我需要这么一个接口就行
-class InventoryTracker {
-  private requeser: InventoryRequester = new InventoryRequester()
-  public requestItems(): void {
-    for (let i = 0; i &lt; this.items.length; i++) {
-      this.requeser.requestItem(this.items[i])
-    }
-  }
-  constructor(public items: Array&lt;string&gt;) { }
-}
-
-// new InventoryTracker([&quot;apple&quot;]).requestItems()
-// Good
-// 修改程下面的代码后，如果发送的请求是不一样的，下面的代码就能达到目的，而不需要去修改原有的代码
-class InventoryTracker {
-  public requestItems(): void {
-    for (let i = 0; i &lt; this.items.length; i++) {
-      this.requeser.requestItem(this.items[i])
-    }
-  }
-  constructor(public items: Array&lt;string&gt;, public requeser: GlobalRequester) { }
-}
-
-new InventoryTracker([&quot;apple&quot;], new InventoryRequester())
-new InventoryTracker([&quot;apple&quot;], new InventoryRequesterWS())
-</code></pre>
-<h3 id="42-unixlinux设计哲学中的设计原则">4.2、《UNIX/LINUX设计哲学》中的设计原则</h3>
-<h4 id="421-大准则">4.2.1、大准则</h4>
-<ul>
-<li>小即是美</li>
-<li>让每个程序只做一件事</li>
-<li>快速建立原型（搭建基础功能后续迭代）</li>
-<li>舍弃高效率而取可移植性</li>
-<li>采用纯文本来存取数据</li>
-<li>充分利用软件的杠杆效应（软件复用）</li>
-<li>使用shell脚本来提高杠杆效应的可移植性</li>
-<li>避免强制性的用户界面</li>
-<li>让每个程序都成为过滤器</li>
-</ul>
-<h3 id="422-小准则">4.2.2、小准则</h3>
-<ul>
-<li>允许用户定制环境</li>
-<li>尽量使操作系统内核小而轻量化</li>
-<li>使用小写字母并简短</li>
-<li>沉默是金</li>
-<li>各部分之和大于整体</li>
-<li>寻求90%的解决方案</li>
-</ul>
-<h2 id="5-认识23种设计模式">5、认识23种设计模式</h2>
-<h3 id="51-创建型模式">5.1、创建型模式</h3>
-<ul>
-<li>工厂模式（Factory Pattern）</li>
-<li>单例模式（Abstract Factory Pattern）</li>
-<li>原型模式（Prototype Pattern）</li>
-</ul>
-<h3 id="52-结构性模式">5.2、结构性模式</h3>
-<ul>
-<li>适配器模式（Adapter Pattern）</li>
-<li>桥接模式（Bridge Pattern）</li>
-<li>过滤器模式（Filter、Criteria Pattern）</li>
-<li>组合模式（Composite Pattern）</li>
-<li>装饰器模式（Decorator Pattern）</li>
-<li>外观模式（Facade Pattern）</li>
-<li>享元模式（Flyweight Pattern）</li>
-<li>代理模式（Proxy Pattern）</li>
-</ul>
-<h3 id="53-行为型模式">5.3、行为型模式</h3>
-<ul>
-<li>责任链模式（Chain of Responsibility Pattern）</li>
-<li>命令模式（Command Pattern）</li>
-<li>解释器模式（Interpreter Pattern）</li>
-<li>迭代器模式（Iterator Pattern）</li>
-<li>中介者模式（Mediator Pattern）</li>
-<li>备忘录模式（Memento Pattern）</li>
-<li>观察者模式（Observer Pattern）</li>
-<li>状态模式（State Pattern）</li>
-<li>空对象模式（Null Object Pattern）</li>
-<li>策略模式（Strategy Pattern）</li>
-<li>模板模式（Template Pattern）</li>
-<li>访问者模式（Visitor Pattern）</li>
-</ul>
-<p>后面的文章会详细的讲解每个设计模式是什么，如何使用，什么场景下适合使用。</p>
-<p>最后，希望读者可以通过本篇文章对<code>常用算法思想</code>有一定的认识和觉悟。。。。。。</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[常用算法思想]]></title>
-        <id>http://localhost:4000/chang-yong-suan-fa-si-xiang/</id>
-        <link href="http://localhost:4000/chang-yong-suan-fa-si-xiang/">
+        <id>https://zhourengui.github.io/chang-yong-suan-fa-si-xiang/</id>
+        <link href="https://zhourengui.github.io/chang-yong-suan-fa-si-xiang/">
         </link>
         <updated>2021-03-01T09:39:01.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1026,8 +412,8 @@ var subsets = function (nums) {
     </entry>
     <entry>
         <title type="html"><![CDATA[排序与搜索]]></title>
-        <id>http://localhost:4000/pai-xu-yu-sou-suo/</id>
-        <link href="http://localhost:4000/pai-xu-yu-sou-suo/">
+        <id>https://zhourengui.github.io/pai-xu-yu-sou-suo/</id>
+        <link href="https://zhourengui.github.io/pai-xu-yu-sou-suo/">
         </link>
         <updated>2021-02-26T07:26:39.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1332,8 +718,8 @@ var guessNumber = function(n) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之堆]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-dui/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-dui/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui/">
         </link>
         <updated>2021-02-05T06:35:18.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -1773,8 +1159,8 @@ var mergeKLists = function(lists) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之图]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-tu/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-tu/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-tu/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-tu/">
         </link>
         <updated>2021-02-04T08:31:18.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -2040,8 +1426,8 @@ var cloneGraph = function(node) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之树]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-shu/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-shu/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-shu/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-shu/">
         </link>
         <updated>2021-02-03T09:16:24.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -2506,8 +1892,8 @@ var hasPathSum = function(root, targetSum) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之字典]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-zi-dian/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-zi-dian/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-zi-dian/">
         </link>
         <updated>2021-01-29T12:24:12.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -2670,8 +2056,8 @@ var minWindow = function(s, t) {
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之集合]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-ji-he/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-ji-he/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-ji-he/">
         </link>
         <updated>2021-01-18T07:40:36.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -2756,8 +2142,8 @@ const s1 = new Set(a)
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构之链表]]></title>
-        <id>http://localhost:4000/shu-ju-jie-gou-zhi-lian-biao/</id>
-        <link href="http://localhost:4000/shu-ju-jie-gou-zhi-lian-biao/">
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-lian-biao/">
         </link>
         <updated>2021-01-18T06:50:43.000Z</updated>
         <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
@@ -3040,6 +2426,84 @@ path.forEach(i =&gt; {
 // c: 1
 </code></pre>
 <p>最后，希望读者可以通过本篇文章对<code>链表</code>有一定的认识和觉悟。。。。。。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[数据结构之队列]]></title>
+        <id>https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/</id>
+        <link href="https://zhourengui.github.io/shu-ju-jie-gou-zhi-dui-lie/">
+        </link>
+        <updated>2021-01-15T08:09:56.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章可以收获的知识：</p>
+<ul>
+<li>什么是<code>队列</code></li>
+<li><code>队列</code>的常用操作</li>
+<li><code>队列</code>的使用场景</li>
+<li>一道<a href="https://leetcode-cn.com/">LeetCode</a>算法题巩固<code>队列</code></li>
+<li>如何分析<code>时间复杂度</code>和<code>空间复杂度</code></li>
+</ul>
+<h3 id="什么是队列">什么是队列</h3>
+<p><code>队列</code>是一个先进先出的数据结构，JavaScirpt中没有队列，但可以使用Array实现队列的所有功能。</p>
+<h3 id="队列的常用操作">队列的常用操作</h3>
+<pre><code class="language-js">const queue = [] // 队列
+queue.push(1) // 入队（enqueue）
+queue.shift() // 出队（dequeue）
+</code></pre>
+<h3 id="队列的使用场景">队列的使用场景</h3>
+<ul>
+<li>
+<p>食堂排队打饭</p>
+<p>食堂排队打饭都不陌生，先排队的学生可以先打到饭，符合<code>队列</code>的特点。</p>
+</li>
+<li>
+<p>JavaScript异步任务队列</p>
+<p>JavaScript是单线程的，无法同时处理异步任务中的并发任务，使用任务队列先后处理异步任务</p>
+</li>
+<li>
+<p>计算最近请求次数</p>
+<p>一个请求队列[[], [1], [100], [3001], [3002]],计算[t-3000, t]的请求次数，首先新请求t先入队，不在这个区间的出队。后面也会通过一道<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">LeetCode</a>算法题巩固<code>队列</code>的知识。</p>
+</li>
+</ul>
+<p>遇到这些相似的问题，都可以优先考虑使用<code>队列</code>来解决问题。</p>
+<h3 id="leetcode算法题题号933最近的请求次数">LeetCode算法题：题号933，<a href="https://leetcode-cn.com/problems/number-of-recent-calls/">最近的请求次数</a></h3>
+<p>解题思路：</p>
+<ul>
+<li>越早发出的请求，越靠前</li>
+<li>符合先进先出的特点，考虑使用队列。</li>
+</ul>
+<p>解题步骤：</p>
+<ul>
+<li>新请求，入队</li>
+<li>不在[t - 3000, t]区间内的成员出队</li>
+<li>最后队列的长度就是最近的请求次数</li>
+</ul>
+<p>代码实现：</p>
+<pre><code class="language-js">var RecentCounter = function() {
+  this.q = [];
+};
+
+/** 
+ * @param {number} t
+ * @return {number}
+ */
+RecentCounter.prototype.ping = function(t) {
+  this.q.push(t);
+  while(t - 3000 &gt; this.q[0]) {
+    this.q.shift();
+  }
+  return this.q.length;
+};
+
+/**
+ * Your RecentCounter object will be instantiated and called as such:
+ * var obj = new RecentCounter()
+ * var param_1 = obj.ping(t)
+ */
+</code></pre>
+<h3 id="分析时间复杂度和空间复杂度">分析时间复杂度和空间复杂度</h3>
+<p>因为代码中有个while循环体，循环的次数最大是ping的次数，所以时间复杂度是O(n)，n是ping的次数。</p>
+<p>因为代码中用到了队列，最大的长度是3000，所以空间复杂度是O(n)，n最大是3000。</p>
+<p>最后，希望读者可以通过本篇文章对<code>队列</code>有一定的认识和觉悟。。。。。。</p>
 ]]></content>
     </entry>
 </feed>
